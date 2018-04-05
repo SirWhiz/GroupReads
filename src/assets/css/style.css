@@ -28,7 +28,7 @@ body {
 }
 #primera{
 	height: 100%;
-	background-image: url("../img/banner-principal.jpeg");
+	background-image: url("../img/banner-principal.jpg");
 	background-size: cover;
 	margin:0; 
 	margin-bottom: 3em;
