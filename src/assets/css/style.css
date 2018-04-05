@@ -6,3 +6,23 @@
 	height: 25em;
 	background-color: #eee;
 }
+
+.typed-cursor {
+    opacity: 1;
+    animation: blink .7s infinite;
+    font-size:4.5rem;
+    font-weight:100;
+
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
