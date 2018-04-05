@@ -1,20 +1,59 @@
+html, body {
+    height: 100%;
+    max-width:100%;
+    padding: 0;
+    margin: 0;
+}
+body {
+    margin: 0;
+}
+.row{
+	margin:0;
+}
+.feature{
+	padding:2em 0;
+	border:1px solid #ccc;
+	border-radius: 5px;
+  	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  	color:#03A9F4;
+}
+.feature:hover{
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+.feature h2, p{
+	color:#212121;
+}
+.feature p{
+	padding:1em;
+}
+#primera{
+	height: 100%;
+	background-image: url("../img/banner-principal.jpeg");
+	background-size: cover;
+	margin:0; 
+	margin-bottom: 3em;
+}
 #banner{
+	color:white;
 	display: flex;
   	justify-content: center;
   	flex-direction: column;
   	text-align: center;
-	height: 25em;
-	background-color: #eee;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
-
+#empezar{
+	background:#0288D1;
+	color:#fff;
+}
+/* -- Cursor animado -- */
 .typed-cursor {
     opacity: 1;
     animation: blink .7s infinite;
     font-size:4.5rem;
     font-weight:100;
-
 }
-
 @keyframes blink {
     0% {
         opacity: 1;
