@@ -17,5 +17,18 @@ export class AppComponent {
       fadeOut: true,
       loop:true      
     });
+
+    //Boton para volver arriba
+    $(window).scroll(function(){ 
+        if ($(this).scrollTop() > 230) { 
+            $('#scroll').fadeIn(); 
+        } else { 
+            $('#scroll').fadeOut(); 
+        } 
+    }); 
+    $('#scroll').click(function(){ 
+        $("html, body").animate({ scrollTop: 0 }, 600); 
+        return false; 
+    }); 
   }
 }
