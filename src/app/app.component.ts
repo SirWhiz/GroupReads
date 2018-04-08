@@ -27,9 +27,11 @@ export class AppComponent {
             $('#scroll').fadeOut(); 
         } 
     }); 
-    $('#scroll').click(function(){ 
-        $("html, body").animate({ scrollTop: 0 }, 600); 
+    //$(document.body).on('click', '.borrar' ,function() #scroll
+
+    $(document.body).on('click','#scroll',function(){
+      $("html, body").animate({ scrollTop: 0 }, 'slow'); 
         return false; 
-    }); 
+    });
   }
 }
