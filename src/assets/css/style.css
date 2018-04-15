@@ -108,3 +108,10 @@ body {
 footer{
     background:#ccc;
 }
+/* ------ Pagina de inicio de sesión ------ */
+.login{
+    padding:2em;
+    border:1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
