@@ -1,0 +1,27 @@
+<div class="row justify-content-around fondoRegistro pb-5">
+	<div class="col-12 text-center mt-5 mb-5">
+		<span class="display-3">Registrarse</span>
+	</div>
+	<div class="col-md-5 mt-3 formulario">
+		<form class="form login">
+			<label for="nombre">Nombre y Apellidos:</label>
+			<input type="text" id="nombre" class="form-control mb-3">
+			<label for="nick">Nombre de usuario:</label>
+			<input type="text" id="nick" class="form-control mb-3">
+			<label for="correo">Correo:</label>
+			<input type="text" id="correo" class="form-control mb-3">
+			<label for="pwd">Contraseña:</label>
+			<input type="password" id="pwd" class="form-control mb-3">
+			<label for="pwd2">Confirmar contraseña:</label>
+			<input type="password" id="pwd2" class="form-control mb-3">
+			<label for="fecha">Fecha de nacimiento:</label>
+			<input type="text" id="fecha" class="form-control mb-3" readonly="readonly">
+			<label for="pais">Pais:</label>
+			<select class="form-control mb-3"></select>
+			<a [routerLink]="['/']" class="btn btn-danger mt-4">Volver</a>
+			<div class="mt-4 float-right">
+			   <input type="submit" value="Enviar" class="btn btn-primary">
+			</div>
+		</form>
+	</div>
+</div>

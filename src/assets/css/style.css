@@ -123,7 +123,15 @@ footer{
     color:#212121;
     background:#fff;
 }
-
+/* ------ Pagina de inicio de sesión ------ */
+.fondoRegistro{
+    background:#4CAF50;
+    color:#fff;
+}
+.fondoRegistro form{
+    color:#212121;
+    background:#fff;
+}
 /* --- Media Queries --- */
 @media only screen and (max-width: 770px) {
     .display-1 {

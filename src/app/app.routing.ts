@@ -5,10 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { PrincipalComponent } from './principal/principal.component';
+import { RegistroComponent } from './registro/registro.component';
 
 const appRoutes: Routes = [
 	{path: '', component: PrincipalComponent},
 	{path: 'login', component: LoginComponent},
+	{path: 'registro', component: RegistroComponent},
 	{path: '**', component: PrincipalComponent}
 ];
 
