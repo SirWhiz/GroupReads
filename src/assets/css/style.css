@@ -115,3 +115,49 @@ footer{
     border-radius: 5px;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
+.fondoLogin{
+    background:#0288D1;
+    color:#fff;
+}
+.fondoLogin form{
+    color:#212121;
+    background:#fff;
+}
+
+/* --- Media Queries --- */
+@media only screen and (max-width: 770px) {
+    .display-1 {
+        font-size:4em;
+    }
+    .display-3{
+        font-size:3em;
+    }
+    .typed-cursor{
+        font-size:3em;
+    }
+}
+@media only screen and (max-width: 380px) {
+    .display-1 {
+        font-size:3em;
+    }
+    .display-3{
+        font-size:1.9em;
+    }
+    .typed-cursor{
+        font-size:2em;
+    }
+}
+@media only screen and (max-width: 260px) {
+    .display-1 {
+        font-size:2em;
+    }
+    .display-3{
+        font-size:1em;
+    }
+    .display-4{
+        font-size:1em;
+    }
+    .typed-cursor{
+        font-size:1em;
+    }
+}
