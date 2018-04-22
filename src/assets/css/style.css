@@ -115,6 +115,14 @@ footer{
     border-radius: 5px;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
+.login span{
+    color:#D32F2F;
+    font-weight: bold;
+}
+.valido{
+    color:#4CAF50 !important;
+    float:right;
+}
 .fondoLogin{
     background:#0288D1;
     color:#fff;
@@ -153,6 +161,9 @@ footer{
     }
     .typed-cursor{
         font-size:2em;
+    }
+    .valido{
+        float:none;
     }
 }
 @media only screen and (max-width: 260px) {

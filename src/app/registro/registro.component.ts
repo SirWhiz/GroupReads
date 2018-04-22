@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Usuario } from './usuario';
 declare var $: any;
 
 @Component({
@@ -12,6 +13,15 @@ export class RegistroComponent{
 	public anio = 0;
 	public mes = 0;
 	public dia = 0;
+	public usuario:Usuario;
+
+	constructor(){
+		this.usuario = new Usuario("","","","","","");
+
+		$("#fecha").blur(function(){
+			this.usuario.fecha_nacimiento=$("#fecha").val();
+		});
+	}
 	
 	ngOnInit(){
 		/* -- Configurar Datepicker -- */
@@ -31,5 +41,9 @@ export class RegistroComponent{
 		    firstDay: 1,
 		    monthNamesShort: ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
 		});
+	}
+
+	onSubmit(){
+		console.log(this.usuario);
 	}
 }

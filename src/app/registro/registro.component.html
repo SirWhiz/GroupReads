@@ -2,25 +2,53 @@
 	<div class="col-12 text-center mt-5 mb-5">
 		<span class="display-3">Registrarse</span>
 	</div>
-	<div class="col-md-5 mt-3 formulario">
-		<form class="form login">
+	<div class="col-md-6 mt-3 formulario">
+		<form #formUsuario="ngForm" class="form login" (ngSubmit)="onSubmit()">
 			<label for="nombre">Nombre y Apellidos:</label>
-			<input type="text" id="nombre" class="form-control mb-3">
+			<span *ngIf="nombre.touched && !nombre.valid"><br/>Introduzca un nombre válido</span>
+			<span class="valido" *ngIf="nombre.touched && nombre.valid">
+				<i class="fas fa-check fa-2x"></i>
+			</span>
+			<input type="text" required="required" id="nombre" #nombre="ngModel" [(ngModel)]="usuario.nombre_ape" name="nombre" class="form-control mb-3" pattern="^[A-Za-z\s]+">
+
 			<label for="nick">Nombre de usuario:</label>
-			<input type="text" id="nick" class="form-control mb-3">
+			<span *ngIf="nick.touched && !nick.valid"><br/>Introduzca un nick válido<br/></span>
+			<span class="valido" *ngIf="nick.touched && nick.valid">
+				<i class="fas fa-check fa-2x"></i>
+			</span>
+			<input type="text" id="nick" required="required" #nick="ngModel" [(ngModel)]="usuario.nick" class="form-control mb-3" name="nick" pattern="^[A-Za-z0-9\_\-\s]+">
+
 			<label for="correo">Correo:</label>
-			<input type="text" id="correo" class="form-control mb-3">
+			<span *ngIf="correo.touched && !correo.valid"><br/>Introduzca un correo válido<br/></span>
+			<span class="valido" *ngIf="correo.touched && correo.valid">
+				<i class="fas fa-check fa-2x"></i>
+			</span>
+			<input type="text" required="required" id="correo" #correo="ngModel" [(ngModel)]="usuario.correo" name="correo" class="form-control mb-3" pattern="^.+@.+\.[a-z]{2,7}">
+			
 			<label for="pwd">Contraseña:</label>
-			<input type="password" id="pwd" class="form-control mb-3">
+			<span *ngIf="pwd.touched && !pwd.valid"><br/>La contraseña debe tener mayúsculas, minúsculas, números y 8 caracteres mínimo<br/></span>
+			<span class="valido" *ngIf="pwd.touched && pwd.valid">
+				<i class="fas fa-check fa-2x"></i>
+			</span>
+			<input type="password" required="required" id="pwd" #pwd="ngModel" [(ngModel)]="usuario.pwd" class="form-control mb-3" name="pwd">
+			
 			<label for="pwd2">Confirmar contraseña:</label>
-			<input type="password" id="pwd2" class="form-control mb-3">
+			<span *ngIf="pwd2.touched && usuario.pwd2!=usuario.pwd"><br/>Las contraseñas no coinciden<br/></span>
+			<span class="valido" *ngIf="pwd2.touched && usuario.pwd2==usuario.pwd">
+				<i class="fas fa-check fa-2x"></i>
+			</span>
+			<input type="password" id="pwd2" #pwd2="ngModel" [(ngModel)]="usuario.pwd2" class="form-control mb-3" name="pwd2">
+			
 			<label for="fecha">Fecha de nacimiento:</label>
-			<input type="text" id="fecha" class="form-control mb-3" readonly="readonly">
+			<span *ngIf="fecha.touched && !fecha.valid"><br/>Debe seleccionar una fecha de nacimiento<br/></span>
+			<input type="text" id="fecha" #fecha="ngModel" [(ngModel)]="usuario.fecha_nacimiento" class="form-control mb-3" name="fecha" required="required" pattern="^[0-9]{2}\/[0-9]{2}\/[0-9]{4}">
+			
 			<label for="pais">Pais:</label>
 			<select class="form-control mb-3"></select>
+			
 			<a [routerLink]="['/']" class="btn btn-danger mt-4">Volver</a>
 			<div class="mt-4 float-right">
-			   <input type="submit" value="Enviar" class="btn btn-primary">
+			   <input type="submit" value="Enviar" class="btn btn-primary" [disabled]="!formUsuario.form.valid">
 			</div>
 		</form>
 	</div>
