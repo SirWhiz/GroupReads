@@ -4,20 +4,24 @@
 	</div>
 	<div class="col-md-6 mt-3 formulario">
 		<form #formUsuario="ngForm" class="form login" (ngSubmit)="onSubmit()">
+			
+			<!--Nombre y apellidos-->
 			<label for="nombre">Nombre y Apellidos:</label>
 			<span *ngIf="nombre.touched && !nombre.valid"><br/>Introduzca un nombre válido</span>
 			<span class="valido" *ngIf="nombre.touched && nombre.valid">
 				<i class="fas fa-check fa-2x"></i>
 			</span>
-			<input type="text" required="required" id="nombre" #nombre="ngModel" [(ngModel)]="usuario.nombre_ape" name="nombre" class="form-control mb-3" pattern="^[A-Za-z\s]+">
+			<input type="text" required="required" id="nombre" #nombre="ngModel" [(ngModel)]="usuario.nombre_ape" name="nombre" class="form-control mb-3" pattern="^[A-Za-z\u00f1\u00d1À-ÿ\s]+">
 
+			<!--Nombre de usuario-->
 			<label for="nick">Nombre de usuario:</label>
 			<span *ngIf="nick.touched && !nick.valid"><br/>Introduzca un nick válido<br/></span>
 			<span class="valido" *ngIf="nick.touched && nick.valid">
 				<i class="fas fa-check fa-2x"></i>
 			</span>
-			<input type="text" id="nick" required="required" #nick="ngModel" [(ngModel)]="usuario.nick" class="form-control mb-3" name="nick" pattern="^[A-Za-z0-9\_\-\s]+">
+			<input type="text" id="nick" required="required" #nick="ngModel" [(ngModel)]="usuario.nick" class="form-control mb-3" name="nick" pattern="^[A-Za-z0-9\u00f1\u00d1À\_\-\s]+">
 
+			<!--Correo-->
 			<label for="correo">Correo:</label>
 			<span *ngIf="correo.touched && !correo.valid"><br/>Introduzca un correo válido<br/></span>
 			<span class="valido" *ngIf="correo.touched && correo.valid">
@@ -25,30 +29,44 @@
 			</span>
 			<input type="text" required="required" id="correo" #correo="ngModel" [(ngModel)]="usuario.correo" name="correo" class="form-control mb-3" pattern="^.+@.+\.[a-z]{2,7}">
 			
+			<!--Contraseña-->
 			<label for="pwd">Contraseña:</label>
 			<span *ngIf="pwd.touched && !pwd.valid"><br/>La contraseña debe tener mayúsculas, minúsculas, números y 8 caracteres mínimo<br/></span>
 			<span class="valido" *ngIf="pwd.touched && pwd.valid">
 				<i class="fas fa-check fa-2x"></i>
 			</span>
-			<input type="password" required="required" id="pwd" #pwd="ngModel" [(ngModel)]="usuario.pwd" class="form-control mb-3" name="pwd">
+			<input type="password" required="required" id="pwd" #pwd="ngModel" [(ngModel)]="usuario.pwd" class="form-control mb-3" name="pwd" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)([A-Za-z\d]|[^$@!%*?&]){8,20}">
 			
+			<!--Confirmar contraseña-->
 			<label for="pwd2">Confirmar contraseña:</label>
 			<span *ngIf="pwd2.touched && usuario.pwd2!=usuario.pwd"><br/>Las contraseñas no coinciden<br/></span>
-			<span class="valido" *ngIf="pwd2.touched && usuario.pwd2==usuario.pwd">
+			<span class="valido" *ngIf="pwd2.touched && usuario.pwd!='' && usuario.pwd==usuario.pwd2 ">
 				<i class="fas fa-check fa-2x"></i>
 			</span>
-			<input type="password" id="pwd2" #pwd2="ngModel" [(ngModel)]="usuario.pwd2" class="form-control mb-3" name="pwd2">
+			<input type="password" id="pwd2" #pwd2="ngModel" [(ngModel)]="usuario.pwd2" class="form-control mb-3" name="pwd2" required="required">
 			
+			<!--Fecha de nacimiento
 			<label for="fecha">Fecha de nacimiento:</label>
-			<span *ngIf="fecha.touched && !fecha.valid"><br/>Debe seleccionar una fecha de nacimiento<br/></span>
-			<input type="text" id="fecha" #fecha="ngModel" [(ngModel)]="usuario.fecha_nacimiento" class="form-control mb-3" name="fecha" required="required" pattern="^[0-9]{2}\/[0-9]{2}\/[0-9]{4}">
+			<span *ngIf="fecha.touched && fecha==''"><br/>Debe seleccionar una fecha de nacimiento<br/></span>
+			<span class="valido" *ngIf="fecha.touched && fecha!=''">
+				<i class="fas fa-check fa-2x"></i>
+			</span>
+			<input type="text" id="fecha" #fecha="ngModel" [(ngModel)]="usuario.fecha" class="form-control mb-3" name="fecha" required="required" (blur)="comprobar()">-->
+
+			<!--Fecha de nacimiento-->
+			<mat-form-field>
+  				<input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento" disabled [(ngModel)]="usuario.fecha" name="fecha">
+  				<mat-datepicker-toggle matSuffix [for]="picker" required="required"></mat-datepicker-toggle>
+  				<mat-datepicker required="true" #picker touchUi="true" disabled="false"></mat-datepicker>
+			</mat-form-field>
 			
-			<label for="pais">Pais:</label>
+			<!--Pais-->
+			<br/><label for="pais">Pais:</label>
 			<select class="form-control mb-3"></select>
 			
 			<a [routerLink]="['/']" class="btn btn-danger mt-4">Volver</a>
 			<div class="mt-4 float-right">
-			   <input type="submit" value="Enviar" class="btn btn-primary" [disabled]="!formUsuario.form.valid">
+			   <input type="submit" id="submit" value="Enviar" class="btn btn-primary" [disabled]="!formUsuario.form.valid || usuario.pwd!=usuario.pwd2 || usuario.fecha==''">
 			</div>
 		</form>
 	</div>

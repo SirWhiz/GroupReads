@@ -7,7 +7,7 @@ export class Usuario{
 		public correo: string,
 		public pwd: string,
 		public pwd2: string,
-		public fecha_nacimiento: string,
+		public fecha: string,
 	){}
 
 }
