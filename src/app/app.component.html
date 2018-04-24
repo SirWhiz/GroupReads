@@ -17,10 +17,10 @@
                 <h5 class="text-uppercase mb-4 mt-3 font-weight-bold">Sitio Web</h5>
                 <ul class="list-unstyled">
                     <li>
-                        <a href="#!">Registrarse</a>
+                        <a [routerLink]="['/registro']">Registrarse</a>
                     </li>
                     <li>
-                        <a href="#!">Iniciar sesión</a>
+                        <a [routerLink]="['/login']">Iniciar sesión</a>
                     </li>
                     <li>
                         <a href="#!">Política de privacidad</a>
@@ -62,7 +62,7 @@
                 <h5 class="mb-1">Registrate gratis</h5>
             </li>
             <li class="list-inline-item">
-                <a href="#!" class="btn btn-danger btn-rounded">Apúntame!</a>
+                <a [routerLink]="['/registro']" class="btn btn-danger btn-rounded">Apúntame!</a>
             </li>
         </ul>
     </div>

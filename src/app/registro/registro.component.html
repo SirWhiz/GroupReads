@@ -44,16 +44,8 @@
 				<i class="fas fa-check fa-2x"></i>
 			</span>
 			<input type="password" id="pwd2" #pwd2="ngModel" [(ngModel)]="usuario.pwd2" class="form-control mb-3" name="pwd2" required="required">
-			
-			<!--Fecha de nacimiento
-			<label for="fecha">Fecha de nacimiento:</label>
-			<span *ngIf="fecha.touched && fecha==''"><br/>Debe seleccionar una fecha de nacimiento<br/></span>
-			<span class="valido" *ngIf="fecha.touched && fecha!=''">
-				<i class="fas fa-check fa-2x"></i>
-			</span>
-			<input type="text" id="fecha" #fecha="ngModel" [(ngModel)]="usuario.fecha" class="form-control mb-3" name="fecha" required="required" (blur)="comprobar()">-->
 
-			<!--Fecha de nacimiento-->
+			<!--Fecha de nacimiento Librería:Angular Material -->
 			<mat-form-field>
   				<input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento" disabled [(ngModel)]="usuario.fecha" name="fecha">
   				<mat-datepicker-toggle matSuffix [for]="picker" required="required"></mat-datepicker-toggle>

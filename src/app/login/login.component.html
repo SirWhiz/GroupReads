@@ -3,15 +3,15 @@
 		<span class="display-3">Iniciar sesión</span>
 	</div>
 	<div class="col-md-5 mt-3 formulario">
-		<form class="form login">
+		<form #formLogin="ngForm" class="form login" (ngSubmit)="comprobar()">
 			<label for="correo">Correo:</label>
-			<input type="text" id="correo" class="form-control">
+			<input type="text" name="correo" required="required" id="correo" class="form-control" [(ngModel)]="correo">
 			<label for="pwd" class="mt-3">Contraseña:</label>
-			<input type="password" id="pwd" class="form-control mb-3">
+			<input type="password" name="pwd" required="required" id="pwd" class="form-control mb-3" [(ngModel)]="pwd">
 			<a href="#">Olvidé mi contraseña</a><br/>
 			<a [routerLink]="['/']" class="btn btn-danger mt-4">Volver</a>
 			<div class="mt-4 float-right">
-			   <input type="submit" value="Enviar" class="btn btn-primary">
+			   <input type="submit" value="Enviar" class="btn btn-primary"           [disabled]="!formLogin.form.valid">
 			</div>
 		</form>
 	</div>
