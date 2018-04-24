@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Usuario } from './usuario';
+import { MenuComponent } from '../menu/menu.component';
 declare var $: any;
 
 @Component({

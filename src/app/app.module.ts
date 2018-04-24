@@ -7,19 +7,23 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { PrincipalComponent } from './principal/principal.component';
 import { RegistroComponent } from './registro/registro.component';
-import { MatInputModule } from '@angular/material';
+import { MenuComponent } from './menu/menu.component';
+
+import { MatInputModule,MatNativeDateModule } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     PrincipalComponent,
-    RegistroComponent
+    RegistroComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +34,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatNativeDateModule,
     MatInputModule,
     BrowserAnimationsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatToolbarModule,
+    MatMenuModule
   ],
   providers: [appRoutingProviders],
   bootstrap: [AppComponent]

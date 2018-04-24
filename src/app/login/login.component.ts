@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MenuComponent } from '../menu/menu.component';
 
 @Component({
 	selector: 'login',
@@ -6,11 +7,12 @@ import { Component } from '@angular/core';
 })
 export class LoginComponent{
 	
-	public nombre_componente = "LoginComponent";
+	public nombre_componente:string;
 	public correo:string;
 	public pwd:string;
 
 	constructor(){
+		this.nombre_componente = "LoginComponent";
 		this.correo = "";
 		this.pwd = "";
 	}
