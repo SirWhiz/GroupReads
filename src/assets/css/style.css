@@ -33,6 +33,13 @@ body {
 .feature p{
 	padding:1em;
 }
+.enlacePrincipal{
+    color:white;
+}
+.enlacePrincipal:hover{
+    color:#eee;
+    text-decoration: none;
+}
 #primera{
 	height: 100%;
 	background-image: url("../img/banner-principal.jpg");
@@ -85,7 +92,7 @@ body {
     display:none;
     -webkit-border-radius:60px;
     -moz-border-radius:60px;
-    border-radius:60px
+    border-radius:60px;
     z-index:0;
 }
 #scroll span {
