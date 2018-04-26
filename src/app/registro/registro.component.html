@@ -33,11 +33,11 @@
 			<!--Correo-->
 			<label for="correo">Correo:</label>
 			<span *ngIf="correo.touched && !correo.valid"><br/>Introduzca un correo válido<br/></span>
-			<span *ngIf="existeCorreo"><br/>Ya hay un usuario con ese correo<br/></span>
+			<span *ngIf="existeCorreo"><br/>Ya existe un usuario con ese correo<br/></span>
 			<span class="valido" *ngIf="correo.touched && correo.valid && !existeCorreo">
 				<i class="fas fa-check fa-2x"></i>
 			</span>
-			<input (change)="comprobar()" type="text" required="required" id="correo" #correo="ngModel" [(ngModel)]="usuario.correo" name="correo" class="form-control mb-3" pattern="^.+@.+\.[a-z]{2,7}">
+			<input (change)="comprobar()" type="text" required="required" id="correo" #correo="ngModel" [(ngModel)]="usuario.correo" name="correo" class="form-control mb-3" pattern="^.+@.+\.[a-z]{1,7}">
 			
 			<!--Contraseña-->
 			<label for="pwd">Contraseña:</label>
