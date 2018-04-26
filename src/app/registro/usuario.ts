@@ -2,7 +2,8 @@
 export class Usuario{
 
 	constructor(
-		public nombre_ape: string,
+		public nombre: string,
+		public apellidos:string,
 		public nick: string,
 		public correo: string,
 		public pwd: string,

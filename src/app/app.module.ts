@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
+import { HttpModule } from '@angular/http';
 
 import { routing, appRoutingProviders } from './app.routing';
 import { AppComponent } from './app.component';
@@ -36,7 +37,8 @@ import { MatMenuModule } from '@angular/material/menu';
     BrowserAnimationsModule,
     MatTooltipModule,
     MatToolbarModule,
-    MatMenuModule
+    MatMenuModule,
+    HttpModule
   ],
   providers: [appRoutingProviders],
   bootstrap: [AppComponent]

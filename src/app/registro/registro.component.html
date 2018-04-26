@@ -6,13 +6,21 @@
 	<div class="col-md-6 mt-3 formulario">
 		<form #formUsuario="ngForm" class="form login" (ngSubmit)="onSubmit()">
 			
-			<!--Nombre y apellidos-->
-			<label for="nombre">Nombre y Apellidos:</label>
+			<!--Nombre-->
+			<label for="nombre">Nombre:</label>
 			<span *ngIf="nombre.touched && !nombre.valid"><br/>Introduzca un nombre válido</span>
 			<span class="valido" *ngIf="nombre.touched && nombre.valid">
 				<i class="fas fa-check fa-2x"></i>
 			</span>
-			<input type="text" required="required" id="nombre" #nombre="ngModel" [(ngModel)]="usuario.nombre_ape" name="nombre" class="form-control mb-3" pattern="^[A-Za-z\u00f1\u00d1À-ÿ\s]+">
+			<input type="text" required="required" id="nombre" #nombre="ngModel" [(ngModel)]="usuario.nombre" name="nombre" class="form-control mb-3" pattern="^[A-Za-z\u00f1\u00d1À-ÿ\s]+">
+
+			<!--Apellidos-->
+			<label for="apellidos">Apellidos:</label>
+			<span *ngIf="apellidos.touched && !apellidos.valid"><br/>Introduzca un apellido válido</span>
+			<span class="valido" *ngIf="apellidos.touched && apellidos.valid">
+				<i class="fas fa-check fa-2x"></i>
+			</span>
+			<input type="text" required="required" id="apellidos" #apellidos="ngModel" [(ngModel)]="usuario.apellidos" name="apellidos" class="form-control mb-3" pattern="^[A-Za-z\u00f1\u00d1À-ÿ\s]+">
 
 			<!--Nombre de usuario-->
 			<label for="nick">Nombre de usuario:</label>
@@ -25,10 +33,11 @@
 			<!--Correo-->
 			<label for="correo">Correo:</label>
 			<span *ngIf="correo.touched && !correo.valid"><br/>Introduzca un correo válido<br/></span>
-			<span class="valido" *ngIf="correo.touched && correo.valid">
+			<span *ngIf="existeCorreo"><br/>Ya hay un usuario con ese correo<br/></span>
+			<span class="valido" *ngIf="correo.touched && correo.valid && !existeCorreo">
 				<i class="fas fa-check fa-2x"></i>
 			</span>
-			<input type="text" required="required" id="correo" #correo="ngModel" [(ngModel)]="usuario.correo" name="correo" class="form-control mb-3" pattern="^.+@.+\.[a-z]{2,7}">
+			<input (change)="comprobar()" type="text" required="required" id="correo" #correo="ngModel" [(ngModel)]="usuario.correo" name="correo" class="form-control mb-3" pattern="^.+@.+\.[a-z]{2,7}">
 			
 			<!--Contraseña-->
 			<label for="pwd">Contraseña:</label>
@@ -59,7 +68,7 @@
 			
 			<a [routerLink]="['/']" class="btn btn-danger mt-4">Volver</a>
 			<div class="mt-4 float-right">
-			   <input type="submit" id="submit" matTooltip="¡Registrarme!" value="Enviar" class="btn btn-primary" [disabled]="!formUsuario.form.valid || usuario.pwd!=usuario.pwd2 || usuario.fecha==''">
+			   <input type="submit" id="submit" matTooltip="¡Registrarme!" value="Enviar" class="btn btn-primary" [disabled]="!formUsuario.form.valid || usuario.pwd!=usuario.pwd2 || usuario.fecha=='' || existeCorreo">
 			</div>
 		</form>
 	</div>
