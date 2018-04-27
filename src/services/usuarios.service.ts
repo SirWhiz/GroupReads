@@ -19,6 +19,10 @@ export class UsuariosService{
         return this._http.get(this.url+'usuarios/'+correo).map(res => res.json());
     }
 
+    getPaises(){
+        return this._http.get(this.url+'paises').map(res => res.json());
+    }
+
     registrarUsuario(usuario:Usuario){
         let json = JSON.stringify(usuario);
         let params = 'json='+json;

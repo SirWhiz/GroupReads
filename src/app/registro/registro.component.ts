@@ -21,9 +21,13 @@ export class RegistroComponent{
 		this.usuario = new Usuario("","","","","","","");
 		this.existeCorreo=false;
 	}
+
+	ngOnInit(){
+		
+	}
 	
 	onSubmit(){
-		this.usuario.fecha = this.usuario.fecha.getDate()+"/"+(parseInt(this.usuario.fecha.getMonth())+1)+"/"+this.usuario.fecha.getFullYear();
+		this.usuario.fecha = this.usuario.fecha.getFullYear()+"/"+(parseInt(this.usuario.fecha.getMonth())+1)+"/"+this.usuario.fecha.getDate();
 		console.log(this.usuario);
 
 		this._usuariosService.registrarUsuario(this.usuario).subscribe(
