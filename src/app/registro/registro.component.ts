@@ -40,7 +40,6 @@ export class RegistroComponent{
 	
 	onSubmit(){
 		this.usuario.fecha = this.usuario.fecha.getFullYear()+"/"+(parseInt(this.usuario.fecha.getMonth())+1)+"/"+this.usuario.fecha.getDate();
-		console.log(this.usuario);
 
 		this._usuariosService.registrarUsuario(this.usuario).subscribe(
 			response => {

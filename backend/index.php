@@ -77,6 +77,36 @@
         echo json_encode($result);
     });
 
+    /* --- COMPROBAR LOGIN DE USUARIO --- */
+    $app->post('/loginusuario',function() use($app,$db){
+        $json = $app->request->post('json');
+        $data = json_decode($json,true);
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>'No se ha econtrado el usuario'
+        );
+
+        $correo = $data['correo'];
+        $pwd = $data['pwd'];
+
+        $consulta = "SELECT * FROM usuarios WHERE correo='".$correo."'";
+        $query = $db->query($consulta);
+
+        if($query){
+            $datos = $query->fetch_assoc();
+            if(password_verify($pwd,$datos['pwd'])){
+                $result = array(
+                    'status'=>'success',
+                    'code'=>200,
+                    'data'=>$datos
+                );
+            }
+        }
+
+        echo json_encode($result);
+    });
+
     /* --- BUSCAR UN USUARIO CONCRETO --- */
     $app->get('/usuarios/:correo',function($correo) use($app,$db){
         $consulta = "SELECT * FROM usuarios WHERE correo='".$correo."';";

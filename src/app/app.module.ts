@@ -17,6 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { MatMenuModule } from '@angular/material/menu';
     LoginComponent,
     PrincipalComponent,
     RegistroComponent,
-    MenuComponent
+    MenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +39,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatTooltipModule,
     MatToolbarModule,
     MatMenuModule,
-    HttpModule
+    HttpModule,
+    MatSnackBarModule
   ],
   providers: [appRoutingProviders],
   bootstrap: [AppComponent]
