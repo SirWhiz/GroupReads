@@ -105,6 +105,19 @@
     $app->get('/paises',function() use($app,$db){
         $consulta = "SELECT id,nicename FROM paises";
         $query = $db->query($consulta);
+
+        $paises = array();
+        while($pais = $query->fetch_assoc()){
+            $paises[] = $pais;
+        }
+
+        $result = array(
+            'status'=>'success',
+            'code'=>200,
+            'data'=>$paises
+        );
+
+        echo json_encode($result);
     });
 
     $app->run();

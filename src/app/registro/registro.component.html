@@ -64,11 +64,13 @@
 			
 			<!--Pais-->
 			<br/><label for="pais">Pais:</label>
-			<select class="form-control mb-3"></select>
+			<select name="pais" class="form-control mb-3" [(ngModel)]="usuario.pais">
+				<option *ngFor="let pais of paises" value="{{pais.id}}">{{pais.nicename}}</option>
+			</select>
 			
 			<a [routerLink]="['/']" class="btn btn-danger mt-4">Volver</a>
 			<div class="mt-4 float-right">
-			   <input type="submit" id="submit" matTooltip="¡Registrarme!" value="Enviar" class="btn btn-primary" [disabled]="!formUsuario.form.valid || usuario.pwd!=usuario.pwd2 || usuario.fecha=='' || existeCorreo">
+			   <input type="submit" id="submit" matTooltip="¡Registrarme!" value="Enviar" class="btn btn-primary" [disabled]="!formUsuario.form.valid || usuario.pwd!=usuario.pwd2 || usuario.fecha=='' || existeCorreo || usuario.pais==''">
 			</div>
 		</form>
 	</div>

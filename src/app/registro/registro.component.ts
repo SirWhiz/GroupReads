@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Usuario } from './usuario';
+import { Pais } from './pais';
 import { MenuComponent } from '../menu/menu.component';
 import { UsuariosService } from '../../services/usuarios.service';
 declare var $: any;
@@ -12,18 +13,29 @@ declare var $: any;
 export class RegistroComponent{
 
 	public nombre_componente = "RegistroComponent";
+	public paises: Pais[];
 	public usuario:Usuario;
 	public existeCorreo:boolean;
 
 	constructor(
 		private _usuariosService: UsuariosService
 	){
-		this.usuario = new Usuario("","","","","","","");
+		this.usuario = new Usuario("","","","","","","","");
 		this.existeCorreo=false;
 	}
 
 	ngOnInit(){
-		
+		this._usuariosService.getPaises().subscribe(
+			result => {
+				if(result.code != 200){
+					console.log(result);
+				}else{
+					this.paises = result.data;
+				}
+			}, error => {
+				console.log(<any>error);
+			}
+		);
 	}
 	
 	onSubmit(){
