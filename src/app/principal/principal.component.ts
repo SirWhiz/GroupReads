@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import * as Typed from 'typed.js';
 import * as $ from 'jquery';
 
@@ -8,6 +9,8 @@ import * as $ from 'jquery';
 })
 export class PrincipalComponent {
   title = 'GroupReads';
+
+  constructor(private _router:Router){ }
 
   ngOnInit(){
     //Animación de escritura
@@ -32,5 +35,10 @@ export class PrincipalComponent {
       $("html, body").animate({ scrollTop: 0 }, 'slow'); 
         return false; 
     });
+
+    if(localStorage.getItem('correo')!=null && localStorage.getItem('perfil')=='n'){
+      this._router.navigate(['/home']);
+    }
+
   }
 }

@@ -19,6 +19,7 @@ CREATE TABLE usuarios(
     nick varchar(40) NOT NULL,
     fecha date NOT NULL,
     pwd varchar(255) NOT NULL,
+    foto varchar(100) NULL,
     pais smallint unsigned NOT NULL,
     tipo ENUM('n','a','c') NOT NULL,
     FOREIGN KEY (pais) REFERENCES paises(id)

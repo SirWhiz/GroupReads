@@ -10,6 +10,7 @@ export class Usuario{
 		public pwd2: string,
 		public fecha: any,
 		public pais: string,
+		public foto: string
 	){}
 
 }

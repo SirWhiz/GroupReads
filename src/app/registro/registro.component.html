@@ -68,6 +68,10 @@
 				<option *ngFor="let pais of paises" value="{{pais.id}}">{{pais.nicename}}</option>
 			</select>
 			
+			<!--Imagen-->
+			<label>Imagen: (Opcional)</label>
+			<input (change)="fileChangeEvent($event)" type="file" name="img" class="form-control">
+
 			<a [routerLink]="['/']" class="btn btn-danger mt-4">Volver</a>
 			<div class="mt-4 float-right">
 			   <input type="submit" id="submit" matTooltip="¡Registrarme!" value="Enviar" class="btn btn-primary" [disabled]="!formUsuario.form.valid || usuario.pwd!=usuario.pwd2 || usuario.fecha=='' || existeCorreo || usuario.pais==''">

@@ -1,0 +1,18 @@
+<nav class="site-header sticky-top py-1">
+    <div class="container d-flex flex-column flex-md-row justify-content-between">
+      <a class="py-2 d-none d-md-inline-block" [routerLink]="['/home']">
+        <i class="fas fa-home"></i> Home
+      </a>
+      <a class="py-2 d-none d-md-inline-block" href="#">
+        <i class="fas fa-cogs"></i> Configuración
+      </a>
+      <a class="py-2 d-none d-md-inline-block" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+      </a>
+    </div>
+</nav>
+<div class="row">
+  <div class="col-md-4">
+    Bienvenido {{usuario.nombre}}
+  </div>
+</div>

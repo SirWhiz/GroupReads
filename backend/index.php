@@ -1,5 +1,6 @@
 <?php
     require_once 'vendor/autoload.php';
+    require_once('piramide-uploader/PiramideUploader.php');
 
     $app = new \Slim\Slim();
     $db = new mysqli('localhost','root','','groupreads');
@@ -49,6 +50,12 @@
             $data['pais']=null;
         }
 
+        if(!isset($data['foto'])){
+            $data['foto']=null;
+        }else if($data['foto']==''){
+            $data['foto']=null;
+        }
+
         $consulta = "INSERT INTO usuarios VALUES (DEFAULT,".
                     "'{$data['correo']}',".
                     "'{$data['nombre']}',".
@@ -56,6 +63,7 @@
                     "'{$data['nick']}',".
                     "'{$data['fecha']}',".
                     "'{$data['pwd']}',".
+                    "'{$data['foto']}',".
                     "'{$data['pais']}','n');";
 
         $insert = $db->query($consulta);
@@ -72,6 +80,40 @@
                 'code'=>200,
                 'message'=>'Usuario registrado correctamente'
             );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- SUBIR IMAGEN DE UN USUARIO --- */
+    $app->post('/upload-file',function() use($app,$db){
+        $result = array(
+            'status' => 'error',
+            'code' => 404,
+            'message' => 'El archivo no ha podido subirse'
+        );
+
+        if(isset($_FILES['uploads'])){
+            $piramideUploader = new PiramideUploader();
+
+            $upload = $piramideUploader->upload('image','uploads','uploads',array('image/jpeg','image/png'));
+            $file = $piramideUploader->getInfoFile();
+            $file_name = $file['complete_name'];
+
+            if(isset($upload) && $upload['uploaded']==false){
+                $result = array(
+                    'status' => 'error',
+                    'code' => 404,
+                    'message' => 'El archivo no ha podido subirse'
+                );
+            }else{
+                $result = array(
+                    'status' => 'success',
+                    'code' => 200,
+                    'message' => 'El archivo se ha subido',
+                    'filename' => $file_name
+                );
+            }
         }
 
         echo json_encode($result);

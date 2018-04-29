@@ -16,10 +16,15 @@ class ComposerStaticInit533d4e4ba2cad420c8008d78e4bd335c
         ),
     );
 
+    public static $classMap = array (
+        'PiramideUploader' => __DIR__ . '/../..' . '/piramide-uploader/PiramideUploader.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixesPsr0 = ComposerStaticInit533d4e4ba2cad420c8008d78e4bd335c::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit533d4e4ba2cad420c8008d78e4bd335c::$classMap;
 
         }, null, ClassLoader::class);
     }

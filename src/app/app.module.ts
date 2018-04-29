@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { PrincipalComponent } from './principal/principal.component';
 import { RegistroComponent } from './registro/registro.component';
 import { MenuComponent } from './menu/menu.component';
+import { HomeComponent } from './home/home.component';
 
 import { MatInputModule,MatNativeDateModule } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -18,6 +19,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { LoginGuard } from './login.guard';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     PrincipalComponent,
     RegistroComponent,
     MenuComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     HttpModule,
     MatSnackBarModule
   ],
-  providers: [appRoutingProviders],
+  providers: [appRoutingProviders,LoginGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
