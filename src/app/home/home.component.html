@@ -1,18 +1,15 @@
-<nav class="site-header sticky-top py-1">
-    <div class="container d-flex flex-column flex-md-row justify-content-between">
-      <a class="py-2 d-none d-md-inline-block" [routerLink]="['/home']">
-        <i class="fas fa-home"></i> Home
-      </a>
-      <a class="py-2 d-none d-md-inline-block" href="#">
-        <i class="fas fa-cogs"></i> Configuración
-      </a>
-      <a class="py-2 d-none d-md-inline-block" (click)="logout()">
-        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
-      </a>
-    </div>
+<nav class="row justify-content-between pl-5 pr-5">
+  <div class="col-md-3 mt-3">
+    <a [routerLink]="['/']"><i class="fas fa-home"></i> Home</a>
+  </div>
+  <div class="col-md-3 text-right mt-3">
+    <a [routerLink]="['/']"><i class="fas fa-cogs"></i> Ajustes</a>
+    <a [routerLink]="['/']"><i class="fas fa-sign-out-alt ml-3"></i> Cerrar sesión</a>
+  </div>
 </nav>
-<div class="row">
+<div class="row mt-4">
   <div class="col-md-4">
-    Bienvenido {{usuario.nombre}}
+    <img class="avatar" src="http://localhost/GroupReads/src/app/upload/{{usuario.foto}}">
+    <br/>Bienvenido {{usuario.nombre}}<br/>@{{usuario.nick}}
   </div>
 </div>
