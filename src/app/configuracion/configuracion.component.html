@@ -1,0 +1,104 @@
+<nav class="navbar navbar-dark bg-primary navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" [routerLink]="['/home']">Mi perfil</a>
+    </div>
+    <button class="navbar-toggler hidden-md-up pull-xs-right" data-target="#collapsenav" data-toggle="collapse" type="button">
+            ☰
+    </button>
+    <div class="navbar-toggleable-sm collapse pull-md-right text-xs-center" id="collapsenav">
+      <ul class="nav navbar-nav menu">
+        <li class="nav-item"><a class="nav-link" [routerLink]="['/configuracion']">Configuración</a></li>
+        <li class="nav-item"><a class="nav-link" (click)="logout()">Cerrar sesión</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="row justify-content-around mt-5">
+  <div class="col-md-7">
+    <h2 class="display-4 text-center mb-3">Editar información</h2>
+
+    <mat-tab-group>
+      <mat-tab label="General">
+          <form #formEditar="ngForm" class="form login mb-5" (ngSubmit)="onSubmit()">
+          <!--Nombre-->
+          <label for="nombre">Nombre:</label>
+          <span *ngIf="nombre.touched && !nombre.valid"><br/>Introduzca un nombre válido</span>
+          <span class="valido" *ngIf="nombre.touched && nombre.valid">
+            <i class="fas fa-check fa-2x"></i>
+          </span>
+          <input type="text" required="required" id="nombre" #nombre="ngModel" [(ngModel)]="usuario.nombre" name="nombre" class="form-control mb-3" pattern="^[A-Za-z\u00f1\u00d1À-ÿ\s]+">
+
+          <!--Apellidos-->
+          <label for="apellidos">Apellidos:</label>
+          <span *ngIf="apellidos.touched && !apellidos.valid"><br/>Introduzca un apellido válido</span>
+          <span class="valido" *ngIf="apellidos.touched && apellidos.valid">
+            <i class="fas fa-check fa-2x"></i>
+          </span>
+          <input type="text" required="required" id="apellidos" #apellidos="ngModel" [(ngModel)]="usuario.apellidos" name="apellidos" class="form-control mb-3" pattern="^[A-Za-z\u00f1\u00d1À-ÿ\s]+">
+
+          <!--Nombre de usuario-->
+          <label for="nick">Nombre de usuario:</label>
+          <span *ngIf="nick.touched && !nick.valid"><br/>Introduzca un nick válido<br/></span>
+          <span class="valido" *ngIf="nick.touched && nick.valid">
+            <i class="fas fa-check fa-2x"></i>
+          </span>
+          <input type="text" id="nick" required="required" #nick="ngModel" [(ngModel)]="usuario.nick" class="form-control mb-3" name="nick" pattern="^[A-Za-z0-9\u00f1\u00d1À\_\-\s]+">
+
+          <!--Fecha de nacimiento Librería:Angular Material -->
+          <label>Fecha de nacimiento: <strong>{{fechaMostrar}}</strong></label><br/>
+          <mat-form-field>
+              <input matInput [matDatepicker]="picker" placeholder="Cambiar" disabled [(ngModel)]="usuario.fecha" name="fecha">
+              <mat-datepicker-toggle matSuffix [for]="picker" required="required"></mat-datepicker-toggle>
+              <mat-datepicker required="true" #picker touchUi="true" disabled="false"></mat-datepicker>
+          </mat-form-field>
+          
+          <!--Pais-->
+          <br/><label for="pais">Pais:</label>
+          <select name="pais" class="form-control mb-3" [(ngModel)]="usuario.pais">
+            <option *ngFor="let pais of paises" value="{{pais.id}}">{{pais.nicename}}</option>
+          </select>
+
+          <a [routerLink]="['/home']" class="btn btn-danger mt-4">Volver</a>
+          <div class="mt-4 float-right">
+             <input type="submit" id="submit" matTooltip="Modificar datos" value="Enviar" class="btn btn-primary" [disabled]="!formEditar.form.valid  || usuario.fecha=='' || existeCorreo || usuario.pais==''">
+          </div>
+        </form>
+      </mat-tab>
+      <!-- Cambiar contraseña -->
+      <mat-tab label="Contraseña">
+        <form #formPwd="ngForm" class="form login mb-5" (ngSubmit)="updatePwd()">
+          <!--Contraseña actual-->
+          <label for="pwda">Contraseña actual:</label>
+          <span *ngIf="!pwdActual"><br/>La contraseña actual es incorrecta<br/></span>
+          <span class="valido" *ngIf="usuario2.pwd!='' && pwdActual">
+            <i class="fas fa-check fa-2x"></i>
+          </span>
+          <input type="password" class="form-control mb-3" name="pwda" id="pwda" required="required"  [(ngModel)]="usuario2.pwd" #pwda="ngModel" (change)="comprobarActual()">
+          
+          <!--Nueva contraseña-->
+          <label for="pwd">Nueva contraseña:</label>
+          <span *ngIf="pwd.touched && !pwd.valid"><br/>La contraseña debe tener mayúsculas, minúsculas, números y 8 caracteres mínimo<br/></span>
+          <span class="valido" *ngIf="pwd.touched && pwd.valid">
+            <i class="fas fa-check fa-2x"></i>
+          </span>
+          <input type="password" class="form-control mb-3" name="pwd" id="pwd" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)([A-Za-z\d]|[^$@!%*?&]){8,20}" #pwd="ngModel" [(ngModel)]="usuario.pwd" required="required">
+
+          <!--Confirmar nueva contraseña-->
+          <label for="pwd2">Confirmar nueva contraseña:</label>
+          <span *ngIf="pwd2.touched && usuario.pwd2!=usuario.pwd"><br/>Las contraseñas no coinciden<br/></span>
+          <span class="valido" *ngIf="pwd2.touched && usuario.pwd!='' && usuario.pwd==usuario.pwd2 ">
+            <i class="fas fa-check fa-2x"></i>
+          </span>
+          <input type="password" required="required" class="form-control mb-3" name="pwd2" id="pwd2" #pwd2="ngModel" [(ngModel)]="usuario.pwd2">
+          
+          <a [routerLink]="['/home']" class="btn btn-danger mt-4">Volver</a>
+          <div class="mt-4 float-right">
+             <input type="submit" id="submitpwd" matTooltip="Modificar contraseña" value="Enviar" class="btn btn-primary" [disabled]="!formPwd.form.valid || usuario.pwd!=usuario.pwd2 || !pwdActual">
+          </div>
+        </form>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

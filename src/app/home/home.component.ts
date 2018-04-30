@@ -24,7 +24,7 @@ export class HomeComponent{
 				}
 			},
 			error => {
-				console.log(<any>error);
+				console.log(error);
 			}
 		);
 	}

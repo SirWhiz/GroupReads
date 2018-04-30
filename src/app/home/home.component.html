@@ -1,15 +1,22 @@
-<nav class="row justify-content-between pl-5 pr-5">
-  <div class="col-md-3 mt-3">
-    <a [routerLink]="['/']"><i class="fas fa-home"></i> Home</a>
-  </div>
-  <div class="col-md-3 text-right mt-3">
-    <a [routerLink]="['/']"><i class="fas fa-cogs"></i> Ajustes</a>
-    <a [routerLink]="['/']"><i class="fas fa-sign-out-alt ml-3"></i> Cerrar sesión</a>
+<nav class="navbar navbar-dark bg-primary navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" [routerLink]="['/home']">Mi perfil</a>
+    </div>
+    <button class="navbar-toggler hidden-md-up pull-xs-right" data-target="#collapsenav" data-toggle="collapse" type="button">
+            ☰
+    </button>
+    <div class="navbar-toggleable-sm collapse pull-md-right text-xs-center" id="collapsenav">
+      <ul class="nav navbar-nav menu">
+        <li class="nav-item"><a class="nav-link" [routerLink]="['/configuracion']">Configuración</a></li>
+        <li class="nav-item"><a class="nav-link" (click)="logout()">Cerrar sesión</a></li>
+      </ul>
+    </div>
   </div>
 </nav>
-<div class="row mt-4">
-  <div class="col-md-4">
-    <img class="avatar" src="http://localhost/GroupReads/src/app/upload/{{usuario.foto}}">
-    <br/>Bienvenido {{usuario.nombre}}<br/>@{{usuario.nick}}
-  </div>
+
+<div class="jumbotron">
+  <h1>Bienvenido, {{usuario.nombre}}</h1>
+  <h3>@{{usuario.nick}}</h3>
+    <a class="btn btn-lg btn-primary"  role="button">Mis clubes »</a>
 </div>

@@ -173,6 +173,64 @@
 
     });
 
+    /* --- ACTUALIZAR DATOS GENERALES DE UN USUARIO --- */
+    $app->post('/actualizar/:correo',function($correo) use($app,$db){
+        $json = $app->request->post('json');
+        $data = json_decode($json,true);
+
+        $consulta = "UPDATE usuarios SET nombre=".
+                    "'{$data['nombre']}',apellidos=".
+                    "'{$data['apellidos']}',nick=".
+                    "'{$data['nick']}',fecha=".
+                    "'{$data['fecha']}',pais=".
+                    "'{$data['pais']}' WHERE correo=".
+                    "'{$data['correo']}';";
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>'No se ha podido actualiza el usuario'
+        );
+
+        $insert = $db->query($consulta);
+        if($insert){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Usuario actualizado correctamente'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- ACTUALIZAR CONTRASEÑA DE UN USUARIO --- */
+    $app->post('/actualizarpwd/:correo',function($correo) use($app,$db){
+        $json = $app->request->post('json');
+        $data = json_decode($json,true);
+
+        $data['pwd'] = password_hash($data['pwd'], PASSWORD_BCRYPT);
+        $consulta = "UPDATE usuarios SET pwd='".$data['pwd']."' WHERE correo='".$correo."'";
+        
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>'No se ha podido actualiza el usuario'
+        );
+
+        $insert = $db->query($consulta);
+        if($insert){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Usuario actualizado correctamente'
+            );
+        }
+
+        echo json_encode($result);
+
+    });
+
     /* --- DEVOLVER TODOS LOS PAISES --- */
     $app->get('/paises',function() use($app,$db){
         $consulta = "SELECT id,nicename FROM paises";

@@ -10,9 +10,11 @@ import { PrincipalComponent } from './principal/principal.component';
 import { RegistroComponent } from './registro/registro.component';
 import { MenuComponent } from './menu/menu.component';
 import { HomeComponent } from './home/home.component';
+import { ConfiguracionComponent } from './configuracion/configuracion.component';
 
 import { MatInputModule,MatNativeDateModule } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -28,7 +30,8 @@ import { LoginGuard } from './login.guard';
     PrincipalComponent,
     RegistroComponent,
     MenuComponent,
-    HomeComponent
+    HomeComponent,
+    ConfiguracionComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,8 @@ import { LoginGuard } from './login.guard';
     MatToolbarModule,
     MatMenuModule,
     HttpModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTabsModule
   ],
   providers: [appRoutingProviders,LoginGuard],
   bootstrap: [AppComponent]
