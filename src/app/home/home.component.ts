@@ -11,9 +11,11 @@ import { Usuario } from '../registro/usuario';
 export class HomeComponent{
 
 	public usuario:Usuario;
+	public noClub:boolean;
 
 	constructor(private _router: Router,private _usuariosService: UsuariosService){
 		this.usuario = new Usuario("","","","","","","","","");
+		this.noClub = true;
 	}
 
 	ngOnInit(){
