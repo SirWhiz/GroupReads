@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { UsuariosService } from '../../services/usuarios.service';
 import { Usuario } from '../registro/usuario';
 import { Pais } from '../registro/pais';
+import { GLOBAL } from '../../services/global';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DialogoComponent } from '../dialogoImagen/dialogo.component';
@@ -21,6 +22,9 @@ export class ConfiguracionComponent{
 	public existeCorreo:boolean;
 	public fechaMostrar:string;
 	public pwdActual:boolean;
+	public filesToUpload;
+	public resultUpload;
+	public nombreNuevo:string;
 
 	constructor(public snackBar: MatSnackBar,private _router: Router,private _usuariosService: UsuariosService,public dialog: MatDialog){
 		this.usuario = new Usuario("","","","","","","","","");
@@ -28,7 +32,9 @@ export class ConfiguracionComponent{
 		this.correoActual = "";
 		this.pwdActual = true;
 		this.fechaMostrar = "";
+		this.filesToUpload = new Array();
 		this.existeCorreo = false;
+		this.nombreNuevo = "";
 	}
 
 	ngOnInit(){
@@ -106,7 +112,6 @@ export class ConfiguracionComponent{
 			error => {
 				console.log(<any>error);
 			});
-
 	}
 
 	comprobarActual(){
@@ -125,6 +130,11 @@ export class ConfiguracionComponent{
 				console.log("error");
 			}
 		);
+	}
+
+	fileChangeEvent(fileInput:any){
+		this.filesToUpload = <Array<File>>fileInput.target.files;
+		console.log(this.filesToUpload);
 	}
 
 	comprobar(){
@@ -146,9 +156,43 @@ export class ConfiguracionComponent{
 		);
 	}
 
+	onSubmitimg(){
+		if(this.filesToUpload.length >= 1){
+			this._usuariosService.makeFileRequest(GLOBAL.url+'upload-file', [], this.filesToUpload)
+				.then((result)=>{
+					this.resultUpload = result;
+					this.usuario.foto = this.resultUpload.filename;
+					this.actualizarUsuario();
+				}, (error) => {
+					console.log(error);
+			});
+		}
+	}
+
+	actualizarUsuario(){
+		this._usuariosService.updateImg(this.usuario).subscribe(
+			result => {
+				if(result.code==200){
+					this.snackBar.open("Imagen actualizada correctamente", "OK", {
+      					duration: 2500,
+    				});
+				}else{
+					this.snackBar.open("Error al actualizar la imagen", "OK", {
+      					duration: 2500,
+    				});
+    				this.usuario.foto = '';
+				}
+			},
+			error => {
+				console.log(<any>error);
+			}
+		);
+	}
+
 	public abrirDialogo(){
 		this.dialog.open(DialogoComponent,{
-			width:'500px'
+			width:'500px',
+			data: { usuario: this.usuario }
 		});
 	}
 

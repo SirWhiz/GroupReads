@@ -231,6 +231,31 @@
 
     });
 
+    /* --- ACTUALIZAR IMAGEN DE UN USUARIO --- */
+    $app->post('/actualizarimg/:correo',function($correo) use($app,$db){
+        $json = $app->request->post('json');
+        $data = json_decode($json,true);
+
+        $consulta = "UPDATE usuarios SET foto='".$data['foto']."' WHERE correo='".$correo."'";
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>'No se ha podido actualiza el usuario'
+        );
+
+        $insert = $db->query($consulta);
+        if($insert){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Imagen actualizada correctamente'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
     /* --- BORRAR LA IMAGEN DE UN USUARIO --- */
     $app->post('/borrarimg',function() use($app,$db){
         $json = $app->request->post('json');

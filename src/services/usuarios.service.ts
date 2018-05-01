@@ -68,6 +68,15 @@ export class UsuariosService{
                 .map(res => res.json());
     }
 
+    updateImg(usuario:Usuario){
+        let json = JSON.stringify(usuario);
+        let params = 'json='+json;
+        let headers = new Headers({"Content-Type":"application/x-www-form-urlencoded"});
+
+        return this._http.post(this.url+'actualizarimg/'+usuario.correo,params,{headers:headers})
+                .map(res => res.json());
+    }
+
     makeFileRequest(url:string, params:Array<string>, files:Array<File>){
         return new Promise((resolve, reject)=>{
             var formData:any = new FormData();

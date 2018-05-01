@@ -39,9 +39,11 @@ export class DialogoComponent{
                             if(response.code==200){
                                 //Usuario registrado correctamente
                                 this.dialogRef.close();
+                                this.usuario.foto = '';
                                 this.snackBar.open("Imagen borrada correctamente", "OK", {
                                       duration: 2500,
                                 });
+                                this.data.usuario.foto = '';
                             }else{
                                 //Error al registrar usuario
                                 this.dialogRef.close();

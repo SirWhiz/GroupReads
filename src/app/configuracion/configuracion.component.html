@@ -66,6 +66,7 @@
           </div>
         </form>
       </mat-tab>
+
       <!-- Cambiar contraseña -->
       <mat-tab label="Contraseña">
         <form #formPwd="ngForm" class="form login mb-5" (ngSubmit)="updatePwd()">
@@ -99,13 +100,15 @@
           </div>
         </form>
       </mat-tab>
+
+      <!--Actualizar foto de perfil-->
       <mat-tab label="Foto de perfil">
         <h3 class="mt-4">Imagen actual:</h3>
         <div *ngIf="usuario.foto=='' || usuario.foto==NULL" class="mb-5">
           <p>¡No tienes ninguna foto de perfil!</p>
-          <form #formimg="ngForm" class="form login">
+          <form #formimg="ngForm" class="form login" (ngSubmit)="onSubmitimg()">
             <label for="foto">Subir una imagen</label>
-            <input type="file" class="form-control mb-3" required="required">
+            <input type="file" (change)="fileChangeEvent($event)" class="form-control mb-3" required="required">
             <input type="submit" [disabled]="!formimg.form.valid" class="btn btn-primary" value="Subir imagen">
           </form>
         </div>
@@ -113,6 +116,7 @@
           <img (click)="abrirDialogo()" src="http://localhost/GroupReads/src/app/upload/{{usuario.foto}}" matTooltip="Click para borrar" class="img-thumbnail borrar" alt="Foto de perfil">
         </div>
       </mat-tab>
+
     </mat-tab-group>
   </div>
 </div>
