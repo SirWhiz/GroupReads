@@ -10,6 +10,7 @@ import { PrincipalComponent } from './principal/principal.component';
 import { RegistroComponent } from './registro/registro.component';
 import { MenuComponent } from './menu/menu.component';
 import { HomeComponent } from './home/home.component';
+import { DialogoComponent } from './dialogoImagen/dialogo.component';
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
 
 import { MatInputModule,MatNativeDateModule } from '@angular/material';
@@ -18,9 +19,11 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
 import { LoginGuard } from './login.guard';
 
 @NgModule({
@@ -31,13 +34,15 @@ import { LoginGuard } from './login.guard';
     RegistroComponent,
     MenuComponent,
     HomeComponent,
-    ConfiguracionComponent
+    ConfiguracionComponent,
+    DialogoComponent
   ],
   imports: [
     BrowserModule,
     routing,
     FormsModule,
     MatDatepickerModule,
+    MatButtonModule,
     MatFormFieldModule,
     MatNativeDateModule,
     MatInputModule,
@@ -47,9 +52,11 @@ import { LoginGuard } from './login.guard';
     MatMenuModule,
     HttpModule,
     MatSnackBarModule,
-    MatTabsModule
+    MatTabsModule,
+    MatDialogModule
   ],
   providers: [appRoutingProviders,LoginGuard],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DialogoComponent]
 })
 export class AppModule { }

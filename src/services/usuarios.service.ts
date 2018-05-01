@@ -23,6 +23,15 @@ export class UsuariosService{
         return this._http.get(this.url+'paises').map(res => res.json());
     }
 
+    borrarImagen(usuario:Usuario){
+        let json = JSON.stringify(usuario);
+        let params = 'json='+json;
+        let headers = new Headers({"Content-Type":"application/x-www-form-urlencoded"});
+
+        return this._http.post(this.url+'borrarimg',params,{headers:headers})
+                .map(res => res.json());
+    }
+
     loginUsuario(usuario:Usuario){
         let json = JSON.stringify(usuario);
         let params = 'json='+json;

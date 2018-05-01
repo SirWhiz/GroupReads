@@ -53,7 +53,7 @@
               <mat-datepicker-toggle matSuffix [for]="picker" required="required"></mat-datepicker-toggle>
               <mat-datepicker required="true" #picker touchUi="true" disabled="false"></mat-datepicker>
           </mat-form-field>
-          
+
           <!--Pais-->
           <br/><label for="pais">Pais:</label>
           <select name="pais" class="form-control mb-3" [(ngModel)]="usuario.pais">
@@ -76,7 +76,7 @@
             <i class="fas fa-check fa-2x"></i>
           </span>
           <input type="password" class="form-control mb-3" name="pwda" id="pwda" required="required"  [(ngModel)]="usuario2.pwd" #pwda="ngModel" (change)="comprobarActual()">
-          
+
           <!--Nueva contraseña-->
           <label for="pwd">Nueva contraseña:</label>
           <span *ngIf="pwd.touched && !pwd.valid"><br/>La contraseña debe tener mayúsculas, minúsculas, números y 8 caracteres mínimo<br/></span>
@@ -92,12 +92,26 @@
             <i class="fas fa-check fa-2x"></i>
           </span>
           <input type="password" required="required" class="form-control mb-3" name="pwd2" id="pwd2" #pwd2="ngModel" [(ngModel)]="usuario.pwd2">
-          
+
           <a [routerLink]="['/home']" class="btn btn-danger mt-4">Volver</a>
           <div class="mt-4 float-right">
              <input type="submit" id="submitpwd" matTooltip="Modificar contraseña" value="Enviar" class="btn btn-primary" [disabled]="!formPwd.form.valid || usuario.pwd!=usuario.pwd2 || !pwdActual">
           </div>
         </form>
+      </mat-tab>
+      <mat-tab label="Foto de perfil">
+        <h3 class="mt-4">Imagen actual:</h3>
+        <div *ngIf="usuario.foto=='' || usuario.foto==NULL" class="mb-5">
+          <p>¡No tienes ninguna foto de perfil!</p>
+          <form #formimg="ngForm" class="form login">
+            <label for="foto">Subir una imagen</label>
+            <input type="file" class="form-control mb-3" required="required">
+            <input type="submit" [disabled]="!formimg.form.valid" class="btn btn-primary" value="Subir imagen">
+          </form>
+        </div>
+        <div *ngIf="usuario.foto!='' && usuario.foto!=NULL" class="mb-5 col-md-4">
+          <img (click)="abrirDialogo()" src="http://localhost/GroupReads/src/app/upload/{{usuario.foto}}" matTooltip="Click para borrar" class="img-thumbnail borrar" alt="Foto de perfil">
+        </div>
       </mat-tab>
     </mat-tab-group>
   </div>

@@ -44,7 +44,7 @@ body {
 	height: 100%;
 	background-image: url("../img/banner-principal.jpg");
 	background-size: cover;
-	margin:0; 
+	margin:0;
 	margin-bottom: 3em;
 }
 #banner{
@@ -179,6 +179,10 @@ footer{
 .noClub{
     border-radius:5px;
     border:1px solid #F44336;
+}
+.borrar:hover {
+  background-color:red;
+  cursor: pointer;
 }
 /* --- Media Queries --- */
 @media only screen and (max-width: 770px) {

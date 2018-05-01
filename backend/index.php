@@ -231,6 +231,30 @@
 
     });
 
+    /* --- BORRAR LA IMAGEN DE UN USUARIO --- */
+    $app->post('/borrarimg',function() use($app,$db){
+        $json = $app->request->post('json');
+        $data = json_decode($json,true);
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>'No se ha podido borrar la foto'
+        );
+
+        $consulta = "UPDATE usuarios SET foto=NULL WHERE correo='".$data['correo']."'";
+        $query = $db->query($consulta);
+        if($query){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Foto borrada correctamente'
+            );
+            unlink('../src/app/upload/'.$data['foto']);
+        }
+
+        echo json_encode($result);
+    });
+
     /* --- DEVOLVER TODOS LOS PAISES --- */
     $app->get('/paises',function() use($app,$db){
         $consulta = "SELECT id,nicename FROM paises";

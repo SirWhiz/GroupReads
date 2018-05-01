@@ -4,6 +4,8 @@ import { UsuariosService } from '../../services/usuarios.service';
 import { Usuario } from '../registro/usuario';
 import { Pais } from '../registro/pais';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { DialogoComponent } from '../dialogoImagen/dialogo.component';
 
 @Component({
 	selector: 'configuracion',
@@ -20,7 +22,7 @@ export class ConfiguracionComponent{
 	public fechaMostrar:string;
 	public pwdActual:boolean;
 
-	constructor(public snackBar: MatSnackBar,private _router: Router,private _usuariosService: UsuariosService){
+	constructor(public snackBar: MatSnackBar,private _router: Router,private _usuariosService: UsuariosService,public dialog: MatDialog){
 		this.usuario = new Usuario("","","","","","","","","");
 		this.usuario2 = new Usuario("","","","","","","","","");
 		this.correoActual = "";
@@ -43,6 +45,7 @@ export class ConfiguracionComponent{
 					var fechaArray = this.usuario.fecha.split('-');
 					this.usuario.fecha = fechaArray[0]+'/'+fechaArray[1]+'/'+fechaArray[2];
 					this.fechaMostrar = fechaArray[2]+'/'+fechaArray[1]+'/'+fechaArray[0];
+					console.log(this.usuario);
 				}
 			},
 			error => {
@@ -107,9 +110,7 @@ export class ConfiguracionComponent{
 	}
 
 	comprobarActual(){
-		
 		this.usuario2.correo = localStorage.getItem('correo');
-
         this._usuariosService.loginUsuario(this.usuario2).subscribe(
 			response => {
 				if(response.code==200){
@@ -143,6 +144,12 @@ export class ConfiguracionComponent{
 				console.log(<any>error);
 			}
 		);
+	}
+
+	public abrirDialogo(){
+		this.dialog.open(DialogoComponent,{
+			width:'500px'
+		});
 	}
 
 	logout(){
