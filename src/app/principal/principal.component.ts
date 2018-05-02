@@ -36,7 +36,7 @@ export class PrincipalComponent {
         return false; 
     });
 
-    if(localStorage.getItem('correo')!=null && localStorage.getItem('perfil')=='n'){
+    if(localStorage.getItem('correo')!=null){
       this._router.navigate(['/home']);
     }
 

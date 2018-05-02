@@ -187,6 +187,7 @@ footer{
 /* --- Plantilla administrador --- */
 .columnaAdmin{
     height: 100%;
+    overflow: hidden;
     background:#455A64;
 }
 /* --- Media Queries --- */
