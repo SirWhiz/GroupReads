@@ -11,11 +11,19 @@ import { Usuario } from '../registro/usuario';
 export class HomeComponent{
 
 	public usuario:Usuario;
+	public esAdmin:boolean;
 	public noClub:boolean;
+	public totalUsuarios:string;
+	public totalLibros:string;
+	public totalAutores:string;
 
 	constructor(private _router: Router,private _usuariosService: UsuariosService){
-		this.usuario = new Usuario("","","","","","","","","");
+		this.usuario = new Usuario("","","","","","","","","","","");
+		this.esAdmin = false;
 		this.noClub = true;
+		this.totalUsuarios = "0";
+		this.totalLibros = "0";
+		this.totalAutores = "0";
 	}
 
 	ngOnInit(){
@@ -29,12 +37,23 @@ export class HomeComponent{
 				console.log(error);
 			}
 		);
-	}
 
-	logout(){
-		localStorage.removeItem('correo');
-		localStorage.removeItem('perfil');
-		this._router.navigate(['/']);
-	}
+		if(localStorage.getItem('perfil')=='n'){
+			this.esAdmin=false;
+		}else if(localStorage.getItem('perfil')=='a'){
+			this.esAdmin=true;
 
+			//Total de usuarios
+			this._usuariosService.totalUsuarios().subscribe(
+				result => {
+					if(result.code==200){
+						this.totalUsuarios = result.data;
+					}
+				},
+				error => {
+					console.log(error);
+				}
+			);
+		}
+	}
 }

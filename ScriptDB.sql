@@ -362,3 +362,5 @@ INSERT INTO paises (id,iso,nombre,nicename,iso3,numcode,phonecode) VALUES
 (237, 'YE', 'YEMEN', 'Yemen', 'YEM', 887, 967),
 (238, 'ZM', 'ZAMBIA', 'Zambia', 'ZMB', 894, 260),
 (239, 'ZW', 'ZIMBABWE', 'Zimbabwe', 'ZWE', 716, 263);
+
+INSERT INTO usuarios VALUES (1,'admin@admin.com','Admin','admin','admin1','',SHA('admin'),NULL,1,'a');

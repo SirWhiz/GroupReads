@@ -1,0 +1,37 @@
+<menuadmin></menuadmin>
+<!--Dashboard-->
+<div class="row filaAdmin jutify-content-around">
+  <div class="col-sm-3 columnaAdmin pt-5 pb-5">
+    <button class="btn btn-light btn-block text-truncate">Autores</button>
+    <button class="btn btn-light btn-block text-truncate">Clubes</button>
+    <button [routerLink]="['/colaboradores']" class="btn btn-light btn-block text-truncate">Colaboradores</button>
+    <button class="btn btn-light btn-block text-truncate">Libros</button>
+    <button class="btn btn-danger btn-block text-truncate">Reinstalar Aplicación</button>
+  </div>
+  <div class="col-sm-9 mt-4 mb-5">
+    <h3>Hacer colaboradores:</h3>
+    <hr>
+    <table *ngIf="!noUsuarios" class="mt-5 table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellidos</th>
+          <th scope="col">Correo</th>
+          <th scope="col">#</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of usuarios">
+          <td *ngIf="user.tipo!='a'">{{user.nombre}}</td>
+          <td *ngIf="user.tipo!='a'">{{user.apellidos}}</td>
+          <td *ngIf="user.tipo!='a'">{{user.correo}}</td>
+          <td *ngIf="user.tipo=='n'"><button class="btn btn-success" (click)="cambiar(user)">Hacer Colaborador</button></td>
+          <td *ngIf="user.tipo=='c'"><button class="btn btn-warning" (click)="cambiar(user)">Quitar Colaborador</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="noUsuarios" class="text-center mt-5">
+      <i>¡Vaya! aún no hay usuarios en la aplicación</i>
+    </div>
+  </div>
+</div>

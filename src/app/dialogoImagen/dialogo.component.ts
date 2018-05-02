@@ -22,7 +22,7 @@ export class DialogoComponent{
         public snackBar:MatSnackBar,
         public _router:Router,
     ){
-        this.usuario = new Usuario("","","","","","","","","");
+        this.usuario = new Usuario("","","","","","","","","","","");
     }
 
     public close(){

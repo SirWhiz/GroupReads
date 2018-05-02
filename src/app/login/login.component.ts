@@ -20,12 +20,12 @@ export class LoginComponent{
 		private _usuariosService: UsuariosService,
 		private _router: Router,
 	){
-		this.usuario = new Usuario("","","","","","","","","");
+		this.usuario = new Usuario("","","","","","","","","","","");
 		this.nombre_componente = "LoginComponent";
 	}
 
 	ngOnInit(){
-		if(localStorage.getItem('correo')!=null && localStorage.getItem('perfil')=='n'){
+		if(localStorage.getItem('correo')!=null){
       		this._router.navigate(['/home']);
     	}
 	}

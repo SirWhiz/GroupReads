@@ -2,6 +2,7 @@
 export class Usuario{
 
 	constructor(
+		public id: string,
 		public nombre: string,
 		public apellidos:string,
 		public nick: string,
@@ -10,7 +11,8 @@ export class Usuario{
 		public pwd2: string,
 		public fecha: any,
 		public pais: string,
-		public foto: string
+		public foto: string,
+		public tipo: string
 	){}
 
 }

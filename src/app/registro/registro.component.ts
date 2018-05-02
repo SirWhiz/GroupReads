@@ -25,7 +25,7 @@ export class RegistroComponent{
 		private _usuariosService: UsuariosService,
 		private _router: Router,
 	){
-		this.usuario = new Usuario("","","","","","","","","");
+		this.usuario = new Usuario("","","","","","","","","","","");
 		this.existeCorreo=false;
 		this.filesToUpload = new Array();
 	}

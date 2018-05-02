@@ -1,0 +1,17 @@
+<!--Menú superior-->
+<nav class="navbar navbar-dark bg-primary navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" [routerLink]="['/home']">Administrador</a>
+    </div>
+    <button class="navbar-toggler hidden-md-up pull-xs-right" data-target="#collapsenav" data-toggle="collapse" type="button">
+            ☰
+    </button>
+    <div class="navbar-toggleable-sm collapse pull-md-right text-xs-center" id="collapsenav">
+      <ul class="nav navbar-nav menu">
+        <li class="nav-item"><a class="nav-link" [routerLink]="['/configuracion']">Configuración</a></li>
+        <li class="nav-item"><a class="nav-link" (click)="logout()">Cerrar sesión</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -143,6 +143,12 @@
                     'code'=>200,
                     'data'=>$datos
                 );
+            }else if(sha1($pwd)==$datos['pwd']){
+                $result = array(
+                    'status'=>'success',
+                    'code'=>200,
+                    'data'=>$datos
+                );
             }
         }
 
@@ -275,6 +281,92 @@
                 'message'=>'Foto borrada correctamente'
             );
             unlink('../src/app/upload/'.$data['foto']);
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- DEVOLVER TOTAL DE USUARIOS --- */
+    $app->get('/totalusuarios',function() use($app,$db){
+        $consulta = "SELECT COUNT(*) as total FROM usuarios WHERE tipo<>'a'";
+        $query = $db->query($consulta);
+        $datos = $query->fetch_assoc();
+        $total = $datos['total'];
+
+        $result = array(
+            'status'=>'success',
+            'code'=>200,
+            'data'=>$total
+        );
+        echo json_encode($result);
+    });
+
+    /* --- DEVOLVER TODOS LOS USUARIOS --- */
+    $app->get('/usuarios',function() use($app,$db){
+        $consulta = "SELECT * FROM usuarios";
+        $query = $db->query($consulta);
+
+        if($query->num_rows > 1){
+            $usuarios = array();
+            while($usuario = $query->fetch_assoc()){
+                $usuarios[] = $usuario;
+            }
+
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$usuarios
+            );
+        }else{
+            $result = array(
+                'status'=>'success',
+                'code'=>201,
+                'data'=>'No hay usuarios a parte del administrador'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- HACER UN USUARIO COLABORADOR --- */
+    $app->get('/colaborador/:id',function($id) use($app,$db){
+        $consulta = "UPDATE usuarios SET tipo='c' WHERE id=".$id;
+        $query = $db->query($consulta);
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>'Error al modificar el usuario'
+        );
+
+        if($query){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Usuario modificado correctamente'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- QUITAR A UN USUARIO DE COLABORADOR --- */
+    $app->get('/normal/:id',function($id) use($app,$db){
+        $consulta = "UPDATE usuarios SET tipo='n' WHERE id=".$id;
+        $query = $db->query($consulta);
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>'Error al modificar el usuario'
+        );
+
+        if($query){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Usuario modificado correctamente'
+            );
         }
 
         echo json_encode($result);

@@ -1,21 +1,49 @@
-<nav class="navbar navbar-dark bg-primary navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
-      <a class="navbar-brand" [routerLink]="['/home']">Mi perfil</a>
-    </div>
-    <button class="navbar-toggler hidden-md-up pull-xs-right" data-target="#collapsenav" data-toggle="collapse" type="button">
-            ☰
-    </button>
-    <div class="navbar-toggleable-sm collapse pull-md-right text-xs-center" id="collapsenav">
-      <ul class="nav navbar-nav menu">
-        <li class="nav-item"><a class="nav-link" [routerLink]="['/configuracion']">Configuración</a></li>
-        <li class="nav-item"><a class="nav-link" (click)="logout()">Cerrar sesión</a></li>
-      </ul>
+<menuadmin *ngIf="esAdmin"></menuadmin>
+<!--Dashboard-->
+<div *ngIf="esAdmin" class="row filaAdmin jutify-content-around">
+  <div class="col-sm-3 columnaAdmin pt-5 pb-5">
+    <button class="btn btn-light btn-block text-truncate">Autores</button>
+    <button class="btn btn-light btn-block text-truncate">Clubes</button>
+    <button [routerLink]="['/colaboradores']" class="btn btn-light btn-block text-truncate">Colaboradores</button>
+    <button class="btn btn-light btn-block text-truncate">Libros</button>
+    <button class="btn btn-danger btn-block text-truncate">Reinstalar Aplicación</button>
+  </div>
+  <div class="col-sm-9 mt-4 mb-5">
+    <h3>Datos generales:</h3>
+    <hr>
+    <!--Cards con datos generales de la aplicación-->
+    <div class="row">
+      <div class="col-sm-4 mt-2 mb-2">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Número de usuarios:</h5>
+            <h3 class="text-center">{{totalUsuarios}}</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4 mt-2 mb-2">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Número de Libros:</h5>
+            <h3 class="text-center">{{totalLibros}}</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4 mt-2 mb-2">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Número de Autores:</h5>
+            <h3 class="text-center">{{totalAutores}}</h3>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</nav>
-
-<div class="row mt-5 mb-5 justify-content-around">
+</div>
+<!--Si no es admin-->
+<menuusuario *ngIf="!esAdmin"></menuusuario>
+<!--Timeline principal y perfil-->
+<div *ngIf="!esAdmin" class="row mt-5 mb-5 justify-content-around">
 
   <!--Cuadrado izquierdo con información del usuario-->
   <div class="col-sm-2 perfil d-none d-sm-block p-0 mb-3">
@@ -40,5 +68,4 @@
     <h3>Últimas novedades:</h3>
     <hr>
   </div>
-
 </div>

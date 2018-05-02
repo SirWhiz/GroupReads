@@ -1,20 +1,5 @@
-<nav class="navbar navbar-dark bg-primary navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
-      <a class="navbar-brand" [routerLink]="['/home']">Mi perfil</a>
-    </div>
-    <button class="navbar-toggler hidden-md-up pull-xs-right" data-target="#collapsenav" data-toggle="collapse" type="button">
-            ☰
-    </button>
-    <div class="navbar-toggleable-sm collapse pull-md-right text-xs-center" id="collapsenav">
-      <ul class="nav navbar-nav menu">
-        <li class="nav-item"><a class="nav-link" [routerLink]="['/configuracion']">Configuración</a></li>
-        <li class="nav-item"><a class="nav-link" (click)="logout()">Cerrar sesión</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
+<menuadmin *ngIf="esAdmin"></menuadmin>
+<menuusuario *ngIf="!esAdmin"></menuusuario>
 <div class="row justify-content-around mt-5">
   <div class="col-md-7">
     <h2 class="display-4 text-center mb-3">Editar información</h2>
@@ -80,16 +65,16 @@
 
           <!--Nueva contraseña-->
           <label for="pwd">Nueva contraseña:</label>
-          <span *ngIf="pwd.touched && !pwd.valid"><br/>La contraseña debe tener mayúsculas, minúsculas, números y 8 caracteres mínimo<br/></span>
-          <span class="valido" *ngIf="pwd.touched && pwd.valid">
+          <span *ngIf="pwd.touched && usuario.pwd!='' && !pwd.valid"><br/>La contraseña debe tener mayúsculas, minúsculas, números y 8 caracteres mínimo<br/></span>
+          <span class="valido" *ngIf="pwd.touched && usuario.pwd!='' && pwd.valid">
             <i class="fas fa-check fa-2x"></i>
           </span>
           <input type="password" class="form-control mb-3" name="pwd" id="pwd" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)([A-Za-z\d]|[^$@!%*?&]){8,20}" #pwd="ngModel" [(ngModel)]="usuario.pwd" required="required">
 
           <!--Confirmar nueva contraseña-->
           <label for="pwd2">Confirmar nueva contraseña:</label>
-          <span *ngIf="pwd2.touched && usuario.pwd2!=usuario.pwd"><br/>Las contraseñas no coinciden<br/></span>
-          <span class="valido" *ngIf="pwd2.touched && usuario.pwd!='' && usuario.pwd==usuario.pwd2 ">
+          <span *ngIf="pwd2.touched && usuario.pwd!='' && usuario.pwd2!=usuario.pwd"><br/>Las contraseñas no coinciden<br/></span>
+          <span class="valido" *ngIf="pwd2.touched && usuario.pwd2!='' && usuario.pwd!='' && usuario.pwd==usuario.pwd2 ">
             <i class="fas fa-check fa-2x"></i>
           </span>
           <input type="password" required="required" class="form-control mb-3" name="pwd2" id="pwd2" #pwd2="ngModel" [(ngModel)]="usuario.pwd2">

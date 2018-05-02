@@ -25,22 +25,30 @@ export class ConfiguracionComponent{
 	public filesToUpload;
 	public resultUpload;
 	public nombreNuevo:string;
+	public esAdmin:boolean;
 
 	constructor(public snackBar: MatSnackBar,private _router: Router,private _usuariosService: UsuariosService,public dialog: MatDialog){
-		this.usuario = new Usuario("","","","","","","","","");
-		this.usuario2 = new Usuario("","","","","","","","","");
+		this.usuario = new Usuario("","","","","","","","","","","");
+		this.usuario2 = new Usuario("","","","","","","","","","","");
 		this.correoActual = "";
 		this.pwdActual = true;
 		this.fechaMostrar = "";
 		this.filesToUpload = new Array();
 		this.existeCorreo = false;
 		this.nombreNuevo = "";
+		this.esAdmin = false;
 	}
 
 	ngOnInit(){
 		if(localStorage.getItem('correo')==null){
       		this._router.navigate(['/login']);
     	}
+
+    	if(localStorage.getItem('perfil')=='n'){
+    		this.esAdmin = false;
+    	}else if(localStorage.getItem('perfil')=='a'){
+			this.esAdmin=true;
+		}
 
 		this._usuariosService.getUsuario(localStorage.getItem('correo')).subscribe(
 			result => {

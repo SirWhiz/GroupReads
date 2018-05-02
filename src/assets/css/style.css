@@ -184,6 +184,11 @@ footer{
   background-color:red;
   cursor: pointer;
 }
+/* --- Plantilla administrador --- */
+.columnaAdmin{
+    height: 100%;
+    background:#455A64;
+}
 /* --- Media Queries --- */
 @media only screen and (max-width: 770px) {
     .display-1 {

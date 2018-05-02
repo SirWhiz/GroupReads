@@ -19,8 +19,24 @@ export class UsuariosService{
         return this._http.get(this.url+'usuarios/'+correo).map(res => res.json());
     }
 
+    getUsuarios(){
+        return this._http.get(this.url+'usuarios').map(res => res.json());
+    }
+
     getPaises(){
         return this._http.get(this.url+'paises').map(res => res.json());
+    }
+
+    hacerColaborador(id:any){
+        return this._http.get(this.url+'colaborador/'+id).map(res => res.json());
+    }
+
+    quitarColaborador(id:any){
+        return this._http.get(this.url+'normal/'+id).map(res => res.json());
+    }
+
+    totalUsuarios(){
+        return this._http.get(this.url+'totalusuarios').map(res => res.json());
     }
 
     borrarImagen(usuario:Usuario){

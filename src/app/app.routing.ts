@@ -9,6 +9,7 @@ import { PrincipalComponent } from './principal/principal.component';
 import { RegistroComponent } from './registro/registro.component';
 import { HomeComponent } from './home/home.component';
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
+import { ColaboradoresComponent } from './colaboradores/colaboradores.component';
 
 const appRoutes: Routes = [
 	{path: '', component: PrincipalComponent},
@@ -16,6 +17,7 @@ const appRoutes: Routes = [
 	{path: 'registro', component: RegistroComponent},
 	{path: 'home', component: HomeComponent, canActivate: [LoginGuard]},
 	{path: 'configuracion', component: ConfiguracionComponent},
+	{path: 'colaboradores', component: ColaboradoresComponent},
 	{path: '**', component: PrincipalComponent}
 ];
 
