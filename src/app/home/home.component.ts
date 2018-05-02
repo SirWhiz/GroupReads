@@ -31,29 +31,24 @@ export class HomeComponent{
 			result => {
 				if(result.code==200){
 					this.usuario = result.data;
+					if(this.usuario.tipo == "a"){
+						//Total de usuarios
+						this._usuariosService.totalUsuarios().subscribe(
+							result => {
+								if(result.code==200){
+									this.totalUsuarios = result.data;
+								}
+							},
+							error => {
+								console.log(error);
+							}
+						);
+					}
 				}
 			},
 			error => {
 				console.log(error);
 			}
 		);
-
-		if(localStorage.getItem('perfil')=='n'){
-			this.esAdmin=false;
-		}else if(localStorage.getItem('perfil')=='a'){
-			this.esAdmin=true;
-
-			//Total de usuarios
-			this._usuariosService.totalUsuarios().subscribe(
-				result => {
-					if(result.code==200){
-						this.totalUsuarios = result.data;
-					}
-				},
-				error => {
-					console.log(error);
-				}
-			);
-		}
 	}
 }

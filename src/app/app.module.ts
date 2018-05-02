@@ -14,6 +14,7 @@ import { DialogoComponent } from './dialogoImagen/dialogo.component';
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
 import { MenuUsuarioComponent } from './menuUsuario/menuusuario.component';
 import { MenuAdminComponent } from './menuAdmin/menuadmin.component';
+import { MenuColaboradorComponent } from './menuColaborador/menucolaborador.component';
 import { ColaboradoresComponent } from './colaboradores/colaboradores.component';
 
 import { MatInputModule,MatNativeDateModule } from '@angular/material';
@@ -41,7 +42,8 @@ import { LoginGuard } from './login.guard';
     DialogoComponent,
     MenuUsuarioComponent,
     MenuAdminComponent,
-    ColaboradoresComponent
+    ColaboradoresComponent,
+    MenuColaboradorComponent
   ],
   imports: [
     BrowserModule,

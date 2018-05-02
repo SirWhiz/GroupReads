@@ -1,6 +1,6 @@
-<menuadmin *ngIf="esAdmin"></menuadmin>
+<menuadmin *ngIf="this.usuario.tipo=='a'"></menuadmin>
 <!--Dashboard-->
-<div *ngIf="esAdmin" class="row filaAdmin jutify-content-around">
+<div *ngIf="this.usuario.tipo=='a'" class="row filaAdmin jutify-content-around">
   <div class="col-sm-3 columnaAdmin pt-5 pb-5">
     <button class="btn btn-light btn-block text-truncate">Autores</button>
     <button class="btn btn-light btn-block text-truncate">Clubes</button>
@@ -41,9 +41,11 @@
   </div>
 </div>
 <!--Si no es admin-->
-<menuusuario *ngIf="!esAdmin"></menuusuario>
+<menuusuario *ngIf="this.usuario.tipo=='n'"></menuusuario>
+<!--Si es colaborador-->
+<menucolaborador *ngIf="this.usuario.tipo=='c'"></menucolaborador>
 <!--Timeline principal y perfil-->
-<div *ngIf="!esAdmin" class="row mt-5 mb-5 justify-content-around">
+<div *ngIf="this.usuario.tipo!='a'" class="row mt-5 mb-5 justify-content-around">
 
   <!--Cuadrado izquierdo con información del usuario-->
   <div class="col-sm-2 perfil d-none d-sm-block p-0 mb-3">
