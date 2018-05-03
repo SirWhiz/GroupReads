@@ -23,6 +23,10 @@ export class UsuariosService{
         return this._http.get(this.url+'usuarios').map(res => res.json());
     }
 
+    getUsuariosFiltro(filtro:string){
+        return this._http.get(this.url+'usuariosfiltro/'+filtro).map(res => res.json());
+    }
+
     getPaises(){
         return this._http.get(this.url+'paises').map(res => res.json());
     }

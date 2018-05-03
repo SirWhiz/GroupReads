@@ -5,6 +5,7 @@ import { Pais } from './pais';
 import { MenuComponent } from '../menu/menu.component';
 import { UsuariosService } from '../../services/usuarios.service';
 import { GLOBAL } from '../../services/global';
+import { MatSnackBar } from '@angular/material/snack-bar';
 declare var $: any;
 
 @Component({
@@ -20,14 +21,17 @@ export class RegistroComponent{
 	public existeCorreo:boolean;
 	public filesToUpload;
 	public resultUpload;
+	public nombreArray:any[];
 
 	constructor(
+		public snackBar: MatSnackBar,
 		private _usuariosService: UsuariosService,
 		private _router: Router,
 	){
 		this.usuario = new Usuario("","","","","","","","","","","");
 		this.existeCorreo=false;
 		this.filesToUpload = new Array();
+		this.nombreArray = new Array();
 	}
 
 	ngOnInit(){
@@ -50,24 +54,31 @@ export class RegistroComponent{
 	}
 	
 	onSubmit(){
-		this.usuario.fecha = this.usuario.fecha.getFullYear()+"/"+(parseInt(this.usuario.fecha.getMonth())+1)+"/"+this.usuario.fecha.getDate();
 
 		if(this.filesToUpload.length >= 1){
-			this._usuariosService.makeFileRequest(GLOBAL.url+'upload-file', [], this.filesToUpload)
-				.then((result)=>{
-					console.log(result);
-					this.resultUpload = result;
-					this.usuario.foto = this.resultUpload.filename;
-					this.saveUsuario();
-				}, (error) => {
-					console.log(error);
-			});
+			this.nombreArray = this.filesToUpload[0].name.split('.');
+			if(this.nombreArray[this.nombreArray.length-1]!='jpeg' && this.nombreArray[this.nombreArray.length-1]!='png'){
+				this.snackBar.open("La imagen debe ser jpeg/png", "OK", {
+					duration: 2500,
+				});
+			}else{
+				this._usuariosService.makeFileRequest(GLOBAL.url+'upload-file', [], this.filesToUpload)
+					.then((result)=>{
+						console.log(result);
+						this.resultUpload = result;
+						this.usuario.foto = this.resultUpload.filename;
+						this.saveUsuario();
+					}, (error) => {
+						console.log(error);
+				});
+			}
 		}else{
 			this.saveUsuario();
 		}
 	}
 
 	saveUsuario(){
+		this.usuario.fecha = this.usuario.fecha.getFullYear()+"/"+(parseInt(this.usuario.fecha.getMonth())+1)+"/"+this.usuario.fecha.getDate();
 		this._usuariosService.registrarUsuario(this.usuario).subscribe(
 			response => {
 				if(response.code==200){

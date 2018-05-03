@@ -147,6 +147,18 @@ footer{
     color:#212121;
     background:#fff;
 }
+.filtro::-webkit-input-placeholder{
+    font-style: italic;
+}
+.filtro::-moz-placeholder{
+    font-style: italic;   
+}
+.filtro:-ms-input-placeholder{
+    font-style: italic;
+}
+.filtro:-moz-placeholder{
+    color: pink;
+}
 /* ------ Home ------ */
 .avatar{
     width:30%;
@@ -185,6 +197,12 @@ footer{
   cursor: pointer;
 }
 /* --- Plantilla administrador --- */
+.filaAdmin{
+    background: #455A64;
+}
+.panel{
+    background: #fff;
+}
 .columnaAdmin{
     height: 100%;
     overflow: hidden;

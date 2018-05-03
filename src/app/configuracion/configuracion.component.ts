@@ -26,6 +26,7 @@ export class ConfiguracionComponent{
 	public resultUpload;
 	public nombreNuevo:string;
 	public esAdmin:boolean;
+	public nombreArray:any[];
 
 	constructor(public snackBar: MatSnackBar,private _router: Router,private _usuariosService: UsuariosService,public dialog: MatDialog){
 		this.usuario = new Usuario("","","","","","","","","","","");
@@ -37,6 +38,7 @@ export class ConfiguracionComponent{
 		this.existeCorreo = false;
 		this.nombreNuevo = "";
 		this.esAdmin = false;
+		this.nombreArray = new Array();
 	}
 
 	ngOnInit(){
@@ -166,14 +168,21 @@ export class ConfiguracionComponent{
 
 	onSubmitimg(){
 		if(this.filesToUpload.length >= 1){
-			this._usuariosService.makeFileRequest(GLOBAL.url+'upload-file', [], this.filesToUpload)
+			this.nombreArray = this.filesToUpload[0].name.split('.');
+			if(this.nombreArray[this.nombreArray.length-1]!='jpeg' && this.nombreArray[this.nombreArray.length-1]!='png'){
+				this.snackBar.open("La imagen debe ser jpeg/png", "OK", {
+					duration: 2500,
+				});
+			}else{
+				this._usuariosService.makeFileRequest(GLOBAL.url+'upload-file', [], this.filesToUpload)
 				.then((result)=>{
 					this.resultUpload = result;
 					this.usuario.foto = this.resultUpload.filename;
 					this.actualizarUsuario();
 				}, (error) => {
 					console.log(error);
-			});
+				});
+			}
 		}
 	}
 

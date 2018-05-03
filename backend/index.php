@@ -328,6 +328,33 @@
         echo json_encode($result);
     });
 
+    /* --- DEVOLVER USUARIOS CON FILTRO --- */
+    $app->get('/usuariosfiltro/:filtro',function($filtro) use($app,$db){
+        $consulta = "SELECT * FROM usuarios WHERE nombre LIKE '%".$filtro."%'";
+        $query = $db->query($consulta);
+
+        if($query->num_rows==0){
+            $result = array(
+                'status' => 'error',
+                'code' => 404,
+                'message' => 'No se han encontrado usuarios con ese criterio'
+            );
+        }else{
+            $usuariosFiltro = array();
+            while($usuario = $query->fetch_assoc()){
+                $usuariosFiltro[] = $usuario;
+            }
+
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$usuariosFiltro
+            );
+        }
+
+        echo json_encode($result);
+    });
+
     /* --- HACER UN USUARIO COLABORADOR --- */
     $app->get('/colaborador/:id',function($id) use($app,$db){
         $consulta = "UPDATE usuarios SET tipo='c' WHERE id=".$id;
