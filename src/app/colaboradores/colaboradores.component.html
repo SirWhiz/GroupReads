@@ -5,16 +5,16 @@
     <button class="btn btn-light btn-block text-truncate">Autores</button>
     <button class="btn btn-light btn-block text-truncate">Clubes</button>
     <button [routerLink]="['/colaboradores']" class="btn btn-light btn-block text-truncate">Colaboradores</button>
-    <button class="btn btn-light btn-block text-truncate">Libros</button>
+    <button [routerLink]="['/libros']" class="btn btn-light btn-block text-truncate">Libros</button>
     <button class="btn btn-danger btn-block text-truncate">Reinstalar Aplicación</button>
   </div>
   <div class="col-sm-9 pt-4 pb-5 panel">
     <h3>Hacer colaboradores:</h3>
     <hr>
     <form *ngIf="!noUsuarios">
-      <input type="text" name="filtro" (keyup)="filtrar()" [(ngModel)]="filtro" class="form-control filtro" placeholder="Buscar por nombre..">
+      <input type="text" name="filtro" (keyup)="filtrar()" [(ngModel)]="filtro" class="form-control filtro" placeholder="Buscar por nombre.." autocomplete="off">
     </form>
-    <table *ngIf="!noUsuarios" class="mt-4 table table-striped">
+    <table *ngIf="!noUsuarios" class="mt-4 table table-striped table-bordered">
       <thead>
         <tr>
           <th scope="col">Nombre</th>

@@ -61,6 +61,7 @@ CREATE TABLE libros(
     paginas smallint NOT NULL,
     fechaAlta date NOT NULL,
     idGenero smallint unsigned NOT NULL,
+    portada varchar(100) NULL,
     FOREIGN KEY (idGenero) REFERENCES generos(id)
 );
 

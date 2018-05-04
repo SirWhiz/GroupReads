@@ -208,6 +208,14 @@ footer{
     overflow: hidden;
     background:#455A64;
 }
+/* --- Libros --- */
+.libro{
+    background: #eee;
+    border-radius: 5px;
+    border:1px solid #ccc;
+    box-shadow:0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    cursor:pointer;
+}
 /* --- Media Queries --- */
 @media only screen and (max-width: 770px) {
     .display-1 {

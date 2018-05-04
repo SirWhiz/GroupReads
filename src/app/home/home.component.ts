@@ -27,10 +27,14 @@ export class HomeComponent{
 	}
 
 	ngOnInit(){
+
+		this.usuario.tipo = localStorage.getItem('perfil');
+
 		this._usuariosService.getUsuario(localStorage.getItem('correo')).subscribe(
 			result => {
 				if(result.code==200){
 					this.usuario = result.data;
+					console.log(this.usuario);
 					if(this.usuario.tipo == "a"){
 						//Total de usuarios
 						this._usuariosService.totalUsuarios().subscribe(

@@ -16,6 +16,8 @@ import { MenuUsuarioComponent } from './menuUsuario/menuusuario.component';
 import { MenuAdminComponent } from './menuAdmin/menuadmin.component';
 import { MenuColaboradorComponent } from './menuColaborador/menucolaborador.component';
 import { ColaboradoresComponent } from './colaboradores/colaboradores.component';
+import { LibrosComponent } from './mantenimientoLibros/libros.component';
+import { NuevoLibroComponent } from './mantenimientoLibros/nuevolibro.component';
 
 import { MatInputModule,MatNativeDateModule } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -43,7 +45,9 @@ import { LoginGuard } from './login.guard';
     MenuUsuarioComponent,
     MenuAdminComponent,
     ColaboradoresComponent,
-    MenuColaboradorComponent
+    MenuColaboradorComponent,
+    LibrosComponent,
+    NuevoLibroComponent
   ],
   imports: [
     BrowserModule,

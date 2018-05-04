@@ -1,0 +1,24 @@
+<menuadmin *ngIf="perfil=='a'"></menuadmin>
+<menucolaborador *ngIf="perfil=='c'"></menucolaborador>
+<!--Dashboard-->
+<div class="row filaAdmin jutify-content-around">
+  <div class="col-sm-3 columnaAdmin pt-5 pb-5">
+    <button [routerLink]="['/nuevo-libro']"class="btn btn-light btn-block text-truncate">Nuevo libro</button>
+    <button class="btn btn-light btn-block text-truncate">Modificar libros</button>
+    <button class="btn btn-light btn-block text-truncate">Borrar libros</button>
+    <button [routerLink]="['/home']" class="btn btn-danger btn-block text-truncate">Volver</button>
+  </div>
+  <div class="col-sm-9 pt-4 pb-5 panel">
+    <h3>Libros:</h3>
+    <hr>
+    <div *ngIf="noLibros" class="text-center mt-5"><i>¡Vaya! parace que aún no hay libros en la base de datos..</i></div>
+    <div *ngIf="!noLibros" class="row">
+      <div *ngFor="let libro of libros" class="col-sm-2 libro mr-3 p-2 text-center" matTooltip="Click para editar" matTooltipPosition="above">
+        <img *ngIf="libro.portada" src="http://localhost/GroupReads/src/app/portadas/{{libro.portada}}" class="img-thumbnail">
+        <img *ngIf="!libro.portada" src="http://localhost/GroupReads/src/app/portadas/nopic.jpg" class="img-thumbnail">
+        <p class="mt-3">{{libro.titulo}}</p>
+        <p>{{libro.paginas}} páginas</p>
+      </div>
+    </div>
+  </div>
+</div>

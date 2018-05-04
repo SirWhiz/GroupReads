@@ -24,7 +24,7 @@ export class ColaboradoresComponent{
 
 	ngOnInit(){
 
-		if(localStorage.getItem('correo')==null || localStorage.getItem('perfil')=='n'){
+		if(localStorage.getItem('correo')==null || localStorage.getItem('perfil')!='a'){
 			this._router.navigate(['/home']);
 		}else{
 			this._usuariosService.getUsuarios().subscribe(

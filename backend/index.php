@@ -4,6 +4,7 @@
 
     $app = new \Slim\Slim();
     $db = new mysqli('localhost','root','','groupreads');
+    $db->set_charset("utf8");
 
     /* --- CONFIGURAR CABECERAS --- */
     header('Access-Control-Allow-Origin: *');
@@ -414,6 +415,186 @@
             'code'=>200,
             'data'=>$paises
         );
+
+        echo json_encode($result);
+    });
+
+    /* --- DEVOLVER TODOS LOS GÉNEROS --- */
+    $app->get('/generos',function() use($app,$db){
+        $consulta = "SELECT * FROM generos";
+        $query = $db->query($consulta);
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>'No hay generos'
+        );
+
+        if($query->num_rows==0){
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'No hay generos'
+            );
+        }else{
+            $generos = array();
+            while($genero = $query->fetch_assoc()){
+                $generos[] = $genero;
+            }
+
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$generos
+            );
+        }
+        echo json_encode($result);
+    });
+
+    /* --- DEVOLVER TODOS LOS AUTORES --- */
+    $app->get('/autores',function() use($app,$db){
+        $consulta = "SELECT * FROM autores";
+        $query = $db->query($consulta);
+
+        if($query->num_rows==0){
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'No hay autores'
+            );
+        }else{
+            $autores = array();
+            while($autor = $query->fetch_assoc()){
+                $autores[] = $autor;
+            }
+
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$autores
+            );
+        }
+        echo json_encode($result);
+    });
+
+    /* --- CREAR NUEVO LIBRO --- */
+    $app->post('/nuevolibro',function() use($app,$db){
+        $json = $app->request->post('json');
+        $data = json_decode($json,true);
+
+        if(empty($data['portada'])){
+            $data['portada'] = NULL;
+        }
+
+        $now = new DateTime();
+        $consulta = "INSERT INTO libros VALUES (".
+            "'{$data['isbn']}',".
+            "'{$data['titulo']}',".
+            "'{$data['paginas']}',".
+            "'{$data['fechaAlta']}',".
+            "'{$data['genero']}',".
+            "'{$data['portada']}');";
+        
+        $query = $db->query($consulta);
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>'Error al registrar libro'
+        );
+
+        if($query){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Libro registrado correctamente'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- OBTENER TODOS LOS LIBROS --- */
+    $app->get('/libros',function() use($app,$db){
+        $consulta = "SELECT * FROM libros";
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>'No hay libros'
+        );
+
+        $query = $db->query($consulta);
+        if($query->num_rows == 0){
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'No hay libros'
+            );
+        }else{
+            $libros = array();
+            while($libro = $query->fetch_assoc()){
+                $libros[] = $libro;
+            }
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$libros
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- GUARDAR LOS AUTORES DE UN LIBRO --- */
+    $app->post('/autoreslibros/:isbn',function($isbn) use($app,$db){
+        $json = $app->request->post('json');
+        $data = json_decode($json,true);
+
+        foreach ($data as $autor) {
+            $consulta = "INSERT INTO autores_libros VALUES(".$autor.",'".$isbn."');";
+            $query = $db->query($consulta);
+        }
+
+        $result = array(
+            'status'=>'success',
+            'code'=>200,
+            'message'=>'Autor asignado correctamente'
+        );
+
+        echo json_encode($result);
+    });
+
+    /* --- SUBIR IMAGEN DE UN LIBRO --- */
+    $app->post('/upload-cover',function() use($app,$db){
+        $result = array(
+            'status' => 'error',
+            'code' => 404,
+            'message' => 'El archivo no ha podido subirse'
+        );
+
+        if(isset($_FILES['uploads'])){
+            $piramideUploader = new PiramideUploader();
+
+            $upload = $piramideUploader->upload('image','uploads','../src/app/portadas',array('image/jpeg','image/png'));
+            $file = $piramideUploader->getInfoFile();
+            $file_name = $file['complete_name'];
+
+            if(isset($upload) && $upload['uploaded']==false){
+                $result = array(
+                    'status' => 'error',
+                    'code' => 404,
+                    'message' => 'El archivo no ha podido subirse'
+                );
+            }else{
+                $result = array(
+                    'status' => 'success',
+                    'code' => 200,
+                    'message' => 'El archivo se ha subido',
+                    'filename' => $file_name
+                );
+            }
+        }
 
         echo json_encode($result);
     });

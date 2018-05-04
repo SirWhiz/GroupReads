@@ -10,6 +10,8 @@ import { RegistroComponent } from './registro/registro.component';
 import { HomeComponent } from './home/home.component';
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
 import { ColaboradoresComponent } from './colaboradores/colaboradores.component';
+import { LibrosComponent } from './mantenimientoLibros/libros.component';
+import { NuevoLibroComponent } from './mantenimientoLibros/nuevolibro.component';
 
 const appRoutes: Routes = [
 	{path: '', component: PrincipalComponent},
@@ -18,6 +20,8 @@ const appRoutes: Routes = [
 	{path: 'home', component: HomeComponent, canActivate: [LoginGuard]},
 	{path: 'configuracion', component: ConfiguracionComponent},
 	{path: 'colaboradores', component: ColaboradoresComponent},
+	{path: 'libros', component: LibrosComponent},
+	{path: 'nuevo-libro', component: NuevoLibroComponent},
 	{path: '**', component: PrincipalComponent}
 ];
 
