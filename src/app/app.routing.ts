@@ -12,6 +12,7 @@ import { ConfiguracionComponent } from './configuracion/configuracion.component'
 import { ColaboradoresComponent } from './colaboradores/colaboradores.component';
 import { LibrosComponent } from './mantenimientoLibros/libros.component';
 import { NuevoLibroComponent } from './mantenimientoLibros/nuevolibro.component';
+import { EditarLibroComponent } from './mantenimientoLibros/editarlibro.component';
 
 const appRoutes: Routes = [
 	{path: '', component: PrincipalComponent},
@@ -22,6 +23,7 @@ const appRoutes: Routes = [
 	{path: 'colaboradores', component: ColaboradoresComponent},
 	{path: 'libros', component: LibrosComponent},
 	{path: 'nuevo-libro', component: NuevoLibroComponent},
+	{path: 'editar-libro/:isbn', component: EditarLibroComponent},
 	{path: '**', component: PrincipalComponent}
 ];
 

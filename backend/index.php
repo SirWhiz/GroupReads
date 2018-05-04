@@ -514,6 +514,29 @@
         echo json_encode($result);
     });
 
+    /* --- OBTENER UN LIBRO CONCRETO --- */
+    $app->get('/libro/:isbn',function($isbn) use($app,$db){
+        $consulta = "SELECT * FROM libros WHERE isbn=".$isbn;
+        $query = $db->query($consulta);
+
+        if($query->num_rows>0){
+            $libro = $query->fetch_assoc();
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$libro
+            );
+        }else{
+            $result = array(
+                'status'=>'erro',
+                'code'=>404,
+                'message'=>'No se ha encontrado ningun libro con ese isbn'
+            ); 
+        }
+
+        echo json_encode($result);
+    });
+
     /* --- OBTENER TODOS LOS LIBROS --- */
     $app->get('/libros',function() use($app,$db){
         $consulta = "SELECT * FROM libros";
@@ -540,6 +563,33 @@
                 'status'=>'success',
                 'code'=>200,
                 'data'=>$libros
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- DEVOLVER LIBROS CON FILTRO --- */
+    $app->get('/librosfiltro/:filtro',function($filtro) use($app,$db){
+        $consulta = "SELECT * FROM libros WHERE titulo LIKE '%".$filtro."%'";
+        $query = $db->query($consulta);
+
+        if($query->num_rows==0){
+            $result = array(
+                'status' => 'error',
+                'code' => 404,
+                'message' => 'No se han encontrado libros con ese criterio'
+            );
+        }else{
+            $librosFiltro = array();
+            while($libro = $query->fetch_assoc()){
+                $librosFiltro[] = $libro;
+            }
+
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$librosFiltro
             );
         }
 

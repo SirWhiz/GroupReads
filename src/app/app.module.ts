@@ -18,6 +18,7 @@ import { MenuColaboradorComponent } from './menuColaborador/menucolaborador.comp
 import { ColaboradoresComponent } from './colaboradores/colaboradores.component';
 import { LibrosComponent } from './mantenimientoLibros/libros.component';
 import { NuevoLibroComponent } from './mantenimientoLibros/nuevolibro.component';
+import { EditarLibroComponent } from './mantenimientoLibros/editarlibro.component';
 
 import { MatInputModule,MatNativeDateModule } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -47,7 +48,8 @@ import { LoginGuard } from './login.guard';
     ColaboradoresComponent,
     MenuColaboradorComponent,
     LibrosComponent,
-    NuevoLibroComponent
+    NuevoLibroComponent,
+    EditarLibroComponent
   ],
   imports: [
     BrowserModule,

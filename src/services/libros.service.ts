@@ -28,6 +28,14 @@ export class LibrosService{
         return this._http.get(this.url+'libros').map(res => res.json());
     }
 
+    getLibro(isbn: string){
+        return this._http.get(this.url+'libro/'+isbn).map(res => res.json());
+    }
+
+    getLibrosFiltro(filtro:string){
+        return this._http.get(this.url+'librosfiltro/'+filtro).map(res => res.json());
+    }
+
     registrarLibro(libro:Libro){
         let json = JSON.stringify(libro);
         let params = 'json='+json;
