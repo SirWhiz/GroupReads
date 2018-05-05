@@ -11,6 +11,7 @@ import { RegistroComponent } from './registro/registro.component';
 import { MenuComponent } from './menu/menu.component';
 import { HomeComponent } from './home/home.component';
 import { DialogoComponent } from './dialogoImagen/dialogo.component';
+import { DialogoLibroComponent } from './dialogoLibro/dialogolibro.component';
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
 import { MenuUsuarioComponent } from './menuUsuario/menuusuario.component';
 import { MenuAdminComponent } from './menuAdmin/menuadmin.component';
@@ -43,6 +44,7 @@ import { LoginGuard } from './login.guard';
     HomeComponent,
     ConfiguracionComponent,
     DialogoComponent,
+    DialogoLibroComponent,
     MenuUsuarioComponent,
     MenuAdminComponent,
     ColaboradoresComponent,
@@ -71,6 +73,6 @@ import { LoginGuard } from './login.guard';
   ],
   providers: [appRoutingProviders,LoginGuard],
   bootstrap: [AppComponent],
-  entryComponents: [DialogoComponent]
+  entryComponents: [DialogoComponent,DialogoLibroComponent]
 })
 export class AppModule { }

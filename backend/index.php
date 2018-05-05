@@ -615,6 +615,57 @@
         echo json_encode($result);
     });
 
+    /* --- DEVOLVER EL AUTOR/AUTORES DE UN LIBRO --- */
+    $app->get('/autores/:isbn',function($isbn) use($app,$db){
+        $consulta = "SELECT * FROM autores_libros WHERE isbnLibro=".$isbn;
+        $query = $db->query($consulta);
+
+        $autores = array();
+        while($autor = $query->fetch_assoc()){
+            $autores[] = $autor;
+        }
+
+        $result = array(
+            'status'=>'success',
+            'code'=>200,
+            'data'=>$autores
+        );
+
+        echo json_encode($result);
+    });
+
+    /* --- BORRAR UN LIBRO --- */
+    $app->post('/deletelibro',function() use($app,$db){
+        $json = $app->request->post('json');
+        $data = json_decode($json,true);
+        $isbn = $data['isbn'];
+
+        $consulta = "DELETE FROM autores_libros WHERE isbnLibro=".$isbn;
+        $db->query($consulta);
+        $consulta = "DELETE FROM libros WHERE isbn=".$isbn;
+        $query = $db->query($consulta);
+
+        if($query){
+            if(!empty($data['portada'])){
+                unlink('../src/app/portadas/'.$data['portada']);
+            }
+
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Libro borrado correctamente'
+            );
+        }else{
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'Error al borrar el libro'
+            );  
+        }
+
+        echo json_encode($result);
+    });
+
     /* --- SUBIR IMAGEN DE UN LIBRO --- */
     $app->post('/upload-cover',function() use($app,$db){
         $result = array(

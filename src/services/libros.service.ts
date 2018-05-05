@@ -24,12 +24,25 @@ export class LibrosService{
     	return this._http.get(this.url+'autores').map(res => res.json());
     }
 
+    getAutoresLibro(isbn: string){
+        return this._http.get(this.url+'autores/'+isbn).map(res => res.json());
+    }
+
     getLibros(){
         return this._http.get(this.url+'libros').map(res => res.json());
     }
 
     getLibro(isbn: string){
         return this._http.get(this.url+'libro/'+isbn).map(res => res.json());
+    }
+
+    borrarLibro(libro: Libro){
+        let json = JSON.stringify(libro);
+        let params = 'json='+json;
+        let headers = new Headers({"Content-Type":"application/x-www-form-urlencoded"});
+
+        return this._http.post(this.url+'deletelibro',params,{headers:headers})
+                .map(res => res.json());
     }
 
     getLibrosFiltro(filtro:string){
