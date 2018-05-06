@@ -9,39 +9,55 @@
     <h3 class="mt-3 text-center"><i>¡Vaya! parece que no hemos encontrado el libro que estabas buscando</i></h3>
   </div>
   <div *ngIf="existeLibro" class="col-sm-9 pt-4 pb-5 panel">
-    <h3 class="d-inline-block">Editar: <i>{{libro.titulo}}</i></h3>
+    <h3 class="d-inline-block">Editar: <i>{{this.tituloActual}}</i></h3>
     <div class="float-right">
     	<button class="btn btn-danger" (click)="abrirDialogo()"><i class="fas fa-trash-alt"></i> Eliminar</button>
     </div>
     <hr>
     <div class="row justify-content-around">
-	    <form class="form mt-4 login col-sm-8" #formLibro="ngForm" (submit)="onSubmit()">
-	        <label for="isbn">ISBN:</label>
-	        <input type="text" name="isbn" class="form-control mb-3" #isbn="ngModel" [(ngModel)]="libro.isbn" required="required" pattern="^[0-9\-]+">
-	        <label for="titulo">Título:</label>
-	        <input type="text" name="titulo" class="form-control mb-3" #titulo="ngModel" [(ngModel)]="libro.titulo" required="required" pattern="^[A-Za-z0-9\s]+">
-	        <label for="paginas">Páginas:</label>
-	        <input type="text" name="paginas" class="form-control mb-3" #paginas="ngModel" [(ngModel)]="libro.paginas" required="required" pattern="^[0-9\.]+">
-	        <label for="genero">Género:</label>
-	        <select name="genero" class="form-control mb-3" [(ngModel)]="libro.idGenero">	  
-	          <option *ngFor="let genero of generos" value="{{genero.id}}">{{genero.nombre}}</option>
-	        </select>
-	        <label>Autor/Autores:</label>
-	        <div class="form-control mb-3">
-	          <span class="mr-3" *ngFor="let autor of autores">
-	          	<span *ngIf="this.autoresElegidos.includes(autor.id);else content">
-	          		<input (change)="cambiar($event,autor.id)" name="autor" class="mb-2 mt-2" id="{{autor.id}}" type="checkbox" checked="checked">{{autor.nombre_ape}}
-	          	</span>
+    	<mat-tab-group class="col-sm-9">
+    		<mat-tab label="Datos generales">
+    			<form class="form mt-4 login" #formLibro="ngForm" (submit)="onSubmit()">
+			        <label for="isbn">ISBN:</label>
+			        <input type="text" name="isbn" class="form-control mb-3" #isbn="ngModel" [(ngModel)]="libro.isbn" required="required" pattern="^[0-9\-]+">
+			        <label for="titulo">Título:</label>
+			        <input type="text" name="titulo" class="form-control mb-3" #titulo="ngModel" [(ngModel)]="libro.titulo" required="required" pattern="^[A-Za-z0-9\s]+">
+			        <label for="paginas">Páginas:</label>
+			        <input type="text" name="paginas" class="form-control mb-3" #paginas="ngModel" [(ngModel)]="libro.paginas" required="required" pattern="^[0-9\.]+">
+			        <label for="genero">Género:</label>
+			        <select name="genero" class="form-control mb-3" [(ngModel)]="libro.idGenero">	  
+			          <option *ngFor="let genero of generos" value="{{genero.id}}">{{genero.nombre}}</option>
+			        </select>
+			        <label>Autor/Autores:</label>
+			        <div class="form-control mb-3">
+			          <span class="mr-3" *ngFor="let autor of autores">
+			          	<span *ngIf="this.autoresElegidos.includes(autor.id);else content">
+			          		<input (change)="cambiar($event,autor.id)" name="autor" class="mb-2 mt-2" id="{{autor.id}}" type="checkbox" checked="checked">{{autor.nombre_ape}}
+			          	</span>
 
-	          	<ng-template #content>
-	          		<input (change)="cambiar($event,autor.id)" name="autor" class="mb-2 mt-2" id="{{autor.id}}" type="checkbox">{{autor.nombre_ape}}
-	          	</ng-template>
-	          </span>
-	        </div>
-	        <label for="img">Imagen de portada: (opcional)</label>
-	        <input (change)="fileChangeEvent($event)" type="file" name="img" class="form-control mb-3">
-	        <input type="submit" value="Enviar" class="btn btn-primary" [disabled]="!formLibro.form.valid || autoresElegidos.length=='0'">
-	    </form>
+			          	<ng-template #content>
+			          		<input (change)="cambiar($event,autor.id)" name="autor" class="mb-2 mt-2" id="{{autor.id}}" type="checkbox">{{autor.nombre_ape}}
+			          	</ng-template>
+			          </span>
+			        </div>
+			        <input type="submit" value="Enviar" class="btn btn-primary" [disabled]="!formLibro.form.valid || autoresElegidos.length=='0'">
+			    </form>
+    		</mat-tab>
+    		<mat-tab label="Portada">
+		        <h3 class="mt-4">Imagen actual:</h3>
+		        <div *ngIf="!libro.portada" class="mb-5">
+		          <p>¡Este libro no tiene ninguna imagen de portada!</p>
+		          <form #formimg="ngForm" class="form login" (ngSubmit)="onSubmitimg()">
+		            <label for="foto">Subir una imagen</label>
+		            <input type="file" (change)="fileChangeEvent($event)" class="form-control mb-3" required="required">
+		            <input type="submit" [disabled]="!formimg.form.valid" class="btn btn-primary" value="Subir imagen">
+		          </form>
+		        </div>
+		        <div *ngIf="libro.portada" class="mb-5 col-md-4">
+		          <img (click)="dialogoPortada()" src="http://localhost/GroupReads/src/app/portadas/{{libro.portada}}" matTooltip="Click para borrar" class="img-thumbnail borrar" alt="Foto de portada">
+		        </div>
+    		</mat-tab>
+    	</mat-tab-group>
 	</div>
   </div>
 </div>

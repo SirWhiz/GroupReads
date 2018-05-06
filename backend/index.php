@@ -666,6 +666,110 @@
         echo json_encode($result);
     });
 
+    /* --- BORRAR IMAGEN DE UN LIBRO --- */
+    $app->get('/deleteportada/:isbn',function($isbn) use($app,$db){
+        $consulta = "SELECT * FROM libros WHERE isbn=".$isbn;
+        $resultado = $db->query($consulta);
+        $datos = $resultado->fetch_assoc();
+        $portada = $datos['portada'];
+        
+        $consulta = "UPDATE libros SET portada=NULL WHERE isbn=".$isbn;
+        $query = $db->query($consulta);
+
+        if($query){
+            unlink('../src/app/portadas/'.$portada);
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Portada borrada correctamente'
+            );
+        }else{
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'Error al borrar la portada'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- ACTUALIZAR IMAGEN DE UN LIBRO --- */
+    $app->post('/actualizarportada/:isbn',function($isbn) use($app,$db){
+        $json = $app->request->post('json');
+        $data = json_decode($json,true);
+
+        $consulta = "UPDATE libros SET portada='".$data['portada']."' WHERE isbn='".$isbn."'";
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>'No se ha podido actualiza el libro'
+        );
+
+        $insert = $db->query($consulta);
+        if($insert){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Imagen actualizada correctamente'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- ACTUALIZAR AUTORES DE UN LIBRO --- */
+    $app->post('/actualizarautores/:isbn',function($isbn) use($app,$db){
+        $json = $app->request->post('json');
+        $data = json_decode($json,true);
+
+        $consulta = "DELETE FROM autores_libros WHERE isbnLibro=".$isbn;
+        $db->query($consulta);
+
+        foreach ($data as $autor) {
+            $consulta = "INSERT INTO autores_libros VALUES(".$autor.",'".$isbn."');";
+            $query = $db->query($consulta);
+        }
+
+        $result = array(
+            'status'=>'success',
+            'code'=>200,
+            'message'=>'Autores actualizados correctamente'
+        );
+
+        echo json_encode($result);
+    });
+
+    /* --- ACTUALIZAR DATOS GENERALES DE UN LIBRO --- */
+    $app->post('/actualizarlibro/:isbn',function($isbn) use($app,$db){
+        $json = $app->request->post('json');
+        $data = json_decode($json,true);
+
+        $consulta = "UPDATE libros SET isbn=".
+                    "{$data['isbn']},titulo=".
+                    "'{$data['titulo']}',paginas=".
+                    "'{$data['paginas']}',idGenero=".
+                    "'{$data['idGenero']}' WHERE isbn=".$isbn;
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'consulta'=>$consulta
+        );
+
+        $insert = $db->query($consulta);
+        if($insert){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Libro actualizado correctamente'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
     /* --- SUBIR IMAGEN DE UN LIBRO --- */
     $app->post('/upload-cover',function() use($app,$db){
         $result = array(

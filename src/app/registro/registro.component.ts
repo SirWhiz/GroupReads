@@ -57,7 +57,7 @@ export class RegistroComponent{
 
 		if(this.filesToUpload.length >= 1){
 			this.nombreArray = this.filesToUpload[0].name.split('.');
-			if(this.nombreArray[this.nombreArray.length-1]!='jpeg' && this.nombreArray[this.nombreArray.length-1]!='png'){
+			if(this.nombreArray[this.nombreArray.length-1]!='jpeg' && this.nombreArray[this.nombreArray.length-1]!='png' && this.nombreArray[this.nombreArray.length-1]!='jpg'){
 				this.snackBar.open("La imagen debe ser jpeg/png", "OK", {
 					duration: 2500,
 				});

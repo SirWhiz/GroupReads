@@ -45,8 +45,39 @@ export class LibrosService{
                 .map(res => res.json());
     }
 
+    borrarPortada(isbn: string){
+        return this._http.get(this.url+'deleteportada/'+isbn).map(res => res.json());
+    }
+
+    updatePortada(libro:Libro){
+        let json = JSON.stringify(libro);
+        let params = 'json='+json;
+        let headers = new Headers({"Content-Type":"application/x-www-form-urlencoded"});
+
+        return this._http.post(this.url+'actualizarportada/'+libro.isbn,params,{headers:headers})
+                .map(res => res.json());
+    }
+
+    updateAutores(autores,isbn){
+        let json = JSON.stringify(autores);
+        let params = 'json='+json;
+        let headers = new Headers({"Content-Type":"application/x-www-form-urlencoded"});
+
+        return this._http.post(this.url+'actualizarautores/'+isbn,params,{headers:headers})
+                .map(res => res.json());
+    }
+
     getLibrosFiltro(filtro:string){
         return this._http.get(this.url+'librosfiltro/'+filtro).map(res => res.json());
+    }
+
+    updateLibro(libro:Libro,isbn:string){
+        let json = JSON.stringify(libro);
+        let params = 'json='+json;
+        let headers = new Headers({"Content-Type":"application/x-www-form-urlencoded"});
+
+        return this._http.post(this.url+'actualizarlibro/'+isbn,params,{headers:headers})
+                .map(res => res.json());
     }
 
     registrarLibro(libro:Libro){
