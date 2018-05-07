@@ -1,0 +1,18 @@
+<menuadmin *ngIf="perfil=='a'"></menuadmin>
+<menucolaborador *ngIf="perfil=='c'"></menucolaborador>
+<!--Dashboard-->
+<div class="row filaAdmin jutify-content-around">
+  <div class="col-sm-3 columnaAdmin pt-5 pb-5">
+  	<button (click)="nuevo()" class="btn btn-light btn-block text-truncate">Añadir nuevo</button>
+    <button [routerLink]="['/home']" class="btn btn-danger btn-block text-truncate">Volver</button>
+  </div>
+  <div class="col-sm-9 pt-4 pb-5 panel">
+    <h3>Géneros literarios:</h3>
+    <hr>
+    <div class="row">
+    	<div *ngFor="let genero of generos" matTooltip="Click para editar o borrar" (click)="editar(genero)" class="col-md-2 feature text-center m-3 cursor">
+    		{{genero.nombre}}
+    	</div>
+    </div>
+  </div>
+</div>

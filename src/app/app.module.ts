@@ -21,6 +21,9 @@ import { ColaboradoresComponent } from './colaboradores/colaboradores.component'
 import { LibrosComponent } from './mantenimientoLibros/libros.component';
 import { NuevoLibroComponent } from './mantenimientoLibros/nuevolibro.component';
 import { EditarLibroComponent } from './mantenimientoLibros/editarlibro.component';
+import { GenerosComponent } from './generos/generos.component';
+import { DialogoNuevoGenero } from './generos/dialogonuevogenero.component';
+import { DialogoEditarGenero } from './generos/dialogoeditargenero.component';
 
 import { MatInputModule,MatNativeDateModule } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -53,7 +56,10 @@ import { LoginGuard } from './login.guard';
     MenuColaboradorComponent,
     LibrosComponent,
     NuevoLibroComponent,
-    EditarLibroComponent
+    EditarLibroComponent,
+    GenerosComponent,
+    DialogoNuevoGenero,
+    DialogoEditarGenero
   ],
   imports: [
     BrowserModule,
@@ -75,6 +81,11 @@ import { LoginGuard } from './login.guard';
   ],
   providers: [appRoutingProviders,LoginGuard],
   bootstrap: [AppComponent],
-  entryComponents: [DialogoComponent,DialogoLibroComponent,DialogoPortadaComponent]
+  entryComponents: [DialogoComponent,
+                    DialogoLibroComponent,
+                    DialogoPortadaComponent,
+                    DialogoNuevoGenero,
+                    DialogoEditarGenero
+                    ]
 })
 export class AppModule { }

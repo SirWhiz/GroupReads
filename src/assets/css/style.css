@@ -130,6 +130,9 @@ footer{
     color:#4CAF50 !important;
     float:right;
 }
+.cursor{
+    cursor: pointer;
+}
 .fondoLogin{
     background:#0288D1;
     color:#fff;
@@ -202,6 +205,7 @@ footer{
 }
 .panel{
     background: #fff;
+    min-height: 15em;
 }
 .columnaAdmin{
     height: 100%;

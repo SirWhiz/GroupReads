@@ -1,0 +1,7 @@
+<h4>Editar: {{genero.nombre}}</h4>
+<form class="form login mt-4" #formGenero="ngForm" (ngSubmit)="onSubmit()">
+	<label>Nombre:</label>
+	<input type="text" [(ngModel)]="nombreActual" name="genero" class="form-control mb-3" required="required" pattern="^[A-Za-z\u00f1\u00d1À-ÿ\s\-]+">
+	<input type="submit" value="Enviar" class="btn btn-primary" [disabled]="!formGenero.form.valid">
+</form>
+<button (click)="borrar()" class="btn btn-danger mt-5 form-control"><i class="fas fa-trash-alt"></i> Eliminar género</button>

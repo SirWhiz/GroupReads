@@ -419,6 +419,78 @@
         echo json_encode($result);
     });
 
+    /* --- AÑADIR NUEVO GENERO --- */
+    $app->post('/nuevogenero',function() use($app,$db){
+        $json = $app->request->post('json');
+        $data = json_decode($json,true);
+
+        $consulta = "INSERT INTO generos VALUES (DEFAULT,'".$data['nombre']."');";
+        $query=$db->query($consulta);
+
+        if($query){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Genero creado correctamente'
+            );
+        }else{
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'Error creando el genero'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- EDITAR UN GENERO --- */
+    $app->post('/editargenero',function() use($app,$db){
+        $json = $app->request->post('json');
+        $data = json_decode($json,true);
+
+        $consulta = "UPDATE generos SET nombre='".$data['nombre']."' WHERE id=".$data['id'];
+        $query = $db->query($consulta);
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>'Error al modificar el genero'
+        );
+
+        if($query){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>$consulta
+            );  
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- BORRAR UN GÉNERO --- */
+    $app->get('/deletegenero/:id',function($id) use($app,$db){
+        $consulta = "DELETE FROM generos WHERE id=".$id;
+        $query = $db->query($consulta);
+
+        if($query){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Genero borrado correctamente'
+            );
+        }else{
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'Error al borrar el genero'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
     /* --- DEVOLVER TODOS LOS GÉNEROS --- */
     $app->get('/generos',function() use($app,$db){
         $consulta = "SELECT * FROM generos";

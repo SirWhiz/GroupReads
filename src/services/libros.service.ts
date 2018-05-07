@@ -3,6 +3,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Libro } from '../app/mantenimientoLibros/libro';
+import { Genero } from '../app/mantenimientoLibros/genero';
 import { GLOBAL } from './global';
 
 @Injectable()
@@ -18,6 +19,28 @@ export class LibrosService{
 
     getGeneros(){
     	return this._http.get(this.url+'generos').map(res => res.json());
+    }
+
+    addGenero(genero: Genero){
+        let json = JSON.stringify(genero);
+        let params = 'json='+json;
+        let headers = new Headers({"Content-Type":"application/x-www-form-urlencoded"});
+
+        return this._http.post(this.url+'nuevogenero',params,{headers:headers})
+                .map(res => res.json());
+    }
+
+    editarGenero(genero: Genero){
+        let json = JSON.stringify(genero);
+        let params = 'json='+json;
+        let headers = new Headers({"Content-Type":"application/x-www-form-urlencoded"});
+
+        return this._http.post(this.url+'editargenero',params,{headers:headers})
+                .map(res => res.json());
+    }
+
+    deleteGenero(id:string){
+        return this._http.get(this.url+'deletegenero/'+id).map(res => res.json());
     }
 
     getAutores(){
