@@ -14,6 +14,8 @@ import { LibrosComponent } from './mantenimientoLibros/libros.component';
 import { NuevoLibroComponent } from './mantenimientoLibros/nuevolibro.component';
 import { EditarLibroComponent } from './mantenimientoLibros/editarlibro.component';
 import { GenerosComponent } from './generos/generos.component';
+import { AutoresComponent } from './autores/autores.component';
+import { NuevoAutorComponent } from './autores/nuevoautor.component';
 
 const appRoutes: Routes = [
 	{path: '', component: PrincipalComponent},
@@ -26,6 +28,8 @@ const appRoutes: Routes = [
 	{path: 'nuevo-libro', component: NuevoLibroComponent},
 	{path: 'editar-libro/:isbn', component: EditarLibroComponent},
 	{path: 'generos', component: GenerosComponent},
+	{path: 'autores', component: AutoresComponent},
+	{path: 'nuevo-autor', component: NuevoAutorComponent},
 	{path: '**', component: PrincipalComponent}
 ];
 

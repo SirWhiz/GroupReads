@@ -431,7 +431,8 @@
             $result = array(
                 'status'=>'success',
                 'code'=>200,
-                'message'=>'Genero creado correctamente'
+                'message'=>'Genero creado correctamente',
+                'id'=>$db->insert_id
             );
         }else{
             $result = array(

@@ -1,0 +1,13 @@
+<menuadmin *ngIf="perfil=='a'"></menuadmin>
+<menucolaborador *ngIf="perfil=='c'"></menucolaborador>
+<!--Dashboard-->
+<div class="row filaAdmin jutify-content-around">
+  <div class="col-sm-3 columnaAdmin pt-5 pb-5">
+    <button [routerLink]="['/autores']" class="btn btn-danger btn-block text-truncate">Volver</button>
+  </div>
+  <div class="col-sm-9 pt-4 pb-5 panel">
+    <h3>Añadir autor:</h3>
+    <hr>
+    
+  </div>
+</div>

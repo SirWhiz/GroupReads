@@ -9,10 +9,11 @@
   <div class="col-sm-9 pt-4 pb-5 panel">
     <h3>Géneros literarios:</h3>
     <hr>
-    <div class="row">
-    	<div *ngFor="let genero of generos" matTooltip="Click para editar o borrar" (click)="editar(genero)" class="col-md-2 feature text-center m-3 cursor">
-    		{{genero.nombre}}
-    	</div>
+    <div *ngIf="generos.length=='0'" class="text-center mt-5"><i>¡Vaya! parace que aún no hay géneros en la base de datos..</i></div>
+    <div *ngIf="generos.length>'0'" class="row">
+      <div *ngFor="let genero of generos" class="col-md-2 feature text-center m-3 cursor" matTooltip="Click para editar o borrar" (click)="editar(genero)">
+          {{genero.nombre}}
+      </div>
     </div>
   </div>
 </div>

@@ -13,10 +13,14 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 export class GenerosComponent{
 
-	public perfil: string;	public generos: Genero[];
+	public perfil: string;	
+	public generos: Genero[];
+	public noGeneros: boolean;
 
 	constructor(private _router: Router,private _librosService: LibrosService,public dialog: MatDialog){
 		this.perfil = "";
+		this.noGeneros = false;
+		this.generos = new Array();
 	}
 
 	ngOnInit(){
@@ -35,6 +39,8 @@ export class GenerosComponent{
 			result => {
 				if(result.code == 200){
 					this.generos = result.data;
+				}else{
+					this.noGeneros = true;
 				}
 			}, error => {
 				console.log(error);
@@ -43,6 +49,7 @@ export class GenerosComponent{
 	}
 
 	editar(genero: Genero){
+		console.log(genero);
 		this.dialog.open(DialogoEditarGenero,{
 			width:'500px',
 			data: { genero: genero, generos: this.generos }

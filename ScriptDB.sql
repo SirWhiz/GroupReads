@@ -70,6 +70,7 @@ CREATE TABLE autores(
     nombre_ape varchar(150) NOT NULL,
     fecha_nacimiento date NOT NULL,
     nacionalidad smallint unsigned NOT NULL,
+    foto varchar(100) NULL,
     FOREIGN KEY (nacionalidad) REFERENCES paises(id)
 );
 

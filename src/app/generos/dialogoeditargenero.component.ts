@@ -12,7 +12,6 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 export class DialogoEditarGenero{
 
-	public perfil: string;	
 	public genero: Genero;
 	public generos: Genero[];
 	public nombreActual: string;
@@ -24,7 +23,6 @@ export class DialogoEditarGenero{
         public snackBar:MatSnackBar,
         public _router:Router,)
 		{
-			this.perfil = "";
 			this.genero = data.genero;
 			this.generos = data.generos;
 

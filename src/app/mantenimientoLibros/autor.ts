@@ -5,5 +5,6 @@ export class Autor{
 		public nombre_ape: string,
 		public fecha_nacimiento: string,
 		public pais: string,
+		public foto: string,
 	){}
 }

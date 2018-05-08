@@ -1,0 +1,21 @@
+<menuadmin *ngIf="perfil=='a'"></menuadmin>
+<menucolaborador *ngIf="perfil=='c'"></menucolaborador>
+<!--Dashboard-->
+<div class="row filaAdmin jutify-content-around">
+  <div class="col-sm-3 columnaAdmin pt-5 pb-5">
+  	<button [routerLink]="['/nuevo-autor']" class="btn btn-light btn-block text-truncate">Añadir nuevo</button>
+    <button [routerLink]="['/home']" class="btn btn-danger btn-block text-truncate">Volver</button>
+  </div>
+  <div class="col-sm-9 pt-4 pb-5 panel">
+    <h3>Autores:</h3>
+    <hr>
+    <div *ngIf="noAutores" class="text-center mt-5"><i>¡Vaya! parace que aún no hay autores en la base de datos..</i></div>
+    <div *ngIf="!noAutores" class="row">
+      <div *ngFor="let autor of autores" class="col-sm-2 libro mr-3 p-2 text-center" matTooltip="Click para editar" matTooltipPosition="above">
+      	<img *ngIf="autor.foto" src="http://localhost/GroupReads/src/app/imgautores/{{autor.foto}}" class="img-thumbnail">
+        <img *ngIf="!autor.foto" src="http://localhost/GroupReads/src/app/imgautores/nopic.jpg" class="img-thumbnail">
+        <p class="mt-3">{{autor.nombre_ape}}</p>
+      </div>
+    </div>
+  </div>
+</div>

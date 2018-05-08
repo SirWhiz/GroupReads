@@ -29,16 +29,6 @@ export class DialogoNuevoGenero{
 		}
 
 	ngOnInit(){
-
-		if(localStorage.getItem('perfil')==null || localStorage.getItem('perfil')=='n'){
-			this._router.navigate(['/login']);
-		}
-
-		if(localStorage.getItem('perfil')=='a'){
-			this.perfil = 'a';
-		}else if(localStorage.getItem('perfil')=='c'){
-			this.perfil = 'c';
-		}
 	}
 
 	onSubmit(){
@@ -50,6 +40,7 @@ export class DialogoNuevoGenero{
     				this.snackBar.open("Genero añadido correctamente", "Aceptar", {
       					duration: 2500,
     				});
+    				this.genero.id=result.id;
     				this.generos.push(this.genero);
 				}else{
 					this.dialogRef.close();
@@ -61,7 +52,6 @@ export class DialogoNuevoGenero{
 				console.log(error);
 			}
 		);
-
 	}
 
     public close(){

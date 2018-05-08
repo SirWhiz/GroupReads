@@ -2,7 +2,7 @@
 <!--Dashboard-->
 <div *ngIf="this.usuario.tipo=='a'" class="row filaAdmin jutify-content-around">
   <div class="col-sm-3 columnaAdmin pt-5 pb-5">
-    <button class="btn btn-light btn-block text-truncate">Autores</button>
+    <button [routerLink]="['/autores']" class="btn btn-light btn-block text-truncate">Autores</button>
     <button class="btn btn-light btn-block text-truncate">Clubes</button>
     <button [routerLink]="['/colaboradores']" class="btn btn-light btn-block text-truncate">Colaboradores</button>
     <button [routerLink]="['/generos']" class="btn btn-light btn-block text-truncate">Géneros</button>

@@ -24,6 +24,8 @@ import { EditarLibroComponent } from './mantenimientoLibros/editarlibro.componen
 import { GenerosComponent } from './generos/generos.component';
 import { DialogoNuevoGenero } from './generos/dialogonuevogenero.component';
 import { DialogoEditarGenero } from './generos/dialogoeditargenero.component';
+import { AutoresComponent } from './autores/autores.component';
+import { NuevoAutorComponent } from './autores/nuevoautor.component';
 
 import { MatInputModule,MatNativeDateModule } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -59,7 +61,9 @@ import { LoginGuard } from './login.guard';
     EditarLibroComponent,
     GenerosComponent,
     DialogoNuevoGenero,
-    DialogoEditarGenero
+    DialogoEditarGenero,
+    AutoresComponent,
+    NuevoAutorComponent
   ],
   imports: [
     BrowserModule,
