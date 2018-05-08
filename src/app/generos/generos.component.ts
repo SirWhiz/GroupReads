@@ -49,7 +49,6 @@ export class GenerosComponent{
 	}
 
 	editar(genero: Genero){
-		console.log(genero);
 		this.dialog.open(DialogoEditarGenero,{
 			width:'500px',
 			data: { genero: genero, generos: this.generos }

@@ -1,0 +1,43 @@
+<menuadmin *ngIf="perfil=='a'"></menuadmin>
+<menucolaborador *ngIf="perfil=='c'"></menucolaborador>
+<!--Dashboard-->
+<div class="row filaAdmin jutify-content-around">
+  <div class="col-sm-3 columnaAdmin pt-5 pb-5">
+    <button [routerLink]="['/autores']" class="btn btn-danger btn-block text-truncate">Volver</button>
+  </div>
+  <div *ngIf="!existeAutor" class="col-sm-9 pt-4 pb-5 panel">
+    <h3 class="mt-3 text-center"><i>¡Vaya! parece que no hemos encontrado el autor que estabas buscando</i></h3>
+  </div>
+  <div *ngIf="existeAutor" class="col-sm-9 pt-4 pb-5 panel">
+    <h3 class="d-inline-block">Editar: <i>{{this.nombreActual}}</i></h3>
+    <div class="float-right">
+    	<button class="btn btn-danger" (click)="abrirDialogo()"><i class="fas fa-trash-alt"></i> Eliminar</button>
+    </div>
+    <hr>
+    <div class="row justify-content-around">
+    	<mat-tab-group class="col-sm-9">
+    		<mat-tab label="Datos generales">
+	      		<form class="form mt-4 login" #formAutor="ngForm" (submit)="onSubmit()">
+			      	<label for="nombre">Nombre y apellidos:</label>
+			      	<input type="text" class="form-control mb-3" name="nombre" #nombre="ngModel" [(ngModel)]="autor.nombre_ape" required="required" pattern="^[A-Za-z\u00f1\u00d1À-ÿ\s\-]+">
+			      	<strong>Fecha de nacimiento: {{this.fechaMostrar}}</strong> <br/>
+					<mat-form-field>
+						<input matInput [matDatepicker]="picker" placeholder="Cambiar" disabled [(ngModel)]="autor.fecha_nacimiento" name="fecha">
+						<mat-datepicker-toggle matSuffix [for]="picker" required="required"></mat-datepicker-toggle>
+						<mat-datepicker required="true" #picker touchUi="true" disabled="false"></mat-datepicker>
+					</mat-form-field><br/>
+					<label for="paises">País de nacionalidad:</label>
+					<select class="form-control mb-3" name="pais" [(ngModel)]="autor.nacionalidad">
+						<option *ngFor="let pais of paises" value="{{pais.id}}">{{pais.nicename}}</option>
+					</select>
+			        <input type="submit" value="Enviar" class="btn btn-primary" [disabled]="!formAutor.form.valid || autor.fecha=='' || autor.pais==''">
+		      	</form>
+    		</mat-tab>
+    		<mat-tab label="Imagen">
+		        <h3 class="mt-4">Imagen actual:</h3>
+
+    		</mat-tab>
+    	</mat-tab-group>
+	</div>
+  </div>
+</div>

@@ -524,6 +524,100 @@
         echo json_encode($result);
     });
 
+    /* --- DEVOLVER UN AUTOR CONCRETO --- */
+    $app->get('/autor/:id',function($id) use($app,$db){
+        $consulta = "SELECT * FROM autores WHERE id=".$id;
+        $query = $db->query($consulta);
+
+        if($query){
+            if($query->num_rows == 1){
+                $autor = $query->fetch_assoc();
+                $result = array(
+                    'status'=>'success',
+                    'code'=>200,
+                    'data'=>$autor
+                );
+            }else{
+                $result = array(
+                    'status'=>'error',
+                    'code'=>404,
+                    'message'=>'No se ha encontrado el autor'
+                );
+            }
+        }else{
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'No se ha encontrado el autor'
+            );
+        }
+        
+
+        echo json_encode($result);
+    });
+
+    /* --- AÑADIR NUEVO AUTOR --- */
+    $app->post('/nuevoautor',function() use($app,$db){
+        $json = $app->request->post('json');
+        $data = json_decode($json,true);
+
+        if(empty($data['foto'])){
+            $data['foto'] = NULL;
+        }
+
+        $consulta = "INSERT INTO autores VALUES (DEFAULT,".
+            "'{$data['nombre_ape']}',".
+            "'{$data['fecha']}',".
+            "'{$data['pais']}',".
+            "'{$data['foto']}');";
+        
+        $query = $db->query($consulta);
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>'Error al registrar autor'
+        );
+
+        if($query){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Autor registrado correctamente'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- ACTUALIZAR DATOS GENERALES DE UN AUTOR --- */
+    $app->post('/updateautor',function() use($app,$db){
+        $json = $app->request->post('json');
+        $data = json_decode($json,true);
+
+        $consulta = "UPDATE autores SET nombre_ape=".
+                    "'{$data['nombre_ape']}',fecha_nacimiento=".
+                    "'{$data['fecha_nacimiento']}',nacionalidad=".
+                    "'{$data['nacionalidad']}' WHERE id=".$data['id'];
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'consulta'=>$consulta
+        );
+
+        $insert = $db->query($consulta);
+        if($insert){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Autor actualizado correctamente'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
     /* --- DEVOLVER TODOS LOS AUTORES --- */
     $app->get('/autores',function() use($app,$db){
         $consulta = "SELECT * FROM autores";
@@ -547,6 +641,36 @@
                 'data'=>$autores
             );
         }
+        echo json_encode($result);
+    });
+
+    /* --- BORRAR UN AUTOR --- */
+    $app->get('/deleteautor/:id',function($id) use($app,$db){
+
+        $consulta = "SELECT * FROM autores_libros WHERE idAutor=".$id;
+        $query = $db->query($consulta);
+        while($libro = $query->fetch_assoc()){
+            $consulta = "DELETE FROM libros WHERE isbn=".$libro['isbnLibro'].";";
+            $db->query($consulta);
+        }
+
+        $consulta = "DELETE FROM autores WHERE id=".$id;
+        $query = $db->query($consulta);
+
+        if($query){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Autor borrado correctamente'
+            );
+        }else{
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'Error al borrar el autor'
+            );
+        }
+
         echo json_encode($result);
     });
 
@@ -855,6 +979,40 @@
             $piramideUploader = new PiramideUploader();
 
             $upload = $piramideUploader->upload('image','uploads','../src/app/portadas',array('image/jpeg','image/png'));
+            $file = $piramideUploader->getInfoFile();
+            $file_name = $file['complete_name'];
+
+            if(isset($upload) && $upload['uploaded']==false){
+                $result = array(
+                    'status' => 'error',
+                    'code' => 404,
+                    'message' => 'El archivo no ha podido subirse'
+                );
+            }else{
+                $result = array(
+                    'status' => 'success',
+                    'code' => 200,
+                    'message' => 'El archivo se ha subido',
+                    'filename' => $file_name
+                );
+            }
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- SUBIR IMAGEN DE UN AUTOR --- */
+    $app->post('/upload-autor',function() use($app,$db){
+        $result = array(
+            'status' => 'error',
+            'code' => 404,
+            'message' => 'El archivo no ha podido subirse'
+        );
+
+        if(isset($_FILES['uploads'])){
+            $piramideUploader = new PiramideUploader();
+
+            $upload = $piramideUploader->upload('image','uploads','../src/app/imgautores',array('image/jpeg','image/png'));
             $file = $piramideUploader->getInfoFile();
             $file_name = $file['complete_name'];
 

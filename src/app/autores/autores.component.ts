@@ -33,7 +33,6 @@ export class AutoresComponent{
 
 		this._librosService.getAutores().subscribe(
 			result => {
-				console.log(result);
 				if(result.code == 200){
 					this.autores = result.data;
 				}else{
@@ -43,6 +42,11 @@ export class AutoresComponent{
 				console.log(error);
 			}
 		);
+	}
+
+	editar(autor:Autor){
+		console.log(autor);
+		this._router.navigate(['/editar-autor/'+autor.id]);
 	}
 
 

@@ -16,6 +16,7 @@ import { EditarLibroComponent } from './mantenimientoLibros/editarlibro.componen
 import { GenerosComponent } from './generos/generos.component';
 import { AutoresComponent } from './autores/autores.component';
 import { NuevoAutorComponent } from './autores/nuevoautor.component';
+import { EditarAutorComponent } from './autores/editarautor.component';
 
 const appRoutes: Routes = [
 	{path: '', component: PrincipalComponent},
@@ -30,6 +31,7 @@ const appRoutes: Routes = [
 	{path: 'generos', component: GenerosComponent},
 	{path: 'autores', component: AutoresComponent},
 	{path: 'nuevo-autor', component: NuevoAutorComponent},
+	{path: 'editar-autor/:id', component: EditarAutorComponent},
 	{path: '**', component: PrincipalComponent}
 ];
 

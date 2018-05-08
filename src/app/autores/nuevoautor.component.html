@@ -8,6 +8,23 @@
   <div class="col-sm-9 pt-4 pb-5 panel">
     <h3>Añadir autor:</h3>
     <hr>
-    
+    <div class="row justify-content-around">
+      <form class="form mt-4 login col-sm-8" #formAutor="ngForm" (submit)="onSubmit()">
+      	<label for="nombre">Nombre y apellidos:</label>
+      	<input type="text" class="form-control mb-3" name="nombre" #nombre="ngModel" [(ngModel)]="autor.nombre_ape" required="required" pattern="^[A-Za-z\u00f1\u00d1À-ÿ\s\-]+">
+		<mat-form-field>
+			<input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento" disabled [(ngModel)]="autor.fecha" name="fecha">
+			<mat-datepicker-toggle matSuffix [for]="picker" required="required"></mat-datepicker-toggle>
+			<mat-datepicker required="true" #picker touchUi="true" disabled="false"></mat-datepicker>
+		</mat-form-field><br/>
+		<label for="paises">País de nacionalidad:</label>
+		<select class="form-control mb-3" name="pais" [(ngModel)]="autor.pais">
+			<option *ngFor="let pais of paises" value="{{pais.id}}">{{pais.nicename}}</option>
+		</select>
+		<label for="foto">Imagen: (Opcional)</label>
+		<input (change)="fileChangeEvent($event)" type="file" name="img" class="form-control mb-3">
+        <input type="submit" value="Enviar" class="btn btn-primary" [disabled]="!formAutor.form.valid || autor.fecha=='' || autor.pais==''">
+      </form>
+    </div>
   </div>
 </div>

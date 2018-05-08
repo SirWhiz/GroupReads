@@ -3,6 +3,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Libro } from '../app/mantenimientoLibros/libro';
+import { Autor } from '../app/mantenimientoLibros/autor';
 import { Genero } from '../app/mantenimientoLibros/genero';
 import { GLOBAL } from './global';
 
@@ -15,6 +16,10 @@ export class LibrosService{
         public _http: Http
     ){
         this.url=GLOBAL.url;
+    }
+
+    getPaises(){
+        return this._http.get(this.url+'paises').map(res => res.json());
     }
 
     getGeneros(){
@@ -39,12 +44,38 @@ export class LibrosService{
                 .map(res => res.json());
     }
 
+    addAutor(autor: Autor){
+        let json = JSON.stringify(autor);
+        let params = 'json='+json;
+        let headers = new Headers({"Content-Type":"application/x-www-form-urlencoded"});
+
+        return this._http.post(this.url+'nuevoautor',params,{headers:headers})
+                .map(res => res.json());
+    }
+
+    updateAutor(autor: Autor){
+        let json = JSON.stringify(autor);
+        let params = 'json='+json;
+        let headers = new Headers({"Content-Type":"application/x-www-form-urlencoded"});
+
+        return this._http.post(this.url+'updateautor',params,{headers:headers})
+                .map(res => res.json());
+    }
+
+    deleteAutor(id: string){
+        return this._http.get(this.url+'deleteautor/'+id).map(res => res.json());
+    }
+
     deleteGenero(id:string){
         return this._http.get(this.url+'deletegenero/'+id).map(res => res.json());
     }
 
     getAutores(){
     	return this._http.get(this.url+'autores').map(res => res.json());
+    }
+
+    getAutor(id:string){
+        return this._http.get(this.url+'autor/'+id).map(res => res.json());
     }
 
     getAutoresLibro(isbn: string){

@@ -78,8 +78,8 @@ CREATE TABLE autores_libros(
     idAutor smallint unsigned NOT NULL,
     isbnLibro varchar(15) NOT NULL,
     PRIMARY KEY (idAutor,isbnLibro),
-    FOREIGN KEY (idAutor) REFERENCES autores(id),
-    FOREIGN KEY (isbnLibro) REFERENCES libros(isbn) ON UPDATE CASCADE
+    FOREIGN KEY (idAutor) REFERENCES autores(id) ON DELETE CASCADE,
+    FOREIGN KEY (isbnLibro) REFERENCES libros(isbn) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE libros_clubes(

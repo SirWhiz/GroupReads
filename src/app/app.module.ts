@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { DialogoComponent } from './dialogoImagen/dialogo.component';
 import { DialogoLibroComponent } from './dialogoLibro/dialogolibro.component';
 import { DialogoPortadaComponent } from './dialogoPortada/dialogoportada.component';
+import { DialogoBorrarAutor } from './autores/dialogoborrarautor.component';
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
 import { MenuUsuarioComponent } from './menuUsuario/menuusuario.component';
 import { MenuAdminComponent } from './menuAdmin/menuadmin.component';
@@ -26,6 +27,7 @@ import { DialogoNuevoGenero } from './generos/dialogonuevogenero.component';
 import { DialogoEditarGenero } from './generos/dialogoeditargenero.component';
 import { AutoresComponent } from './autores/autores.component';
 import { NuevoAutorComponent } from './autores/nuevoautor.component';
+import { EditarAutorComponent } from './autores/editarautor.component';
 
 import { MatInputModule,MatNativeDateModule } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -63,7 +65,9 @@ import { LoginGuard } from './login.guard';
     DialogoNuevoGenero,
     DialogoEditarGenero,
     AutoresComponent,
-    NuevoAutorComponent
+    NuevoAutorComponent,
+    EditarAutorComponent,
+    DialogoBorrarAutor
   ],
   imports: [
     BrowserModule,
@@ -89,7 +93,8 @@ import { LoginGuard } from './login.guard';
                     DialogoLibroComponent,
                     DialogoPortadaComponent,
                     DialogoNuevoGenero,
-                    DialogoEditarGenero
+                    DialogoEditarGenero,
+                    DialogoBorrarAutor
                     ]
 })
 export class AppModule { }
