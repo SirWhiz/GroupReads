@@ -90,6 +90,10 @@ export class LibrosService{
         return this._http.get(this.url+'libro/'+isbn).map(res => res.json());
     }
 
+    comprobarisbn(isbn: string){
+        return this._http.get(this.url+'checkisbn/'+isbn).map(res => res.json());
+    }
+
     borrarLibro(libro: Libro){
         let json = JSON.stringify(libro);
         let params = 'json='+json;
@@ -141,6 +145,10 @@ export class LibrosService{
 
     getLibrosFiltro(filtro:string){
         return this._http.get(this.url+'librosfiltro/'+filtro).map(res => res.json());
+    }
+
+    getAutoresFiltro(filtro:string){
+       return this._http.get(this.url+'autoresfiltro/'+filtro).map(res => res.json());
     }
 
     updateLibro(libro:Libro,isbn:string){

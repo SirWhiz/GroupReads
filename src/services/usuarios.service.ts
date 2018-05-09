@@ -43,6 +43,10 @@ export class UsuariosService{
         return this._http.get(this.url+'totalusuarios').map(res => res.json());
     }
 
+    totalLibros(){
+        return this._http.get(this.url+'totallibros').map(res => res.json());   
+    }
+
     borrarImagen(usuario:Usuario){
         let json = JSON.stringify(usuario);
         let params = 'json='+json;

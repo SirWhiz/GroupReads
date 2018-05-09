@@ -9,6 +9,9 @@
   <div class="col-sm-9 pt-4 pb-5 panel">
     <h3>Autores:</h3>
     <hr>
+    <div *ngIf="!noAutores">
+      <input type="text" name="filtro" (keyup)="filtrarAutores()" [(ngModel)]="filtro" class="form-control filtro mb-4" placeholder="Filtrar por nombre.." autocomplete="off">
+    </div>
     <div *ngIf="noAutores" class="text-center mt-5"><i>¡Vaya! parace que aún no hay autores en la base de datos..</i></div>
     <div *ngIf="!noAutores" class="row">
       <div *ngFor="let autor of autores" (click)="editar(autor)" class="col-sm-2 libro mr-3 p-2 text-center" matTooltip="Click para editar" matTooltipPosition="above">

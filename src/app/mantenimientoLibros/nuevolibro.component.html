@@ -11,7 +11,8 @@
     <div class="row justify-content-around">
       <form class="form mt-4 login col-sm-8" #formLibro="ngForm" (submit)="onSubmit()">
         <label for="isbn">ISBN:</label>
-        <input type="text" name="isbn" class="form-control mb-3" #isbn="ngModel" [(ngModel)]="libro.isbn" required="required" pattern="^[0-9\-]+">
+        <span *ngIf="isbnRepetido"><br/>Ya existe un libro con ese ISBN</span>
+        <input type="text" name="isbn" class="form-control mb-3" #isbn="ngModel" [(ngModel)]="libro.isbn" required="required" pattern="^[0-9\-]+" (keyup)="comprobarisbn()">
         <label for="titulo">Título:</label>
         <input type="text" name="titulo" class="form-control mb-3" #titulo="ngModel" [(ngModel)]="libro.titulo" required="required" pattern="^[A-Za-z0-9\s]+">
         <label for="paginas">Páginas:</label>
@@ -26,7 +27,7 @@
         </div>
         <label for="img">Imagen de portada: (opcional)</label>
         <input (change)="fileChangeEvent($event)" type="file" name="img" class="form-control mb-3">
-        <input type="submit" value="Enviar" class="btn btn-primary" [disabled]="!formLibro.form.valid || autoresLibro.length=='0'">
+        <input type="submit" value="Enviar" class="btn btn-primary" [disabled]="!formLibro.form.valid || autoresLibro.length=='0' || isbnRepetido">
       </form>
     </div>
   </div>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { LibrosService } from '../../services/libros.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Autor } from '../mantenimientoLibros/autor';
 
 @Component({
@@ -13,14 +14,15 @@ export class AutoresComponent{
 	public perfil: string;
 	public autores: Autor[];
 	public noAutores: boolean;
+	public filtro: string;
 
-	constructor(private _router: Router,private _librosService: LibrosService){
+	constructor(private snackBar:MatSnackBar,private _router: Router,private _librosService: LibrosService){
 		this.perfil = "";
+		this.filtro = "";
 		this.noAutores = false;
 	}
 
 	ngOnInit(){
-
 		if(localStorage.getItem('perfil')==null || localStorage.getItem('perfil')=='n'){
 			this._router.navigate(['/login']);
 		}
@@ -48,5 +50,34 @@ export class AutoresComponent{
 		this._router.navigate(['/editar-autor/'+autor.id]);
 	}
 
+	filtrarAutores(){
+		if(this.filtro!=''){
+			this._librosService.getAutoresFiltro(this.filtro).subscribe(
+				result => {
+					if(result.code == 200){
+						this.autores = result.data;
+					}else{
+						this.snackBar.open("No se han encontrado autores con ese criterio", "Aceptar", {
+	  						duration: 2500,
+	    				});
+					}
+				}, error => {
+					console.log(error);
+				}
+			);
+		}else{
+			this._librosService.getAutores().subscribe(
+				result => {
+					if(result.code == 200){
+						this.autores = result.data;
+					}else{
+						this.noAutores = true;
+					}
+				}, error => {
+					console.log(error);
+				}
+			);	
+		}
+	}
 
 }

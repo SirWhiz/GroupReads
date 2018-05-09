@@ -23,10 +23,12 @@ export class NuevoLibroComponent{
 	public filesToUpload;
 	public resultUpload;
 	public nombreArray:any[];
+	public isbnRepetido: boolean;
 
 	constructor(private snackBar:MatSnackBar,private _router: Router,public _libroService:LibrosService){
 		this.libro = new Libro("","","","","","","");
 		this.perfil = "";
+		this.isbnRepetido = false;
 		this.autoresLibro = new Array();
 		this.filesToUpload = new Array();
 		this.nombreArray = new Array();
@@ -54,6 +56,20 @@ export class NuevoLibroComponent{
 			result => {
 				if(result.code == 200){
 					this.autores = result.data;
+				}
+			}, error => {
+				console.log(error);
+			}
+		);
+	}
+
+	comprobarisbn(){
+		this._libroService.comprobarisbn(this.libro.isbn).subscribe(
+			result => {
+				if(result.code == 200){
+					this.isbnRepetido = true;
+				}else{
+					this.isbnRepetido = false;
 				}
 			}, error => {
 				console.log(error);

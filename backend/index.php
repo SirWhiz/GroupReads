@@ -302,6 +302,21 @@
         echo json_encode($result);
     });
 
+    /* --- DEVOLVER TOTAL DE USUARIOS --- */
+    $app->get('/totallibros',function() use($app,$db){
+        $consulta = "SELECT COUNT(isbn) as total FROM libros";
+        $query = $db->query($consulta);
+        $datos = $query->fetch_assoc();
+        $total = $datos['total'];
+
+        $result = array(
+            'status'=>'success',
+            'code'=>200,
+            'data'=>$total
+        );
+        echo json_encode($result);
+    });
+
     /* --- DEVOLVER TODOS LOS USUARIOS --- */
     $app->get('/usuarios',function() use($app,$db){
         $consulta = "SELECT * FROM usuarios";
@@ -350,6 +365,33 @@
                 'status'=>'success',
                 'code'=>200,
                 'data'=>$usuariosFiltro
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- DEVOLVER AUTORES CON FILTRO --- */
+    $app->get('/autoresfiltro/:filtro',function($filtro) use($app,$db){
+        $consulta = "SELECT * FROM autores WHERE nombre_ape LIKE '%".$filtro."%'";
+        $query = $db->query($consulta);
+
+        if($query->num_rows==0){
+            $result = array(
+                'status' => 'error',
+                'code' => 404,
+                'message' => 'No se han encontrado usuarios con ese criterio'
+            );
+        }else{
+            $autoresFiltro = array();
+            while($autor = $query->fetch_assoc()){
+                $autoresFiltro[] = $autor;
+            }
+
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$autoresFiltro
             );
         }
 
@@ -719,6 +761,28 @@
                 'status'=>'error',
                 'code'=>404,
                 'message'=>'Error al borrar el autor'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- COMPROBAR SI EXISTE UN ISBN --- */
+    $app->get('/checkisbn/:isbn',function($isbn) use($app,$db){
+        $consulta = "SELECT * FROM libros WHERE isbn=".$isbn;
+        $query = $db->query($consulta);
+
+        if($query->num_rows==0){
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'No existe un libro con ese isbn'
+            );
+        }else{
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Ya existe un libro con ese isbn'
             );
         }
 

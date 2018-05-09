@@ -34,13 +34,24 @@ export class HomeComponent{
 			result => {
 				if(result.code==200){
 					this.usuario = result.data;
-					console.log(this.usuario);
 					if(this.usuario.tipo == "a"){
 						//Total de usuarios
 						this._usuariosService.totalUsuarios().subscribe(
 							result => {
 								if(result.code==200){
 									this.totalUsuarios = result.data;
+								}
+							},
+							error => {
+								console.log(error);
+							}
+						);
+						//Total de libros
+						this._usuariosService.totalUsuarios().subscribe(
+							result => {
+								console.log(result);
+								if(result.code==200){
+									this.totalLibros = result.data;
 								}
 							},
 							error => {
