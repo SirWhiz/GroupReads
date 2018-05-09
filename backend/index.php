@@ -302,9 +302,24 @@
         echo json_encode($result);
     });
 
-    /* --- DEVOLVER TOTAL DE USUARIOS --- */
+    /* --- DEVOLVER TOTAL DE LIBROS --- */
     $app->get('/totallibros',function() use($app,$db){
         $consulta = "SELECT COUNT(isbn) as total FROM libros";
+        $query = $db->query($consulta);
+        $datos = $query->fetch_assoc();
+        $total = $datos['total'];
+
+        $result = array(
+            'status'=>'success',
+            'code'=>200,
+            'data'=>$total
+        );
+        echo json_encode($result);
+    });
+
+    /* --- DEVOLVER TOTAL DE AUTORES --- */
+    $app->get('/totalautores',function() use($app,$db){
+        $consulta = "SELECT COUNT(id) as total FROM autores";
         $query = $db->query($consulta);
         $datos = $query->fetch_assoc();
         $total = $datos['total'];

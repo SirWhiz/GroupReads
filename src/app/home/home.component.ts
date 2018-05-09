@@ -21,9 +21,9 @@ export class HomeComponent{
 		this.usuario = new Usuario("","","","","","","","","","","");
 		this.esAdmin = false;
 		this.noClub = true;
-		this.totalUsuarios = "0";
-		this.totalLibros = "0";
-		this.totalAutores = "0";
+		this.totalUsuarios = "";
+		this.totalLibros = "";
+		this.totalAutores = "";
 	}
 
 	ngOnInit(){
@@ -47,14 +47,23 @@ export class HomeComponent{
 							}
 						);
 						//Total de libros
-						this._usuariosService.totalUsuarios().subscribe(
+						this._usuariosService.totalLibros().subscribe(
 							result => {
-								console.log(result);
 								if(result.code==200){
 									this.totalLibros = result.data;
 								}
 							},
 							error => {
+								console.log(error);
+							}
+						);
+						//Total de autores
+						this._usuariosService.totalAutores().subscribe(
+							result => {
+								if(result.code == 200){
+									this.totalAutores = result.data;
+								}
+							}, error => {
 								console.log(error);
 							}
 						);

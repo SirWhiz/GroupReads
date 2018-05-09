@@ -75,10 +75,10 @@ CREATE TABLE autores(
 );
 
 CREATE TABLE autores_libros(
-    idAutor smallint unsigned NOT NULL,
+    id smallint unsigned NOT NULL,
     isbnLibro varchar(15) NOT NULL,
-    PRIMARY KEY (idAutor,isbnLibro),
-    FOREIGN KEY (idAutor) REFERENCES autores(id) ON DELETE CASCADE,
+    PRIMARY KEY (id,isbnLibro),
+    FOREIGN KEY (id) REFERENCES autores(id) ON DELETE CASCADE,
     FOREIGN KEY (isbnLibro) REFERENCES libros(isbn) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
