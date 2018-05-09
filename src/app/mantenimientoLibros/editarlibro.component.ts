@@ -89,7 +89,7 @@ export class EditarLibroComponent{
 				if(result.code == 200){
 					this.autoresLibro = result.data;
 					for(let autor of this.autoresLibro){
-						this.autoresElegidos.push(autor.idAutor);
+						this.autoresElegidos.push(autor.id);
 					}
 				}
 			}, error => {

@@ -112,6 +112,24 @@ export class LibrosService{
                 .map(res => res.json());
     }
 
+    updateFotoAutor(autor: Autor){
+        let json = JSON.stringify(autor);
+        let params = 'json='+json;
+        let headers = new Headers({"Content-Type":"application/x-www-form-urlencoded"});
+
+        return this._http.post(this.url+'actualizarfotoautor/'+autor.id,params,{headers:headers})
+                .map(res => res.json());
+    }
+
+    deleteFotoAutor(autor: Autor){
+        let json = JSON.stringify(autor);
+        let params = 'json='+json;
+        let headers = new Headers({"Content-Type":"application/x-www-form-urlencoded"});
+
+        return this._http.post(this.url+'deletefotoautor',params,{headers:headers})
+                .map(res => res.json());  
+    }
+
     updateAutores(autores,isbn){
         let json = JSON.stringify(autores);
         let params = 'json='+json;

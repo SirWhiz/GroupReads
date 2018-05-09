@@ -5,7 +5,9 @@ import { Autor } from '../mantenimientoLibros/autor';
 import { Pais } from '../registro/pais';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogoBorrarAutor } from './dialogoborrarautor.component';
+import { DialogoBorrarFotoAutor } from './dialogoborrarfotoautor.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { GLOBAL } from '../../services/global';
 
 @Component({
 	selector: 'editarautor',
@@ -20,6 +22,9 @@ export class EditarAutorComponent{
 	public nombreActual: string;
 	public fechaMostrar: string;
 	public paises: Pais[];
+	public filesToUpload;
+	public resultUpload;
+	public nombreArray:any[];
 	public fechaArray: Array<any>;
 
 	constructor(public dialog: MatDialog,public snackBar: MatSnackBar,private activatedRoute: ActivatedRoute,private _router: Router,private _librosService: LibrosService){
@@ -29,6 +34,8 @@ export class EditarAutorComponent{
 		this.fechaArray = new Array();
 		this.autor = new Autor("","","","","");
 		this.paises = new Array();
+		this.nombreArray = new Array();
+		this.filesToUpload = new Array();
 		this.existeAutor = true;
 	}
 
@@ -85,7 +92,6 @@ export class EditarAutorComponent{
 	onSubmit(){
 		this._librosService.updateAutor(this.autor).subscribe(
 			result => {
-				console.log(result);
 				if(result.code == 200) {
     				this.snackBar.open("Autor modificado correctamente", "Aceptar", {
       					duration: 2500,
@@ -99,6 +105,56 @@ export class EditarAutorComponent{
 				console.log(error);
 			}
 		);
+	}
+
+	fileChangeEvent(fileInput:any){
+		this.filesToUpload = <Array<File>>fileInput.target.files;
+		console.log(this.filesToUpload);
+	}
+
+	onSubmitimg(){
+		if(this.filesToUpload.length >= 1){
+			this.nombreArray = this.filesToUpload[0].name.split('.');
+			if(this.nombreArray[this.nombreArray.length-1]!='jpeg' && this.nombreArray[this.nombreArray.length-1]!='png' && this.nombreArray[this.nombreArray.length-1]!='jpg'){
+				this.snackBar.open("La imagen debe ser jpeg/png", "OK", {
+					duration: 2500,
+				});
+			}else{
+				this._librosService.makeFileRequest(GLOBAL.url+'upload-autor', [], this.filesToUpload)
+				.then((result)=>{
+					this.resultUpload = result;
+					this.autor.foto = this.resultUpload.filename;
+					this.actualizarAutor();
+				}, (error) => {
+					console.log(error);
+				});
+			}
+		}
+	}
+
+	actualizarAutor(){
+		this._librosService.updateFotoAutor(this.autor).subscribe(
+			result => {
+				if(result.code == 200){
+					this.snackBar.open("Imagen actualizada correctamente", "OK", {
+						duration: 2500,
+					});
+				}else{
+					this.snackBar.open("Error al actualizar la imagen", "OK", {
+						duration: 2500,
+					});		
+				}
+			}, error => {
+				console.log(error);
+			}
+		);
+	}
+
+	dialogoFoto(){
+		this.dialog.open(DialogoBorrarFotoAutor,{
+			width:'500px',
+			data: { autor: this.autor }
+		});
 	}
 
 

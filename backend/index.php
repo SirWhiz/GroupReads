@@ -618,6 +618,57 @@
         echo json_encode($result);
     });
 
+    /* --- ACTUALIZAR IMAGEN DE UN AUTOR --- */
+    $app->post('/actualizarfotoautor/:id',function($id) use($app,$db){
+        $json = $app->request->post('json');
+        $data = json_decode($json,true);
+
+        $consulta = "UPDATE autores SET foto='".$data['foto']."' WHERE id=".$id;
+        $query = $db->query($consulta);
+
+        if($query){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Imagen actualizada correctamente'
+            );
+        }else{
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'consulta'=>$consulta
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- BORRAR IMAGEN DE UN AUTOR --- */
+    $app->post('/deletefotoautor',function() use($app,$db){
+        $json = $app->request->post('json');
+        $data = json_decode($json,true);
+
+        unlink('../src/app/imgautores/'.$data['foto']);
+        $consulta = "UPDATE autores SET foto=NULL WHERE id=".$data['id'];
+        $query = $db->query($consulta);
+
+        if($query){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Imagen borrada correctamente'
+            );
+        }else{
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'consulta'=>$consulta
+            );
+        }
+
+        echo json_encode($result);
+    });
+
     /* --- DEVOLVER TODOS LOS AUTORES --- */
     $app->get('/autores',function() use($app,$db){
         $consulta = "SELECT * FROM autores";

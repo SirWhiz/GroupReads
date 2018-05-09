@@ -14,6 +14,7 @@ import { DialogoComponent } from './dialogoImagen/dialogo.component';
 import { DialogoLibroComponent } from './dialogoLibro/dialogolibro.component';
 import { DialogoPortadaComponent } from './dialogoPortada/dialogoportada.component';
 import { DialogoBorrarAutor } from './autores/dialogoborrarautor.component';
+import { DialogoBorrarFotoAutor } from './autores/dialogoborrarfotoautor.component';
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
 import { MenuUsuarioComponent } from './menuUsuario/menuusuario.component';
 import { MenuAdminComponent } from './menuAdmin/menuadmin.component';
@@ -54,6 +55,7 @@ import { LoginGuard } from './login.guard';
     DialogoComponent,
     DialogoLibroComponent,
     DialogoPortadaComponent,
+    DialogoBorrarFotoAutor,
     MenuUsuarioComponent,
     MenuAdminComponent,
     ColaboradoresComponent,
@@ -94,7 +96,8 @@ import { LoginGuard } from './login.guard';
                     DialogoPortadaComponent,
                     DialogoNuevoGenero,
                     DialogoEditarGenero,
-                    DialogoBorrarAutor
+                    DialogoBorrarAutor,
+                    DialogoBorrarFotoAutor
                     ]
 })
 export class AppModule { }

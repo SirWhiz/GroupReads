@@ -45,7 +45,6 @@ export class AutoresComponent{
 	}
 
 	editar(autor:Autor){
-		console.log(autor);
 		this._router.navigate(['/editar-autor/'+autor.id]);
 	}
 

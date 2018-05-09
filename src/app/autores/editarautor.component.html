@@ -35,7 +35,17 @@
     		</mat-tab>
     		<mat-tab label="Imagen">
 		        <h3 class="mt-4">Imagen actual:</h3>
-
+            <div *ngIf="!autor.foto" class="mb-5">
+              <p>¡Este Autor no tiene ninguna imagen!</p>
+              <form #formimg="ngForm" class="form login" (ngSubmit)="onSubmitimg()">
+                <label for="foto">Subir una imagen</label>
+                <input type="file" (change)="fileChangeEvent($event)" class="form-control mb-3" required="required">
+                <input type="submit" [disabled]="!formimg.form.valid" class="btn btn-primary" value="Subir imagen">
+              </form>
+            </div>
+            <div *ngIf="autor.foto" class="mb-5 col-md-4">
+              <img (click)="dialogoFoto()" src="http://localhost/GroupReads/src/app/imgautores/{{autor.foto}}" matTooltip="Click para borrar" class="img-thumbnail borrar" alt="Foto de portada">
+            </div>
     		</mat-tab>
     	</mat-tab-group>
 	</div>

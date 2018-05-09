@@ -6,16 +6,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
-	selector: 'dialogoborrarautor',
-	templateUrl: './dialogoborrarautor.component.html',
+	selector: 'dialogoborrarfotoautor',
+	templateUrl: './dialogoborrarfotoautor.component.html',
 	providers: [LibrosService]
 })
-export class DialogoBorrarAutor{
+export class DialogoBorrarFotoAutor{
 
 	public autor: Autor;
 
 	constructor(  
-		public dialogRef: MatDialogRef<DialogoBorrarAutor>,
+		public dialogRef: MatDialogRef<DialogoBorrarFotoAutor>,
         @Inject(MAT_DIALOG_DATA) public data: any,
         private _librosService: LibrosService,
         public snackBar:MatSnackBar,
@@ -25,19 +25,19 @@ export class DialogoBorrarAutor{
 	}
 
 	borrar(){
-		this._librosService.deleteAutor(this.autor.id).subscribe(
+		this._librosService.deleteFotoAutor(this.autor).subscribe(
 			result => {
 				if(result.code == 200){
 					this.dialogRef.close();
-    				this.snackBar.open("Autor borrado correctamente", "Aceptar", {
-      					duration: 2500,
-    				});
-    				this._router.navigate(['/autores']);
+					this.snackBar.open("Imagen borrada correctamente", "OK", {
+						duration: 2500,
+					});
+					this.autor.foto = '';
 				}else{
 					this.dialogRef.close();
-    				this.snackBar.open("Error al borrar el autor", "Aceptar", {
-      					duration: 2500,
-    				});	
+					this.snackBar.open("Error al borrar la imagen", "OK", {
+						duration: 2500,
+					});
 				}
 			}, error => {
 				console.log(error);
