@@ -27,6 +27,8 @@ import { GenerosComponent } from './generos/generos.component';
 import { DialogoNuevoGenero } from './generos/dialogonuevogenero.component';
 import { DialogoEditarGenero } from './generos/dialogoeditargenero.component';
 import { AutoresComponent } from './autores/autores.component';
+import { AmigosComponent } from './amigos/amigos.component';
+import { AgregarAmigosComponent } from './agregarAmigos/agregaramigos.component';
 import { NuevoAutorComponent } from './autores/nuevoautor.component';
 import { EditarAutorComponent } from './autores/editarautor.component';
 
@@ -66,10 +68,12 @@ import { LoginGuard } from './login.guard';
     GenerosComponent,
     DialogoNuevoGenero,
     DialogoEditarGenero,
+    AmigosComponent,
     AutoresComponent,
     NuevoAutorComponent,
     EditarAutorComponent,
-    DialogoBorrarAutor
+    DialogoBorrarAutor,
+    AgregarAmigosComponent
   ],
   imports: [
     BrowserModule,

@@ -17,6 +17,7 @@ import { GenerosComponent } from './generos/generos.component';
 import { AutoresComponent } from './autores/autores.component';
 import { NuevoAutorComponent } from './autores/nuevoautor.component';
 import { EditarAutorComponent } from './autores/editarautor.component';
+import { AgregarAmigosComponent } from './agregarAmigos/agregaramigos.component';
 
 const appRoutes: Routes = [
 	{path: '', component: PrincipalComponent},
@@ -32,6 +33,7 @@ const appRoutes: Routes = [
 	{path: 'autores', component: AutoresComponent},
 	{path: 'nuevo-autor', component: NuevoAutorComponent},
 	{path: 'editar-autor/:id', component: EditarAutorComponent},
+	{path: 'amigos', component: AgregarAmigosComponent},
 	{path: '**', component: PrincipalComponent}
 ];
 

@@ -413,6 +413,95 @@
         echo json_encode($result);
     });
 
+    /* --- DEVOLVER SOLICITUDES PENDIENTES DE AMISTAD --- */
+    $app->get('/solicitudespen/:id',function($id) use($app,$db){
+        $consulta = "SELECT COUNT(*) as total FROM amigos WHERE idAmigo=".$id." AND pendiente=1";
+        $query = $db->query($consulta);
+
+        if($query){
+            $fila = $query->fetch_assoc();
+            $total = $fila['total'];
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$total
+            );
+        }else{
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>$consulta
+            );
+        }
+        echo json_encode($result);
+    });
+
+    /* --- DEVOLVER LOS USUARIOS QUE NO SON AMIGOS DE UN USUARIO --- */
+    $app->get('/noamigos/:id',function($id) use($app,$db){
+        $consulta = "SELECT * FROM usuarios WHERE usuarios.id NOT IN (SELECT  id FROM usuarios INNER JOIN amigos ON usuarios.id=amigos.idUsuario WHERE idAmigo=".$id." AND idUsuario<>".$id." UNION SELECT  id FROM usuarios INNER JOIN amigos ON usuarios.id=amigos.idAmigo WHERE idUsuario=".$id." AND idAmigo<>".$id.") AND id<>1 AND id<>".$id;
+        $query = $db->query($consulta);
+        
+        if(!$query){
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>$consulta
+            );
+        }
+
+        if($query->num_rows==0){
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'No se han encontrado usuarios'
+            );
+        }else{
+            $usuarios = array();
+            while($usuario = $query->fetch_assoc()){
+                $usuarios[] = $usuario;
+            }
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$usuarios
+            );
+        }
+        echo json_encode($result);
+    });
+
+    /* --- DEVOLVER LOS AMIGOS DE UN USUARIO --- */
+    $app->get('/amigos/:id',function($id) use($app,$db){
+        $consulta = "SELECT  id,correo,nombre,apellidos,nick,fecha,foto FROM usuarios INNER JOIN amigos ON usuarios.id=amigos.idUsuario WHERE idAmigo=".$id." AND idUsuario<>".$id." AND pendiente=0 UNION SELECT  id,correo,nombre,apellidos,nick,fecha,foto FROM usuarios INNER JOIN amigos ON usuarios.id=amigos.idAmigo WHERE idUsuario=".$id." AND idAmigo<>".$id." AND pendiente=0";
+        $query = $db->query($consulta);
+        
+        if(!$query){
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>$consulta
+            );
+        }
+
+        if($query->num_rows==0){
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'No se han encontrado amigos'
+            );
+        }else{
+            $amigos = array();
+            while($amigo = $query->fetch_assoc()){
+                $amigos[] = $amigo;
+            }
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$amigos
+            );
+        }
+        echo json_encode($result);
+    });
+
     /* --- HACER UN USUARIO COLABORADOR --- */
     $app->get('/colaborador/:id',function($id) use($app,$db){
         $consulta = "UPDATE usuarios SET tipo='c' WHERE id=".$id;

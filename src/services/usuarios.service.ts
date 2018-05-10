@@ -15,6 +15,18 @@ export class UsuariosService{
         this.url=GLOBAL.url;
     }
 
+    getSolicitudesPendientes(id: string){
+        return this._http.get(this.url+'solicitudespen/'+id).map(res => res.json());
+    }
+
+    getAmigos(id: string){
+        return this._http.get(this.url+'amigos/'+id).map(res => res.json());
+    }
+
+    getNoAmigos(id: string){
+        return this._http.get(this.url+'noamigos/'+id).map(res => res.json());   
+    }
+
     getUsuario(correo:string){
         return this._http.get(this.url+'usuarios/'+correo).map(res => res.json());
     }

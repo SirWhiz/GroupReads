@@ -28,6 +28,7 @@ CREATE TABLE usuarios(
 CREATE TABLE amigos(
     idUsuario smallint unsigned,
     idAmigo smallint unsigned,
+    pendiente boolean DEFAULT 1,
     PRIMARY KEY (idUsuario,idAmigo),
     FOREIGN KEY (idUsuario) REFERENCES usuarios(id),
     FOREIGN KEY (idAmigo) REFERENCES usuarios(id)
