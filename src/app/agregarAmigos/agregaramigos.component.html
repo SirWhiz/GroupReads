@@ -1,7 +1,7 @@
 <menucolaborador *ngIf="perfil=='c'"></menucolaborador>
 <menuusuario *ngIf="perfil=='n'"></menuusuario>
 <div class="row mt-5 justify-content-around">
-  <div class="col-md-5 mb-4">
+  <div class="col-md-3 mb-4">
     <h3>Mis amigos:</h3>
     <hr>
     <div *ngIf="!existeAmigos" class="mt-3">
@@ -12,11 +12,11 @@
 
       <div *ngFor="let amigo of amigos" class="p-2 mb-2 text-center amigoLista">
         <span>{{amigo.nombre}} {{amigo.apellidos}} @{{amigo.nick}}</span>
-        <button matTooltipPosition="right" matTooltip="Borrar {{amigo.nombre}} de la lista de amigos" class="btn btn-danger float-right"><i class="fas fa-trash-alt"></i></button>
+        <button (click)="borrarAmigo(amigo)" matTooltipPosition="right" matTooltip="Borrar {{amigo.nombre}} de la lista de amigos" class="btn btn-danger float-right"><i class="fas fa-trash-alt"></i></button>
       </div>
     </span>
   </div>
-  <div class="col-md-5 mb-4">
+  <div class="col-md-3 mb-4">
     <h3>Usuarios:</h3>
     <hr>
     <div *ngIf="!existeUsuarios" class="mt-3"><i><span class="text-center">¡Vaya! parece que no hay usuarios que no estén en tu lista de amigos</span></i></div>
@@ -25,7 +25,18 @@
 
       <div *ngFor="let user of usuarios" class="p-2 mb-2 text-center amigoLista">
         <span>{{user.nombre}} {{user.apellidos}} @{{user.nick}}</span>
-        <button matTooltipPosition="right" matTooltip="Añadir {{user.nombre}} a la lista de amigos" class="btn btn-success float-right"><i class="fas fa-plus"></i></button>
+        <button (click)="peticionAmigo(user)" matTooltipPosition="right" matTooltip="Añadir {{user.nombre}} a la lista de amigos" class="btn btn-success float-right"><i class="fas fa-plus"></i></button>
+      </div>
+    </span>
+  </div>
+  <div class="col-md-3 mb-4">
+    <h3>Peticiones enviadas:</h3>
+    <hr>
+    <div *ngIf="!existePendientes" class="mt-3"><i><span class="text-center">¡Vaya! parece que no has enviado ninguna petición de amistad</span></i></div>
+    <span *ngIf="existePendientes">
+      <div *ngFor="let pendiente of pendientes" class="p-2 mb-2 text-center amigoLista">
+        <span>{{pendiente.nombre}} {{pendiente.apellidos}} @{{pendiente.nick}}</span>
+        <button (click)="borrarPeticion(pendiente)" matTooltipPosition="right" matTooltip="Eliminar petición de amistad a {{pendiente.nombre}}" class="btn btn-warning float-right"><i class="fas fa-minus"></i></button>
       </div>
     </span>
   </div>

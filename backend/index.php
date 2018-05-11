@@ -469,9 +469,42 @@
         echo json_encode($result);
     });
 
+    /* --- DEVOLVER USUARIOS PENDIENTES DE ACEPTAR LA SOLICITUD --- */
+    $app->get('/pendientes/:id',function($id) use($app,$db){
+        $consulta = "SELECT  id,correo,nombre,apellidos,nick,fecha,foto FROM usuarios INNER JOIN amigos ON usuarios.id=amigos.idAmigo WHERE idUsuario=".$id." AND idAmigo<>".$id." AND pendiente=1 ";
+        $query = $db->query($consulta);
+        
+        if(!$query){
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>$consulta
+            );
+        }
+
+        if($query->num_rows==0){
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'No se han encontrado usuarios pendientes'
+            );
+        }else{
+            $pendientes = array();
+            while($pendiente = $query->fetch_assoc()){
+                $pendientes[] = $pendiente;
+            }
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$pendientes
+            );
+        }
+        echo json_encode($result);
+    });
+
     /* --- DEVOLVER LOS AMIGOS DE UN USUARIO --- */
     $app->get('/amigos/:id',function($id) use($app,$db){
-        $consulta = "SELECT  id,correo,nombre,apellidos,nick,fecha,foto FROM usuarios INNER JOIN amigos ON usuarios.id=amigos.idUsuario WHERE idAmigo=".$id." AND idUsuario<>".$id." AND pendiente=0 UNION SELECT  id,correo,nombre,apellidos,nick,fecha,foto FROM usuarios INNER JOIN amigos ON usuarios.id=amigos.idAmigo WHERE idUsuario=".$id." AND idAmigo<>".$id." AND pendiente=0";
+        $consulta = "SELECT nombre,apellidos,correo,fecha,foto,id,nick,pais,pwd,tipo FROM usuarios INNER JOIN amigos ON usuarios.id=amigos.idUsuario WHERE idAmigo=".$id." AND idUsuario<>".$id." AND pendiente=0 UNION SELECT nombre,apellidos,correo,fecha,foto,id,nick,pais,pwd,tipo FROM usuarios INNER JOIN amigos ON usuarios.id=amigos.idAmigo WHERE idUsuario=".$id." AND idAmigo<>".$id." AND pendiente=0";
         $query = $db->query($consulta);
         
         if(!$query){
@@ -499,6 +532,69 @@
                 'data'=>$amigos
             );
         }
+        echo json_encode($result);
+    });
+
+    /* --- BORRAR AMIGO --- */
+    $app->get('/deleteamigo/:id/:idamigo',function($id,$idamigo) use($app,$db){
+        $consulta = "DELETE FROM amigos WHERE idUsuario=".$id." AND idAmigo=".$idamigo." OR idAmigo=".$id." AND idUsuario=".$idamigo." AND pendiente=0";
+        $query = $db->query($consulta);
+        if(!$query){
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'Error al borrar amigo'
+            );
+        }else{
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Amigo borrado correctamente'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- HACER PETICION DE AMISTAD --- */
+    $app->get('/peticionamigo/:id/:idamigo',function($id,$idamigo) use($app,$db){
+        $consulta = "INSERT INTO amigos VALUES(".$id.",".$idamigo.",DEFAULT)";
+        $query = $db->query($consulta);
+        if(!$query){
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'Error al hacer la peticion'
+            );
+        }else{
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Peticion correcta'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- BORRAR PETICIÓN DE AMISTAD --- */
+    $app->get('/deletepeticion/:id/:idamigo',function($id,$idamigo) use($app,$db){
+        $consulta = "DELETE FROM amigos WHERE idUsuario=".$id." AND idAmigo=".$idamigo." AND pendiente=1";
+        $query = $db->query($consulta);
+        if(!$query){
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'Error al hacer la peticion'
+            );
+        }else{
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Peticion correcta'
+            );
+        }
+
         echo json_encode($result);
     });
 

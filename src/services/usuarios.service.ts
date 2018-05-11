@@ -23,8 +23,24 @@ export class UsuariosService{
         return this._http.get(this.url+'amigos/'+id).map(res => res.json());
     }
 
+    borrarAmigo(id: string,idamigo: string){
+        return this._http.get(this.url+'deleteamigo/'+id+'/'+idamigo).map(res => res.json());    
+    }
+
+    peticionAmigo(id: string,idamigo: string){
+        return this._http.get(this.url+'peticionamigo/'+id+'/'+idamigo).map(res => res.json());    
+    }
+
+    borrarPeticion(id: string,idamigo: string){
+        return this._http.get(this.url+'deletepeticion/'+id+'/'+idamigo).map(res => res.json());   
+    }
+
     getNoAmigos(id: string){
         return this._http.get(this.url+'noamigos/'+id).map(res => res.json());   
+    }
+
+    getPendientes(id: string){
+        return this._http.get(this.url+'pendientes/'+id).map(res => res.json());      
     }
 
     getUsuario(correo:string){
