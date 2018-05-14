@@ -8,6 +8,7 @@
       <i>¡Vaya! parece que no tienes amigos agregados</i>
     </div>
     <span *ngIf="existeAmigos">
+      <!--Filtro de amigos-->
       <input type="text" name="filtro" (keyup)="filtrarAmigos()" [(ngModel)]="filtro" class="form-control filtro mb-4" placeholder="Filtrar amigos por nombre.." autocomplete="off">
 
       <div *ngFor="let amigo of amigos" class="p-2 mb-2 text-center amigoLista">
@@ -19,6 +20,7 @@
   <div class="col-md-3 mb-4">
     <h3>Usuarios:</h3>
     <hr>
+    <!--Filtro de usuarios-->
     <div *ngIf="!existeUsuarios" class="mt-3"><i><span class="text-center">¡Vaya! parece que no hay usuarios que no estén en tu lista de amigos</span></i></div>
     <span *ngIf="existeUsuarios">
       <input type="text" name="filtro" (keyup)="filtrarUsuarios()" [(ngModel)]="filtroUsuarios" class="form-control filtro mb-4" placeholder="Filtrar usuarios por nombre.." autocomplete="off">

@@ -161,11 +161,55 @@ export class AgregarAmigosComponent{
 	}
 
 	filtrarAmigos(){
-
+		if(this.filtro!=''){
+			this._usuariosService.getAmigosFiltro(this.usuario.id,this.filtro).subscribe(
+				result => {
+					if(result.code == 200){
+						this.amigos = result.data;
+					}else{
+	    				this.snackBar.open("No se ha encontrado amigos con ese criterio", "Aceptar", {
+      						duration: 2500,
+    					});
+					}
+				}, error => {console.log(error)}
+			);
+		}else{
+			this._usuariosService.getAmigos(this.usuario.id).subscribe(
+				result => {
+					if(result.code == 200){
+						this.amigos = result.data;
+					}else{
+						this.existeAmigos = false;
+					}
+				}
+			);
+		}
 	}
 
 	filtrarUsuarios(){
-
+		if(this.filtroUsuarios!=''){
+			this._usuariosService.getNoAmigosFiltro(this.usuario.id,this.filtroUsuarios).subscribe(
+				result => {
+					if(result.code == 200){
+						this.usuarios = result.data;
+					}else{
+	  	  				this.snackBar.open("No se ha encontrado usuarios con ese criterio", "Aceptar", {
+      						duration: 2500,
+    					});
+					}
+				}, error => {console.log(error)}
+			);
+		}else{
+			this._usuariosService.getNoAmigos(this.usuario.id).subscribe(
+				result => {
+					if(result.code == 200){
+						this.usuarios = result.data;
+					}else{
+	    				this.existeUsuarios = false;
+					}
+				}, error => {console.log(error)}
+			);
+		}
 	}
 
 }

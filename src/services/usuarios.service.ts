@@ -27,6 +27,10 @@ export class UsuariosService{
         return this._http.get(this.url+'amigos/'+id).map(res => res.json());
     }
 
+    getAmigosFiltro(id: string,filtro: string){
+        return this._http.get(this.url+'amigosfiltro/'+id+'/'+filtro).map(res => res.json());
+    }
+
     borrarAmigo(id: string,idamigo: string){
         return this._http.get(this.url+'deleteamigo/'+id+'/'+idamigo).map(res => res.json());    
     }
@@ -49,6 +53,10 @@ export class UsuariosService{
 
     getNoAmigos(id: string){
         return this._http.get(this.url+'noamigos/'+id).map(res => res.json());   
+    }
+
+    getNoAmigosFiltro(id: string,filtro: string){
+        return this._http.get(this.url+'noamigosfiltro/'+id+'/'+filtro).map(res => res.json());   
     }
 
     getPendientes(id: string){

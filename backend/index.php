@@ -469,6 +469,39 @@
         echo json_encode($result);
     });
 
+    /* --- DEVOLVER LOS USUARIOS QUE NO SON AMIGOS DE UN USUARIO FILTRADOS --- */
+    $app->get('/noamigosfiltro/:id/:filtro',function($id,$filtro) use($app,$db){
+        $consulta = "SELECT * FROM usuarios WHERE usuarios.id NOT IN (SELECT  id FROM usuarios INNER JOIN amigos ON usuarios.id=amigos.idUsuario WHERE idAmigo=".$id." AND idUsuario<>".$id." UNION SELECT  id FROM usuarios INNER JOIN amigos ON usuarios.id=amigos.idAmigo WHERE idUsuario=".$id." AND idAmigo<>".$id.") AND id<>1 AND id<>".$id." AND nombre LIKE '%".$filtro."%'";
+        $query = $db->query($consulta);
+        
+        if(!$query){
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>$consulta
+            );
+        }
+
+        if($query->num_rows==0){
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'No se han encontrado usuarios'
+            );
+        }else{
+            $usuarios = array();
+            while($usuario = $query->fetch_assoc()){
+                $usuarios[] = $usuario;
+            }
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$usuarios
+            );
+        }
+        echo json_encode($result);
+    });
+
     /* --- DEVOLVER USUARIOS PENDIENTES DE ACEPTAR LA SOLICITUD --- */
     $app->get('/pendientes/:id',function($id) use($app,$db){
         $consulta = "SELECT  id,correo,nombre,apellidos,nick,fecha,foto FROM usuarios INNER JOIN amigos ON usuarios.id=amigos.idAmigo WHERE idUsuario=".$id." AND idAmigo<>".$id." AND pendiente=1 ";
@@ -538,6 +571,39 @@
     /* --- DEVOLVER LOS AMIGOS DE UN USUARIO --- */
     $app->get('/amigos/:id',function($id) use($app,$db){
         $consulta = "SELECT nombre,apellidos,correo,fecha,foto,id,nick,pais,pwd,tipo FROM usuarios INNER JOIN amigos ON usuarios.id=amigos.idUsuario WHERE idAmigo=".$id." AND idUsuario<>".$id." AND pendiente=0 UNION SELECT nombre,apellidos,correo,fecha,foto,id,nick,pais,pwd,tipo FROM usuarios INNER JOIN amigos ON usuarios.id=amigos.idAmigo WHERE idUsuario=".$id." AND idAmigo<>".$id." AND pendiente=0";
+        $query = $db->query($consulta);
+        
+        if(!$query){
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>$consulta
+            );
+        }
+
+        if($query->num_rows==0){
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'No se han encontrado amigos'
+            );
+        }else{
+            $amigos = array();
+            while($amigo = $query->fetch_assoc()){
+                $amigos[] = $amigo;
+            }
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$amigos
+            );
+        }
+        echo json_encode($result);
+    });
+
+    /* --- DEVOLVER LOS AMIGOS FILTRADOS DE UN USUARIO --- */
+    $app->get('/amigosfiltro/:id/:filtro',function($id,$filtro) use($app,$db){
+        $consulta = "SELECT nombre,apellidos,correo,fecha,foto,id,nick,pais,pwd,tipo FROM usuarios INNER JOIN amigos ON usuarios.id=amigos.idUsuario WHERE idAmigo=".$id." AND idUsuario<>".$id." AND pendiente=0 AND nombre LIKE '%".$filtro."%' UNION SELECT nombre,apellidos,correo,fecha,foto,id,nick,pais,pwd,tipo FROM usuarios INNER JOIN amigos ON usuarios.id=amigos.idAmigo WHERE idUsuario=".$id." AND idAmigo<>".$id." AND pendiente=0 AND nombre LIKE '%".$filtro."%'";
         $query = $db->query($consulta);
         
         if(!$query){
