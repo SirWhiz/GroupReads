@@ -502,6 +502,39 @@
         echo json_encode($result);
     });
 
+    /* --- DEVOLVER USUARIOS QUE HAN ENVIADO PETICIONES DE AMISTAD AL USUARIO --- */
+    $app->get('/peticiones/:id',function($id) use($app,$db){
+        $consulta = "SELECT  id,correo,nombre,apellidos,nick,fecha,foto FROM usuarios INNER JOIN amigos ON usuarios.id=amigos.idUsuario WHERE idUsuario<>".$id." AND idAmigo=".$id." AND pendiente=1 ";
+        $query = $db->query($consulta);
+        
+        if(!$query){
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>$consulta
+            );
+        }else{
+            if($query->num_rows==0){
+                $result = array(
+                    'status'=>'error',
+                    'code'=>404,
+                    'message'=>'No se han encontrado peticiones pendientes'
+                );
+            }else{
+                $pendientes = array();
+                while($pendiente = $query->fetch_assoc()){
+                    $pendientes[] = $pendiente;
+                }
+                $result = array(
+                    'status'=>'success',
+                    'code'=>200,
+                    'data'=>$pendientes
+                );
+            }
+        }
+        echo json_encode($result);
+    });
+
     /* --- DEVOLVER LOS AMIGOS DE UN USUARIO --- */
     $app->get('/amigos/:id',function($id) use($app,$db){
         $consulta = "SELECT nombre,apellidos,correo,fecha,foto,id,nick,pais,pwd,tipo FROM usuarios INNER JOIN amigos ON usuarios.id=amigos.idUsuario WHERE idAmigo=".$id." AND idUsuario<>".$id." AND pendiente=0 UNION SELECT nombre,apellidos,correo,fecha,foto,id,nick,pais,pwd,tipo FROM usuarios INNER JOIN amigos ON usuarios.id=amigos.idAmigo WHERE idUsuario=".$id." AND idAmigo<>".$id." AND pendiente=0";
@@ -580,6 +613,48 @@
     /* --- BORRAR PETICIÓN DE AMISTAD --- */
     $app->get('/deletepeticion/:id/:idamigo',function($id,$idamigo) use($app,$db){
         $consulta = "DELETE FROM amigos WHERE idUsuario=".$id." AND idAmigo=".$idamigo." AND pendiente=1";
+        $query = $db->query($consulta);
+        if(!$query){
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'Error al hacer la peticion'
+            );
+        }else{
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Peticion correcta'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- BORRAR SOLICITUD DE AMISTAD --- */
+    $app->get('/deletesolicitud/:id/:idamigo',function($id,$idamigo) use($app,$db){
+        $consulta = "DELETE FROM amigos WHERE idUsuario=".$idamigo." AND idAmigo=".$id." AND pendiente=1";
+        $query = $db->query($consulta);
+        if(!$query){
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'Error al hacer la peticion'
+            );
+        }else{
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Peticion correcta'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- ACEPTAR SOLICITUD DE AMISTAD --- */
+    $app->get('/aceptarsolicitud/:id/:idamigo',function($id,$idamigo) use($app,$db){
+        $consulta = "UPDATE amigos SET pendiente=0 WHERE idUsuario=".$idamigo." AND idAmigo=".$id;
         $query = $db->query($consulta);
         if(!$query){
             $result = array(

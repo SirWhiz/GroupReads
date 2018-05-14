@@ -17,6 +17,7 @@ import { DialogoBorrarAutor } from './autores/dialogoborrarautor.component';
 import { DialogoBorrarFotoAutor } from './autores/dialogoborrarfotoautor.component';
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
 import { MenuUsuarioComponent } from './menuUsuario/menuusuario.component';
+import { DialogoSolicitudesComponent } from './dialogoSolicitudes/dialogosolicitudes.component';
 import { MenuAdminComponent } from './menuAdmin/menuadmin.component';
 import { MenuColaboradorComponent } from './menuColaborador/menucolaborador.component';
 import { ColaboradoresComponent } from './colaboradores/colaboradores.component';
@@ -73,7 +74,8 @@ import { LoginGuard } from './login.guard';
     NuevoAutorComponent,
     EditarAutorComponent,
     DialogoBorrarAutor,
-    AgregarAmigosComponent
+    AgregarAmigosComponent,
+    DialogoSolicitudesComponent
   ],
   imports: [
     BrowserModule,
@@ -101,7 +103,8 @@ import { LoginGuard } from './login.guard';
                     DialogoNuevoGenero,
                     DialogoEditarGenero,
                     DialogoBorrarAutor,
-                    DialogoBorrarFotoAutor
+                    DialogoBorrarFotoAutor,
+                    DialogoSolicitudesComponent
                     ]
 })
 export class AppModule { }

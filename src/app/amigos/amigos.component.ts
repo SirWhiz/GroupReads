@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsuariosService } from '../../services/usuarios.service';
+import { UsuarioP } from '../registro/usuariop';
 import { Usuario } from '../registro/usuario';
+import { DialogoSolicitudesComponent } from '../dialogoSolicitudes/dialogosolicitudes.component'
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
 	selector: 'amigos',
@@ -10,15 +13,13 @@ import { Usuario } from '../registro/usuario';
 })
 export class AmigosComponent{
 
-	public usuario:Usuario;
+	public usuario:UsuarioP;
 	public amigos: Usuario[];
-	public pendiente: number;
 	public existeAmigos: boolean;
 
-	constructor(private _router: Router,private _usuariosService: UsuariosService){
-		this.usuario = new Usuario("","","","","","","","","","","");
+	constructor(private _router: Router,private _usuariosService: UsuariosService,public dialog: MatDialog){
+		this.usuario = new UsuarioP("","","","","","","","","","","",0);
 		this.amigos = new Array();
-		this.pendiente = 0;
 		this.existeAmigos = true;
 	}
 
@@ -34,7 +35,7 @@ export class AmigosComponent{
 					this._usuariosService.getSolicitudesPendientes(this.usuario.id).subscribe(
 						result => {
 							if(result.code == 200){
-								this.pendiente = result.data;
+								this.usuario.peticiones = result.data;
 							}
 						}
 					);
@@ -43,7 +44,6 @@ export class AmigosComponent{
 						result => {
 							if(result.code == 200){
 								this.amigos = result.data;
-								console.log(this.amigos);
 							}else{
 								this.existeAmigos = false;
 							}
@@ -54,6 +54,12 @@ export class AmigosComponent{
 				console.log(error);
 			}
 		);
+	}
 
+	verSolicitudes(){
+		this.dialog.open(DialogoSolicitudesComponent,{
+			width:'500px',
+			data: { usuario: this.usuario, amigos: this.amigos }
+		});
 	}
 }

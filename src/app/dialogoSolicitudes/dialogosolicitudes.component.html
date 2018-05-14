@@ -1,0 +1,12 @@
+<h3>Solicitudes de amistad:</h3>
+<div class="row justify-content-around mt-4">
+	<div *ngFor="let user of solicitudes" class="col-12 mb-3 p-4 solicitud">
+		<div  class="row justify-content-between">
+			<div class="col-4">{{user.nombre}} @{{user.nick}}</div>
+			<div class="col-4">
+				<button (click)="deleteSolicitud(user)" matTooltip="Eliminar solicitud" matTooltipPosition="left" class="btn btn-danger"><i class="fas fa-times"></i></button>
+				<button (click)="aceptarSolicitud(user)" matTooltip="Añadir amigo" matTooltipPosition="right" class="btn btn-success"><i class="fas fa-check"></i></button>
+			</div>
+		</div>
+	</div>
+</div>

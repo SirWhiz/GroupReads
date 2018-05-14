@@ -19,6 +19,10 @@ export class UsuariosService{
         return this._http.get(this.url+'solicitudespen/'+id).map(res => res.json());
     }
 
+    getUsuariosSolicitudes(id: string){
+        return this._http.get(this.url+'peticiones/'+id).map(res => res.json());
+    }
+
     getAmigos(id: string){
         return this._http.get(this.url+'amigos/'+id).map(res => res.json());
     }
@@ -33,6 +37,14 @@ export class UsuariosService{
 
     borrarPeticion(id: string,idamigo: string){
         return this._http.get(this.url+'deletepeticion/'+id+'/'+idamigo).map(res => res.json());   
+    }
+
+    borrarSolicitud(id: string,idamigo: string){
+        return this._http.get(this.url+'deletesolicitud/'+id+'/'+idamigo).map(res => res.json());      
+    }
+
+    aceptarSolicitud(id: string,idamigo: string){
+        return this._http.get(this.url+'aceptarsolicitud/'+id+'/'+idamigo).map(res => res.json());              
     }
 
     getNoAmigos(id: string){

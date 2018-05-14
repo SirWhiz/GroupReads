@@ -1,10 +1,14 @@
 <h5>Amigos</h5>
 <hr>
-<span *ngIf="this.pendiente>1">{{this.pendiente}} Solicitudes pendientes:<hr></span>
-<span *ngIf="this.pendiente==1">{{this.pendiente}} Solicitud pendiente:<hr></span>
+<span *ngIf="usuario.peticiones>1">
+	<button (click)="verSolicitudes()" class="btn btn-success">{{usuario.peticiones}}</button> Solicitudes pendientes<hr>
+</span>
+<span *ngIf="usuario.peticiones==1">
+	<button (click)="verSolicitudes()" class="btn btn-success">{{usuario.peticiones}}</button> Solicitud pendiente<hr>
+</span>
 <span>Mis amigos:</span>
-<span *ngIf="!existeAmigos"><br/><i>¡Vaya! no tienes ningún amigo agregado</i></span>
-<span *ngIf="existeAmigos">
+<span *ngIf="amigos.length==0"><br/><i>¡Vaya! no tienes ningún amigo agregado</i></span>
+<span *ngIf="amigos.length>0">
 	<ul class="listaamigos mt-3">
 		<li *ngFor="let amigo of amigos">{{amigo.nombre}} (@{{amigo.nick}})</li>
 	</ul>

@@ -236,6 +236,11 @@ footer{
 .amigos:hover {
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
+.solicitud {
+    background-color: #eee;
+    border:1px solid #d3d3d3;
+    border-radius: 5px;
+}
 /* --- Plantilla administrador --- */
 .filaAdmin{
     background: #455A64;

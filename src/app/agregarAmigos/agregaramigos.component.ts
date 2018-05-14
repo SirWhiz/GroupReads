@@ -98,6 +98,9 @@ export class AgregarAmigosComponent{
 				this.amigos.splice(i,1);
 			}
 		}
+		if(this.usuarios.length == 0){
+			this.existeUsuarios = true;
+		}
 		this.usuarios.push(amigo);
 
 		if(this.amigos.length == 0){
@@ -147,6 +150,9 @@ export class AgregarAmigosComponent{
 			if(this.pendientes[i].id == amigo.id){
 				this.pendientes.splice(i,1);
 			}
+		}
+		if(this.usuarios.length == 0){
+			this.existeUsuarios = true;
 		}
 		this.usuarios.push(amigo);
 		if(this.pendientes.length == 0){
