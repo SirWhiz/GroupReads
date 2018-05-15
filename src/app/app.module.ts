@@ -32,6 +32,8 @@ import { AmigosComponent } from './amigos/amigos.component';
 import { AgregarAmigosComponent } from './agregarAmigos/agregaramigos.component';
 import { NuevoAutorComponent } from './autores/nuevoautor.component';
 import { EditarAutorComponent } from './autores/editarautor.component';
+import { ClubesComponent } from './clubes/clubes.component';
+import { NuevoClubComponent } from './clubes/nuevoclub.component';
 
 import { MatInputModule,MatNativeDateModule } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -75,7 +77,9 @@ import { LoginGuard } from './login.guard';
     EditarAutorComponent,
     DialogoBorrarAutor,
     AgregarAmigosComponent,
-    DialogoSolicitudesComponent
+    DialogoSolicitudesComponent,
+    ClubesComponent,
+    NuevoClubComponent
   ],
   imports: [
     BrowserModule,

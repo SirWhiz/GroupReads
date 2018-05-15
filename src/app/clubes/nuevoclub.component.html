@@ -1,0 +1,25 @@
+<menuadmin *ngIf="usuario.tipo=='a'"></menuadmin>
+<menucolaborador *ngIf="usuario.tipo=='c'"></menucolaborador>
+<menuusuario *ngIf="usuario.tipo=='n'"></menuusuario>
+<div class="row mt-5 mb-5 justify-content-around">
+	<div class="col-md-7">
+		<h3 class="mb-4 display-4 text-center">Crear un nuevo club:</h3>
+		<form #formClub="ngForm" class="form login">
+			<!--Nombre-->
+			<label for="nombre">Nombre:</label>
+			<input [(ngModel)]="club.nombre" required="required" type="text" name="nombre" class="mb-3 form-control">
+			<!--Descripción-->
+			<label for="descripcion">Breve descripción del club:</label>
+			<textarea [(ngModel)]="club.descripcion" required="required" name="descripcion" style="min-height:50px;max-height:120px" class="mb-3 form-control"></textarea>
+			<!--Género--->
+			<label for="genero">Género preferido:</label>
+			<select class="mb-3 form-control" name="genero" required="required">
+				
+			</select>
+			<a [routerLink]="['/clubes']" class="btn btn-danger mt-4">Volver</a>
+			<div class="mt-4 float-right">
+			   <input type="submit" id="submit" matTooltip="¡Crear club!" value="Enviar" class="btn btn-primary" [disabled]="!formClub.form.valid">
+			</div>
+		</form>
+	</div>
+</div>

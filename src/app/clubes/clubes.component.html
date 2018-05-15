@@ -1,0 +1,12 @@
+<menuadmin *ngIf="usuario.tipo=='a'"></menuadmin>
+<menucolaborador *ngIf="usuario.tipo=='c'"></menucolaborador>
+<menuusuario *ngIf="usuario.tipo=='n'"></menuusuario>
+<div class="row mt-5 mb-5 justify-content-around">
+  <div *ngIf="noClub" class="col-md-6">
+    <h4>¡{{usuario.nombre}} no estás en ningún club!</h4>
+    <span class="lead">
+      Aquí tienes algunos clubes a los que puedes unirte o puedes <button [routerLink]="['/nuevo-club']" class="btn btn-success">Crear un club</button>
+    </span>
+    <hr>
+  </div>
+</div>

@@ -44,6 +44,8 @@ CREATE TABLE clubes(
     nombre varchar(60) NOT NULL,
     idCreador smallint unsigned,
     idGenero smallint unsigned NULL,
+    privacidad ENUM('a','c') NOT NULL,
+    descripcion text NOT NULL,
     FOREIGN KEY (idGenero) REFERENCES generos(id),
     FOREIGN KEY (idCreador) REFERENCES usuarios(id)
 );

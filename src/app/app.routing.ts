@@ -18,6 +18,8 @@ import { AutoresComponent } from './autores/autores.component';
 import { NuevoAutorComponent } from './autores/nuevoautor.component';
 import { EditarAutorComponent } from './autores/editarautor.component';
 import { AgregarAmigosComponent } from './agregarAmigos/agregaramigos.component';
+import { ClubesComponent } from './clubes/clubes.component';
+import { NuevoClubComponent } from './clubes/nuevoclub.component';
 
 const appRoutes: Routes = [
 	{path: '', component: PrincipalComponent},
@@ -34,6 +36,8 @@ const appRoutes: Routes = [
 	{path: 'nuevo-autor', component: NuevoAutorComponent},
 	{path: 'editar-autor/:id', component: EditarAutorComponent},
 	{path: 'amigos', component: AgregarAmigosComponent},
+	{path: 'clubes', component: ClubesComponent},
+	{path: 'nuevo-club', component: NuevoClubComponent},
 	{path: '**', component: PrincipalComponent}
 ];
 

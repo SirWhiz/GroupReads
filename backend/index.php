@@ -156,6 +156,28 @@
         echo json_encode($result);
     });
 
+    /* --- COMPROBAR SI UN USUARIO ESTÁ EN ALGÚN CLUB --- */
+    $app->get('/checkuserclub/:id', function($id) use($app,$db){
+        $consulta = "SELECT * FROM usuarios_clubes WHERE idUsuario=".$id;
+        $query = $db->query($consulta);
+
+        if($query->num_rows==0){
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'El usuario no esta en ningun club'
+            );
+        }else{
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'El usuario pertenece a algun club'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
     /* --- BUSCAR UN USUARIO CONCRETO --- */
     $app->get('/usuarios/:correo',function($correo) use($app,$db){
         $consulta = "SELECT * FROM usuarios WHERE correo='".$correo."';";
@@ -1192,7 +1214,39 @@
 
     /* --- OBTENER TODOS LOS LIBROS --- */
     $app->get('/libros',function() use($app,$db){
-        $consulta = "SELECT * FROM libros";
+        $consulta = "SELECT * FROM libros ORDER BY fechaAlta DESC";
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>'No hay libros'
+        );
+
+        $query = $db->query($consulta);
+        if($query->num_rows == 0){
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'No hay libros'
+            );
+        }else{
+            $libros = array();
+            while($libro = $query->fetch_assoc()){
+                $libros[] = $libro;
+            }
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$libros
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- OBTENER LOS 5 ÚLTIMOS LIBROS --- */
+    $app->get('/librostop',function() use($app,$db){
+        $consulta = "SELECT * FROM libros ORDER BY fechaAlta DESC LIMIT 5";
 
         $result = array(
             'status'=>'error',

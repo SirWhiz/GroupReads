@@ -205,6 +205,21 @@ footer{
     border: 1px solid #d3d3d3;
     border-radius: 5px;
 }
+.ultimosLibros{
+    overflow: hidden;
+    border: 1px solid #d3d3d3;
+    border-radius: 5px;
+}
+.portada {
+    width: 70%;
+    max-width: 70% !important;
+    height: 75% !important;
+    margin-bottom: 0.5em;
+}
+.portada img {
+    width:100%;
+    height: auto;
+}
 .listaamigos{
     list-style: none;
     padding: 0;
@@ -303,5 +318,10 @@ footer{
     }
     .typed-cursor{
         font-size:1em;
+    }
+}
+@media only screen and (max-width: 575px) {
+    .portada{
+        width: 40%;
     }
 }

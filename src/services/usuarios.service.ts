@@ -23,6 +23,10 @@ export class UsuariosService{
         return this._http.get(this.url+'peticiones/'+id).map(res => res.json());
     }
 
+    getLibros(){
+        return this._http.get(this.url+'librostop').map(res => res.json());
+    }
+
     getAmigos(id: string){
         return this._http.get(this.url+'amigos/'+id).map(res => res.json());
     }
@@ -45,6 +49,10 @@ export class UsuariosService{
 
     borrarSolicitud(id: string,idamigo: string){
         return this._http.get(this.url+'deletesolicitud/'+id+'/'+idamigo).map(res => res.json());      
+    }
+
+    comprobarTieneClub(id: string){
+        return this._http.get(this.url+'checkuserclub/'+id).map(res => res.json());
     }
 
     aceptarSolicitud(id: string,idamigo: string){
