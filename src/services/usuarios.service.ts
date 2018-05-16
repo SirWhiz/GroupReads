@@ -3,6 +3,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Usuario } from '../app/registro/usuario';
+import { Club } from '../app/clubes/club';
 import { GLOBAL } from './global';
 
 @Injectable()
@@ -19,12 +20,32 @@ export class UsuariosService{
         return this._http.get(this.url+'solicitudespen/'+id).map(res => res.json());
     }
 
+    getGeneros(){
+        return this._http.get(this.url+'generos').map(res => res.json());
+    }
+
     getUsuariosSolicitudes(id: string){
         return this._http.get(this.url+'peticiones/'+id).map(res => res.json());
     }
 
     getLibros(){
         return this._http.get(this.url+'librostop').map(res => res.json());
+    }
+
+    getClub(id:string){
+        return this._http.get(this.url+'getclub/'+id).map(res => res.json());
+    }
+
+    getClubesDisponibles(){
+        return this._http.get(this.url+'freeclubs').map(res => res.json());   
+    }
+
+    unirseClub(id:string,idclub:string){
+        return this._http.get(this.url+'joinclub/'+id+'/'+idclub).map(res => res.json());
+    }
+
+    getMiembros(idclub:string){
+        return this._http.get(this.url+'miembros/'+idclub).map(res => res.json());
     }
 
     getAmigos(id: string){
@@ -105,6 +126,15 @@ export class UsuariosService{
 
     totalAutores(){
         return this._http.get(this.url+'totalautores').map(res => res.json());   
+    }
+
+    addClub(club:Club){
+        let json = JSON.stringify(club);
+        let params = 'json='+json;
+        let headers = new Headers({"Content-Type":"application/x-www-form-urlencoded"});
+
+        return this._http.post(this.url+'addclub',params,{headers:headers})
+                .map(res => res.json());
     }
 
     borrarImagen(usuario:Usuario){

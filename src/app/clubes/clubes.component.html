@@ -2,11 +2,58 @@
 <menucolaborador *ngIf="usuario.tipo=='c'"></menucolaborador>
 <menuusuario *ngIf="usuario.tipo=='n'"></menuusuario>
 <div class="row mt-5 mb-5 justify-content-around">
-  <div *ngIf="noClub" class="col-md-6">
+  <!--Si no estás en ningún club-->
+  <div *ngIf="noClub" class="col-md-10">
     <h4>¡{{usuario.nombre}} no estás en ningún club!</h4>
     <span class="lead">
       Aquí tienes algunos clubes a los que puedes unirte o puedes <button [routerLink]="['/nuevo-club']" class="btn btn-success">Crear un club</button>
     </span>
     <hr>
+    <div *ngFor="let club of clubes" class="card club" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">{{club.nombre}}</h5>
+        <h6 *ngIf="club.privacidad=='a'" class="card-subtitle mb-2 text-muted">
+          Privacidad: Abierto <i class="fas fa-unlock-alt"></i>
+        </h6>
+        <h6 *ngIf="club.privacidad=='c'" class="card-subtitle mb-2 text-muted">
+          Privacidad: Cerrado <i class="fas fa-lock"></i>
+        </h6>
+        <p class="card-text">
+          {{club.descripcion}}
+        </p>
+        <button *ngIf="club.privacidad=='c'" class="btn btn-outline-dark">Solicitar</button>
+        <button (click)="unirse(club)" *ngIf="club.privacidad=='a'" class="btn btn-outline-success">Unirme</button>
+      </div>
+    </div>
+  </div>
+  <!--Si estás en algún club-->
+  <div *ngIf="!noClub" class="col-md-7">
+    <h4 class="text-left">¡Actualmente formas parte de: <i>{{club.nombre}}</i>!</h4>
+    <span class="text-left lead">Otros miembros del club:</span><br/>
+    <!--Miembros del club-->
+    <span *ngIf="miembros.length>'0'">
+      <div class="row mt-3">
+        <div *ngFor="let miembro of miembros" class="card club col-md-4 m-2">
+          <div class="card-body">
+            <h5 class="card-title">{{miembro.nombre}} {{miembro.apellidos}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">@{{miembro.nick}}</h6>
+            <p class="card-text text-truncate">
+              {{miembro.correo}}
+            </p>
+          </div>
+        </div>
+      </div>
+    </span>
+    <!--Si es el creador del club-->
+    <hr/>
+    <span class="lead">Opciones:</span>
+    <div *ngIf="club.idCreador==usuario.id" class="row mt-3">
+      <div class="col-md-5"><button (click)="dialogoEditar()" class="btn btn-warning btn-block"><i class="fas fa-wrench"></i> Editar</button></div>
+      <div class="col-md-5"><button class="btn btn-danger btn-block"><i class="fas fa-trash-alt"></i> Borrar</button></div>
+    </div>
+    <!--Si es un miembro del club-->
+    <div *ngIf="club.idCreador!=usuario.id" class="row mt-4 justify-content-around">
+      <div class="col-md-5"><button class="btn btn-danger btn-block"><i class="fas fa-sign-out-alt"></i> Abandonar</button></div>
+    </div>
   </div>
 </div>

@@ -1189,6 +1189,137 @@
         echo json_encode($result);
     });
 
+    /* --- CREAR UN NUEVO CLUB --- */
+    $app->post('/addclub',function() use($app,$db){
+        $json = $app->request->post('json');
+        $data = json_decode($json,true);
+
+        $consulta = "INSERT INTO clubes VALUES (DEFAULT,".
+            "'{$data['nombre']}',".
+            "{$data['creador']},".
+            "{$data['genero']},".
+            "'{$data['privacidad']}',".
+            "'{$data['descripcion']}');";
+        $query = $db->query($consulta);
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>$consulta
+        );
+
+        if($query){
+            $idclub = $db->insert_id;
+            $consulta = "INSERT INTO usuarios_clubes VALUES(".$idclub.",".$data['creador'].")";
+            $db->query($consulta);
+
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Club registrado correctamente'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- OBTENER EL CLUB DE UN USUARIO --- */
+    $app->get('/getclub/:id',function($id) use($app,$db){
+        $consulta = "SELECT id,nombre,idCreador,idGenero,privacidad,descripcion FROM clubes INNER JOIN usuarios_clubes ON clubes.id=usuarios_clubes.idClub WHERE idUsuario=".$id;
+        $query = $db->query($consulta);
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>$consulta
+        );
+
+        if($query){
+            $data = $query->fetch_assoc();
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$data
+            );            
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- OBTENER LOS CLUBES DISPONIBLES --- */
+    $app->get('/freeclubs',function() use($app,$db){
+        $consulta = "SELECT * FROM clubes";
+        $query = $db->query($consulta);
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>$consulta
+        );
+
+        if($query){
+            $clubes = array();
+            while ($club = $query->fetch_assoc()) {
+                $clubes[] = $club;
+            }
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$clubes
+            );            
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- UNIRSE A UN CLUB --- */
+    $app->get('/joinclub/:id/:idclub',function($id,$idclub) use($app,$db){
+        $consulta = "INSERT INTO usuarios_clubes VALUES(".$idclub.",".$id.")";
+        $query = $db->query($consulta);
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>$consulta
+        );
+
+        if($query){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Usuario apuntado correctamente'
+            );            
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- OBTENER LOS MIEMBROS DE UN CLUB --- */
+    $app->get('/miembros/:idclub',function($idclub) use($app,$db){
+        $consulta = "SELECT * FROM usuarios INNER JOIN usuarios_clubes ON usuarios.id=usuarios_clubes.idUsuario WHERE idClub=".$idclub;
+        $query = $db->query($consulta);
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>$consulta
+        );
+
+        if($query){
+            $miembros = array();
+            while($miembro = $query->fetch_assoc()){
+                $miembros[] = $miembro;
+            }
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$miembros
+            );            
+        }
+
+        echo json_encode($result);
+    });
+
     /* --- OBTENER UN LIBRO CONCRETO --- */
     $app->get('/libro/:isbn',function($isbn) use($app,$db){
         $consulta = "SELECT * FROM libros WHERE isbn=".$isbn;
