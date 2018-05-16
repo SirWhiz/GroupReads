@@ -24,6 +24,10 @@ export class UsuariosService{
         return this._http.get(this.url+'generos').map(res => res.json());
     }
 
+    abandonarClub(id:string,idclub:string){
+        return this._http.get(this.url+'dejarclub/'+id+'/'+idclub).map(res => res.json());
+    }
+
     getUsuariosSolicitudes(id: string){
         return this._http.get(this.url+'peticiones/'+id).map(res => res.json());
     }

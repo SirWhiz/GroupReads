@@ -1294,6 +1294,28 @@
         echo json_encode($result);
     });
 
+    /* --- ABANDONAR UN CLUB --- */
+    $app->get('/dejarclub/:id/:idclub',function($id,$idclub) use($app,$db){
+        $consulta = "DELETE FROM usuarios_clubes WHERE idClub=".$idclub." AND idUsuario=".$id;
+        $query = $db->query($consulta);
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>$consulta
+        );
+
+        if($query){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Usuario borrado correctamente'
+            );            
+        }
+
+        echo json_encode($result);
+    });
+
     /* --- OBTENER LOS MIEMBROS DE UN CLUB --- */
     $app->get('/miembros/:idclub',function($idclub) use($app,$db){
         $consulta = "SELECT * FROM usuarios INNER JOIN usuarios_clubes ON usuarios.id=usuarios_clubes.idUsuario WHERE idClub=".$idclub;

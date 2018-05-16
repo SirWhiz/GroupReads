@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Club } from './club';
 import { DialogoEditarClubComponent } from './dialogoeditar.component';
+import { DialogoAbandonarComponent } from './dialogoabandonar.component';
 
 @Component({
 	selector: 'clubes',
@@ -94,6 +95,13 @@ export class ClubesComponent{
 		this.dialog.open(DialogoEditarClubComponent,{
 			width:'500px',
 			data: { club: this.club }
+		});
+	}
+
+	abandonar(){
+		this.dialog.open(DialogoAbandonarComponent,{
+			width:'500px',
+			data: { club: this.club,usuario: this.usuario.id,noclub: this.noclub }
 		});
 	}
 

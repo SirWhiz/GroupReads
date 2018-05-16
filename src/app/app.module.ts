@@ -34,7 +34,8 @@ import { NuevoAutorComponent } from './autores/nuevoautor.component';
 import { EditarAutorComponent } from './autores/editarautor.component';
 import { ClubesComponent } from './clubes/clubes.component';
 import { NuevoClubComponent } from './clubes/nuevoclub.component';
-import { DialogoEditarClubComponent } from './clubes/dialogoeditar.component'
+import { DialogoEditarClubComponent } from './clubes/dialogoeditar.component';
+import { DialogoAbandonarComponent } from './clubes/dialogoabandonar.component';
 
 import { MatInputModule,MatNativeDateModule } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -78,6 +79,7 @@ import { LoginGuard } from './login.guard';
     NuevoAutorComponent,
     EditarAutorComponent,
     DialogoBorrarAutor,
+    DialogoAbandonarComponent,
     AgregarAmigosComponent,
     DialogoSolicitudesComponent,
     ClubesComponent,
@@ -111,7 +113,8 @@ import { LoginGuard } from './login.guard';
                     DialogoBorrarAutor,
                     DialogoBorrarFotoAutor,
                     DialogoSolicitudesComponent,
-                    DialogoEditarClubComponent
+                    DialogoEditarClubComponent,
+                    DialogoAbandonarComponent
                     ]
 })
 export class AppModule { }
