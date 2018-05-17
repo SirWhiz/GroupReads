@@ -131,6 +131,9 @@ export class NuevoLibroComponent{
 				if(response.code == 200){
 					//Libro registrado correctamente
 					this.guardarAutores(this.libro.isbn);
+					this.snackBar.open("Libro registrado correctamente", "OK", {
+						duration: 2500,
+					});
 					this._router.navigate(['/libros']);
 				}else{
 					console.log(response);

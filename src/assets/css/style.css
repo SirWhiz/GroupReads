@@ -208,6 +208,17 @@ footer{
     border: 1px solid #d3d3d3;
     border-radius: 5px;
 }
+.genero{
+    background-color:#E64A19;
+    border-radius: 500px;
+    padding-top: 5px;
+    width:40%;
+    padding-bottom: 5px;
+    margin-top: 1em !important;
+    margin-bottom: 1em !important;
+    color:#fff;
+    text-align: center;
+}
 .ultimosLibros{
     overflow: hidden;
     border: 1px solid #d3d3d3;

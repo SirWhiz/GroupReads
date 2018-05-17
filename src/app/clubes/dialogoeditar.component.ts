@@ -15,7 +15,6 @@ import { Genero } from '../mantenimientoLibros/genero';
 export class DialogoEditarClubComponent{
 
     public club:Club;
-    public clubCopia:Club;
     public nombreMostrar:string;
     public generos:Genero[];
 
@@ -27,8 +26,7 @@ export class DialogoEditarClubComponent{
         public _router:Router,
     ){
         this.club = data.club;
-        console.log(this.club);
-        this.clubCopia = this.club;
+        this.nombreMostrar = this.club.nombreClub;
     }
 
     ngOnInit(){
@@ -41,8 +39,22 @@ export class DialogoEditarClubComponent{
         );
     }
 
-    public borrar(){
-
+    cambiar(event,tipo:string){
+        if(event.target.checked){
+            this.club.privacidad = tipo;
+        }
     }
 
+    onSubmit(){
+        this._usuariosService.editarClub(this.club).subscribe(
+            result => {
+                if(result.code == 200){
+                    this.dialogRef.close();
+                    this.snackBar.open("Club modificado correctamente", "Aceptar", {
+                        duration: 2500,
+                    });
+                }
+            }, error => {console.log(error);}
+        );
+    }
 }

@@ -158,7 +158,7 @@
 
     /* --- COMPROBAR SI UN USUARIO ESTÁ EN ALGÚN CLUB --- */
     $app->get('/checkuserclub/:id', function($id) use($app,$db){
-        $consulta = "SELECT * FROM usuarios_clubes WHERE idUsuario=".$id;
+        $consulta = "SELECT * FROM usuarios_clubes WHERE pendiente=0 AND idUsuario=".$id;
         $query = $db->query($consulta);
 
         if($query->num_rows==0){
@@ -1210,7 +1210,7 @@
 
         if($query){
             $idclub = $db->insert_id;
-            $consulta = "INSERT INTO usuarios_clubes VALUES(".$idclub.",".$data['creador'].")";
+            $consulta = "INSERT INTO usuarios_clubes VALUES(".$idclub.",".$data['creador'].",DEFAULT)";
             $db->query($consulta);
 
             $result = array(
@@ -1225,7 +1225,7 @@
 
     /* --- OBTENER EL CLUB DE UN USUARIO --- */
     $app->get('/getclub/:id',function($id) use($app,$db){
-        $consulta = "SELECT id,nombre,idCreador,idGenero,privacidad,descripcion FROM clubes INNER JOIN usuarios_clubes ON clubes.id=usuarios_clubes.idClub WHERE idUsuario=".$id;
+        $consulta = "SELECT id,nombreClub,idCreador,idGenero,privacidad,descripcion FROM clubes INNER JOIN usuarios_clubes ON clubes.id=usuarios_clubes.idClub WHERE pendiente=0 AND idUsuario=".$id;
         $query = $db->query($consulta);
 
         $result = array(
@@ -1235,12 +1235,20 @@
         );
 
         if($query){
-            $data = $query->fetch_assoc();
-            $result = array(
-                'status'=>'success',
-                'code'=>200,
-                'data'=>$data
-            );            
+            if($query->num_rows==0){
+                $result = array(
+                    'status'=>'error',
+                    'code'=>404,
+                    'message'=>$consulta
+                );
+            }else{
+                $data = $query->fetch_assoc();
+                $result = array(
+                    'status'=>'success',
+                    'code'=>200,
+                    'data'=>$data
+                ); 
+            }           
         }
 
         echo json_encode($result);
@@ -1248,7 +1256,7 @@
 
     /* --- OBTENER LOS CLUBES DISPONIBLES --- */
     $app->get('/freeclubs',function() use($app,$db){
-        $consulta = "SELECT * FROM clubes";
+        $consulta = "SELECT clubes.id,nombreClub,idCreador,idGenero,generos.nombre,privacidad,descripcion FROM clubes INNER JOIN generos WHERE generos.id=clubes.idGenero";
         $query = $db->query($consulta);
 
         $result = array(
@@ -1272,9 +1280,139 @@
         echo json_encode($result);
     });
 
+    /* --- OBTENER LOS CLUBES SOLICITADOS --- */
+    $app->get('/requestedclubs/:id',function($id) use($app,$db){
+        $consulta = "SELECT clubes.id,nombreClub,idCreador,idGenero,generos.nombre,privacidad,descripcion FROM usuarios_clubes INNER JOIN clubes ON clubes.id=usuarios_clubes.idClub INNER JOIN generos ON generos.id=clubes.idGenero WHERE usuarios_clubes.idUsuario=".$id." AND usuarios_clubes.pendiente=1";
+        $query = $db->query($consulta);
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>$consulta
+        );
+
+        if($query){
+            if($query->num_rows==0){
+                $result = array(
+                    'status'=>'success',
+                    'code'=>400,
+                    'message'=>'No ha solicitado ningun club'
+                );
+            }else{
+                $clubes = array();
+                while ($club = $query->fetch_assoc()) {
+                    $clubes[] = $club;
+                }
+                $result = array(
+                    'status'=>'success',
+                    'code'=>200,
+                    'data'=>$clubes
+                );
+            }            
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- BORRAR SOLICITUD A UN CLUB --- */
+    $app->get('/deleteclubreq/:id/:idclub',function($id,$idclub) use($app,$db){
+        $consulta = "DELETE FROM usuarios_clubes WHERE idClub=".$idclub." AND idUsuario=".$id." AND pendiente=1";
+        $query = $db->query($consulta);
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>$consulta
+        );
+
+        if($query){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Solicitud borrada correctamente'
+            );            
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- EDITAR DATOS DE UN CLUB --- */
+    $app->post('/editclub',function() use($app,$db){
+        $json = $app->request->post('json');
+        $data = json_decode($json,true);
+
+        $consulta = "UPDATE clubes SET nombreClub=".
+                    "'{$data['nombreClub']}',idGenero=".
+                    "{$data['idGenero']},privacidad=".
+                    "'{$data['privacidad']}',descripcion=".
+                    "'{$data['descripcion']}' WHERE id=".
+                    "{$data['id']};";
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>$consulta
+        );
+
+        $insert = $db->query($consulta);
+        if($insert){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Club actualizado correctamente'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- BORRAR UN CLUB --- */
+    $app->get('/deleteclub/:id',function($id) use($app,$db){
+        $consulta = "DELETE FROM clubes WHERE id=".$id;
+        $query = $db->query($consulta);
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>$consulta
+        );
+
+        if($query){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Club borrado correctamente'
+            );            
+        }
+
+        echo json_encode($result);
+    });
+
     /* --- UNIRSE A UN CLUB --- */
     $app->get('/joinclub/:id/:idclub',function($id,$idclub) use($app,$db){
-        $consulta = "INSERT INTO usuarios_clubes VALUES(".$idclub.",".$id.")";
+        $consulta = "INSERT INTO usuarios_clubes VALUES(".$idclub.",".$id.",DEFAULT)";
+        $query = $db->query($consulta);
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>$consulta
+        );
+
+        if($query){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Usuario apuntado correctamente'
+            );            
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- SOLICITAR UN CLUB --- */
+    $app->get('/requestclub/:id/:idclub',function($id,$idclub) use($app,$db){
+        $consulta = "INSERT INTO usuarios_clubes VALUES(".$idclub.",".$id.",1)";
         $query = $db->query($consulta);
 
         $result = array(
@@ -1318,7 +1456,7 @@
 
     /* --- OBTENER LOS MIEMBROS DE UN CLUB --- */
     $app->get('/miembros/:idclub',function($idclub) use($app,$db){
-        $consulta = "SELECT * FROM usuarios INNER JOIN usuarios_clubes ON usuarios.id=usuarios_clubes.idUsuario WHERE idClub=".$idclub;
+        $consulta = "SELECT * FROM usuarios INNER JOIN usuarios_clubes ON usuarios.id=usuarios_clubes.idUsuario WHERE idClub=".$idclub." AND pendiente=0";
         $query = $db->query($consulta);
 
         $result = array(
@@ -1336,6 +1474,32 @@
                 'status'=>'success',
                 'code'=>200,
                 'data'=>$miembros
+            );            
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- OBTENER LAS PETICIONES DE UN CLUB --- */
+    $app->get('/getrequests/:idclub',function($idclub) use($app,$db){
+        $consulta = "SELECT id,correo,nombre,apellidos,nick,fecha,pwd,foto,pais,tipo FROM usuarios INNER JOIN usuarios_clubes ON usuarios.id=usuarios_clubes.idUsuario WHERE idClub=".$idclub." AND pendiente=1";
+        $query = $db->query($consulta);
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>$consulta
+        );
+
+        if($query){
+            $peticiones = array();
+            while($peticion = $query->fetch_assoc()){
+                $peticiones[] = $peticion;
+            }
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$peticiones
             );            
         }
 

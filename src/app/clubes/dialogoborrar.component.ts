@@ -8,37 +8,35 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Genero } from '../mantenimientoLibros/genero';
 
 @Component({
-	selector: 'abandonarclub',
-	templateUrl: './dialogoabandonar.component.html',
+	selector: 'dialogoborrar',
+	templateUrl: './dialogoborrar.component.html',
 	providers: [UsuariosService]
 })
-export class DialogoAbandonarComponent{
+export class DialogoBorrarClubComponent{
 
     public club:Club;
-    public id:string;
 
 	constructor(
-        public dialogRef: MatDialogRef<DialogoAbandonarComponent>,
+        public dialogRef: MatDialogRef<DialogoBorrarClubComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any,
         private _usuariosService: UsuariosService,
         public snackBar:MatSnackBar,
         public _router:Router,
     ){
         this.club = data.club;
-        this.id = data.usuario;
     }
 
-    abandonar(){
-        this._usuariosService.abandonarClub(this.id,this.club.id).subscribe(
+    delete(){
+        this._usuariosService.deleteClub(this.club.id).subscribe(
             result => {
                 if(result.code == 200){
                     this.dialogRef.close();
-                    this._router.navigate(['/home']);
-                    this.snackBar.open("Has dejado el club correctamente", "Aceptar", {
+                    this.snackBar.open("Club borrado correctamente", "Aceptar", {
                         duration: 2500,
                     });
+                    this._router.navigate(['/home']);
                 }
-            }, error => {console.log(error)}
+            }, error => {console.log(error);}
         );
     }
 

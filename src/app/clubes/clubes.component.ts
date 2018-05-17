@@ -7,6 +7,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Club } from './club';
 import { DialogoEditarClubComponent } from './dialogoeditar.component';
 import { DialogoAbandonarComponent } from './dialogoabandonar.component';
+import { DialogoBorrarClubComponent } from './dialogoborrar.component';
 
 @Component({
 	selector: 'clubes',
@@ -17,16 +18,22 @@ export class ClubesComponent{
 
 	public usuario:Usuario;
 	public miembros:Usuario[];
+	public peticiones:Usuario[];
+	public nombreMostrar: string;
 	public club:Club;
 	public clubes:Club[];
+	public solicitados:Club[];
 	public noClub:boolean;
 
 	constructor(public dialog: MatDialog,public snackBar: MatSnackBar,private _router: Router,private _usuariosService: UsuariosService){
 		this.usuario = new Usuario("","","","","","","","","","","");
 		this.miembros = new Array();
-		this.club = new Club("","","","","","");
+		this.club = new Club("","","","","","","");
 		this.clubes = new Array();
+		this.solicitados = new Array();
+		this.peticiones = new Array();
 		this.noClub = false;
+		this.nombreMostrar = "";
 	}
 
 	ngOnInit(){
@@ -43,12 +50,13 @@ export class ClubesComponent{
 					this.usuario = result.data;
 					this._usuariosService.comprobarTieneClub(this.usuario.id).subscribe(
 						result => {
+							console.log(result);
 							if(result.code == 200){
 								this.noClub = false;
 								this.getClub();
 							}else{
 								this.noClub = true;
-								this.getClubesDisponibles();
+								this.getClubesSolicitados();
 							}
 						}, error => {console.log(error);}
 					);
@@ -62,7 +70,11 @@ export class ClubesComponent{
 			result => {
 				if(result.code == 200){
 					this.club = result.data;
+					this.nombreMostrar = this.club.nombreClub;
 					this.getMiembros();
+					if(this.club.idCreador == this.usuario.id && this.club.privacidad=='c'){
+						this.getPeticiones();
+					}
 				}
 			}, error => {
 				console.log(error);
@@ -80,12 +92,47 @@ export class ClubesComponent{
 		);
 	}
 
+	getClubesSolicitados(){
+		this._usuariosService.getClubesSolicitados(this.usuario.id).subscribe(
+			result => {
+				if(result.code == 200){
+					this.solicitados = result.data;
+				}else{
+					this.getClubesDisponibles();
+				}
+			}, error => {console.log(error);}
+		);
+	}
+
+	borrarSolicitud(club:Club){
+		this._usuariosService.borrarSolicitudClub(this.usuario.id,club.id).subscribe(
+			result => {
+				if(result.code == 200){
+    				this.snackBar.open("Petición eliminada correctamente", "Aceptar", {
+      					duration: 2500,
+    				});
+    				this.solicitados = [];
+    				this.getClubesDisponibles();
+				}
+			}, error => {console.log(error);}
+		);
+	}
+
 	getMiembros(){
 		this._usuariosService.getMiembros(this.club.id).subscribe(
 			result => {
 				if(result.code == 200){
 					this.miembros = result.data;
-					console.log(this.miembros);
+				}
+			}, error => {console.log(error);}
+		);
+	}
+
+	getPeticiones(){
+		this._usuariosService.getPeticiones(this.club.id).subscribe(
+			result => {
+				if(result.code == 200){
+					this.peticiones = result.data;
 				}
 			}, error => {console.log(error);}
 		);
@@ -98,26 +145,47 @@ export class ClubesComponent{
 		});
 	}
 
+	dialogoBorrar(){
+		this.dialog.open(DialogoBorrarClubComponent,{
+			width:'500px',
+			data: { club: this.club }
+		});
+	}
+
 	abandonar(){
 		this.dialog.open(DialogoAbandonarComponent,{
 			width:'500px',
-			data: { club: this.club,usuario: this.usuario.id,noclub: this.noclub }
+			data: { club: this.club,usuario: this.usuario.id }
 		});
 	}
 
 	unirse(club:Club){
-		this._usuariosService.unirseClub(this.usuario.id,club.id).subscribe(
-			result => {
-				if(result.code == 200){
-    				this.snackBar.open("¡Te acabas de unir a "+club.nombre+"!", "Aceptar", {
-      					duration: 2500,
-    				});
-    				this.club = club;
-    				this.noClub = false;
-    				this.getMiembros();
-				}
-			}, error => {console.log(error);}
-		);
+		if(club.privacidad=='a'){
+			this._usuariosService.unirseClub(this.usuario.id,club.id).subscribe(
+				result => {
+					if(result.code == 200){
+	    				this.snackBar.open("¡Te acabas de unir a "+club.nombreClub+"!", "Aceptar", {
+	      					duration: 2500,
+	    				});
+	    				this.club = club;
+	    				this.noClub = false;
+	    				this.getMiembros();
+					}
+				}, error => {console.log(error);}
+			);
+		}else{
+			this._usuariosService.solicitarClub(this.usuario.id,club.id).subscribe(
+				result => {
+					if(result.code == 200){
+	    				this.snackBar.open("Solicitud enviada correctamente", "Aceptar", {
+	      					duration: 2500,
+	    				});
+	    				this.solicitados.push(club);
+	    				this.clubes = [];
+					}
+				}, error => {console.log(error);}
+			);
+		}
 	}
 
 }

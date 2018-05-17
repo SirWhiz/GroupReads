@@ -9,47 +9,74 @@
       Aquí tienes algunos clubes a los que puedes unirte o puedes <button [routerLink]="['/nuevo-club']" class="btn btn-success">Crear un club</button>
     </span>
     <hr>
-    <div *ngFor="let club of clubes" class="card club" style="width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">{{club.nombre}}</h5>
-        <h6 *ngIf="club.privacidad=='a'" class="card-subtitle mb-2 text-muted">
-          Privacidad: Abierto <i class="fas fa-unlock-alt"></i>
-        </h6>
-        <h6 *ngIf="club.privacidad=='c'" class="card-subtitle mb-2 text-muted">
-          Privacidad: Cerrado <i class="fas fa-lock"></i>
-        </h6>
-        <p class="card-text">
-          {{club.descripcion}}
-        </p>
-        <button *ngIf="club.privacidad=='c'" class="btn btn-outline-dark">Solicitar</button>
-        <button (click)="unirse(club)" *ngIf="club.privacidad=='a'" class="btn btn-outline-success">Unirme</button>
+    <h5 *ngIf="clubes.length=='0' && solicitados.length=='0'"><i>¡Vaya! parece que no hay clubes..</i></h5>
+    <h5 *ngIf="solicitados.length>0"><i>Esperando a que el club acepte tu petición..</i></h5>
+    <div *ngIf="clubes.length>'0' || solicitados.length>'0'" class="row">
+      <div *ngFor="let club of clubes" class="card club m-2" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{club.nombreClub}}</h5>
+          <h6 *ngIf="club.privacidad=='a'" class="card-subtitle mb-2 text-muted">
+            Privacidad: Abierto <i class="fas fa-unlock-alt"></i>
+          </h6>
+          <h6 *ngIf="club.privacidad=='c'" class="card-subtitle mb-2 text-muted">
+            Privacidad: Cerrado <i class="fas fa-lock"></i>
+          </h6>
+          <div class="genero">{{club.nombre}}</div>
+          <p class="card-text">
+            {{club.descripcion}}
+          </p>
+          <button (click)="unirse(club)" *ngIf="club.privacidad=='c'" class="btn btn-outline-dark">Solicitar</button>
+          <button (click)="unirse(club)" *ngIf="club.privacidad=='a'" class="btn btn-outline-success">Unirme</button>
+        </div>
+      </div>
+      <div *ngFor="let solicitado of solicitados" class="card club m-2" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{solicitado.nombreClub}}</h5>
+          <h6 *ngIf="solicitado.privacidad=='a'" class="card-subtitle mb-2 text-muted">
+            Privacidad: Abierto <i class="fas fa-unlock-alt"></i>
+          </h6>
+          <h6 *ngIf="solicitado.privacidad=='c'" class="card-subtitle mb-2 text-muted">
+            Privacidad: Cerrado <i class="fas fa-lock"></i>
+          </h6>
+          <div class="genero">{{solicitado.nombre}}</div>
+          <p class="card-text">
+            {{solicitado.descripcion}}
+          </p>
+          <button (click)="borrarSolicitud(solicitado)" *ngIf="solicitado.privacidad=='c'" class="btn btn-outline-warning">Eliminar solicitud</button>
+        </div>
       </div>
     </div>
   </div>
   <!--Si estás en algún club-->
   <div *ngIf="!noClub" class="col-md-7">
-    <h4 class="text-left">¡Actualmente formas parte de: <i>{{club.nombre}}</i>!</h4>
+    <h4 class="text-left">¡Actualmente formas parte de: <i>{{club.nombreClub}}</i>!</h4>
     <span class="text-left lead">Otros miembros del club:</span><br/>
     <!--Miembros del club-->
-    <span *ngIf="miembros.length>'0'">
-      <div class="row mt-3">
-        <div *ngFor="let miembro of miembros" class="card club col-md-4 m-2">
-          <div class="card-body">
-            <h5 class="card-title">{{miembro.nombre}} {{miembro.apellidos}}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">@{{miembro.nick}}</h6>
-            <p class="card-text text-truncate">
-              {{miembro.correo}}
-            </p>
-          </div>
+    <div *ngIf="miembros.length>'0'" class="row mt-3">
+      <div *ngFor="let miembro of miembros" class="card club col-md-4 m-2">
+        <div class="card-body">
+          <h5 class="card-title">{{miembro.nombre}} {{miembro.apellidos}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">@{{miembro.nick}}</h6>
+          <p class="card-text text-truncate">
+            {{miembro.correo}}
+          </p>
         </div>
       </div>
-    </span>
+    </div>
     <!--Si es el creador del club-->
     <hr/>
+    <div *ngIf="peticiones.length>'0'" class="row mt-3">
+        <span class="lead">Usuarios que quieren unirse al club:</span>
+        <span class="w-100 amigoLista p-2 m-2" *ngFor="let peticion of peticiones">                {{peticion.nombre}} @{{peticion.nick}}
+        <button matTooltip="Descartar petición" class="btn btn-danger float-right"><i class="fas fa-times"></i></button>
+        <button matTooltip="Aceptar petición" class="btn btn-success float-right mr-2"><i class="fas fa-check"></i></button>
+        </span>
+        <hr>
+    </div>
     <span class="lead">Opciones:</span>
     <div *ngIf="club.idCreador==usuario.id" class="row mt-3">
       <div class="col-md-5"><button (click)="dialogoEditar()" class="btn btn-warning btn-block"><i class="fas fa-wrench"></i> Editar</button></div>
-      <div class="col-md-5"><button class="btn btn-danger btn-block"><i class="fas fa-trash-alt"></i> Borrar</button></div>
+      <div class="col-md-5"><button (click)="dialogoBorrar()" class="btn btn-danger btn-block"><i class="fas fa-trash-alt"></i> Borrar</button></div>
     </div>
     <!--Si es un miembro del club-->
     <div *ngIf="club.idCreador!=usuario.id" class="row mt-4 justify-content-around">

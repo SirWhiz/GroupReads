@@ -36,6 +36,7 @@ import { ClubesComponent } from './clubes/clubes.component';
 import { NuevoClubComponent } from './clubes/nuevoclub.component';
 import { DialogoEditarClubComponent } from './clubes/dialogoeditar.component';
 import { DialogoAbandonarComponent } from './clubes/dialogoabandonar.component';
+import { DialogoBorrarClubComponent } from './clubes/dialogoborrar.component';
 
 import { MatInputModule,MatNativeDateModule } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -72,6 +73,7 @@ import { LoginGuard } from './login.guard';
     EditarLibroComponent,
     DialogoEditarClubComponent,
     GenerosComponent,
+    DialogoBorrarClubComponent,
     DialogoNuevoGenero,
     DialogoEditarGenero,
     AmigosComponent,
@@ -114,7 +116,8 @@ import { LoginGuard } from './login.guard';
                     DialogoBorrarFotoAutor,
                     DialogoSolicitudesComponent,
                     DialogoEditarClubComponent,
-                    DialogoAbandonarComponent
+                    DialogoAbandonarComponent,
+                    DialogoBorrarClubComponent
                     ]
 })
 export class AppModule { }

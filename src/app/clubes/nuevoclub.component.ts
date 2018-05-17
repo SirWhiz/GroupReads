@@ -19,7 +19,7 @@ export class NuevoClubComponent{
 
 	constructor(public snackBar: MatSnackBar,private _router: Router,private _usuariosService: UsuariosService){
 		this.usuario = new Usuario("","","","","","","","","","","");
-		this.club = new Club("","","","","","");
+		this.club = new Club("","","","","","","");
 		this.generos = new Array();
 	}
 

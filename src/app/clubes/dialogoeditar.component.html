@@ -1,4 +1,4 @@
-<h5 class="text-center">Editar {{club.nombre}}</h5>
+<h5 class="text-center">Editar {{nombreMostrar}}</h5>
 <form #formClub="ngForm" class="form login" (ngSubmit)="onSubmit()">
 	<!--Nombre-->
 	<label for="nombre">Nombre:</label>
@@ -6,26 +6,30 @@
 	<span class="valido" *ngIf="nombre.touched && club.nombre!='' && nombre.valid">
 		<i class="fas fa-check fa-2x"></i>
 	</span>
-	<input [(ngModel)]="clubCopia.nombre" #nombre=ngModel required="required" type="text" name="nombre" class="mb-3 form-control" pattern="^[\-\_A-Za-z\u00f1\u00d1À-ÿ\s]+">
+	<input [(ngModel)]="club.nombreClub" #nombre=ngModel required="required" type="text" name="nombre" class="mb-3 form-control" pattern="^[\-\_A-Za-z\u00f1\u00d1À-ÿ\s]+">
 	<!--Descripción-->
 	<label for="descripcion">Breve descripción del club:</label>
 	<span *ngIf="descripcion.touched && club.descripcion!='' && !descripcion.valid"><br/>Introduzca una descripción válida</span>
 	<span class="valido" *ngIf="descripcion.touched && club.descripcion!='' && descripcion.valid">
 		<i class="fas fa-check fa-2x"></i>
 	</span>
-	<textarea [(ngModel)]="clubCopia.descripcion" #descripcion=ngModel required="required" name="descripcion" style="min-height:50px;max-height:120px" class="mb-3 form-control" pattern="^[0-9A-Za-z\u00f1\u00d1À-ÿ\s\,\.\-]+"></textarea>
+	<textarea [(ngModel)]="club.descripcion" #descripcion=ngModel required="required" name="descripcion" style="min-height:50px;max-height:120px" class="mb-3 form-control" pattern="^[0-9A-Za-z\u00f1\u00d1À-ÿ\s\,\.\-]+"></textarea>
 	<!--Género--->
 	<label for="genero">Género preferido:</label>
-	<select class="mb-3 form-control" name="genero" [(ngModel)]="clubCopia.idGenero" required="required">
+	<select class="mb-3 form-control" name="genero" [(ngModel)]="club.idGenero" required="required">
 		<option *ngFor="let genero of generos" value="{{genero.id}}">
 			{{genero.nombre}}
 		</option>
 	</select>
 	<!--Privacidad del club-->
 	<label for="tipo">Tipo:</label>
-	<div class="form-control">
-		<input (change)="cambiar($event,'a')" type="radio" name="tipo">Público
+	<div *ngIf="club.privacidad=='a'" class="form-control">
+		<input  checked="checked" (change)="cambiar($event,'a')" type="radio" name="tipo">Público
 		<input (change)="cambiar($event,'c')" type="radio" name="tipo">Privado
 	</div>
-    <input type="submit" id="submit" matTooltip="¡Crear club!" value="Enviar" class="btn btn-primary mt-3" [disabled]="!formClub.form.valid || club.privacidad==''">
+	<div *ngIf="club.privacidad=='c'" class="form-control">
+		<input (change)="cambiar($event,'a')" type="radio" name="tipo">Público
+		<input checked="checked" (change)="cambiar($event,'c')" type="radio" name="tipo">Privado
+	</div>
+    <input type="submit" id="submit" matTooltip="¡Crear club!" value="Guardar cambios" class="btn btn-primary mt-3" [disabled]="!formClub.form.valid || club.privacidad==''">
 </form>

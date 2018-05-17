@@ -41,21 +41,22 @@ CREATE TABLE generos(
 
 CREATE TABLE clubes(
     id smallint unsigned AUTO_INCREMENT PRIMARY KEY,
-    nombre varchar(60) NOT NULL,
+    nombreClub varchar(60) NOT NULL,
     idCreador smallint unsigned,
     idGenero smallint unsigned NULL,
     privacidad ENUM('a','c') NOT NULL,
     descripcion text NOT NULL,
-    FOREIGN KEY (idGenero) REFERENCES generos(id),
-    FOREIGN KEY (idCreador) REFERENCES usuarios(id)
+    FOREIGN KEY (idGenero) REFERENCES generos(id) ON DELETE CASCADE,
+    FOREIGN KEY (idCreador) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
 CREATE TABLE usuarios_clubes(
     idClub smallint unsigned,
     idUsuario smallint unsigned,
+    pendiente boolean DEFAULT 0 NOT NULL,
     PRIMARY KEY(idClub,idUsuario),
-    FOREIGN KEY (idClub) REFERENCES clubes(id),
-    FOREIGN KEY (idUsuario) REFERENCES usuarios(id)
+    FOREIGN KEY (idClub) REFERENCES clubes(id) ON DELETE CASCADE,
+    FOREIGN KEY (idUsuario) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
 CREATE TABLE libros(
@@ -65,7 +66,7 @@ CREATE TABLE libros(
     fechaAlta date NOT NULL,
     idGenero smallint unsigned NOT NULL,
     portada varchar(100) NULL,
-    FOREIGN KEY (idGenero) REFERENCES generos(id)
+    FOREIGN KEY (idGenero) REFERENCES generos(id) ON DELETE CASCADE
 );
 
 CREATE TABLE autores(
@@ -74,7 +75,7 @@ CREATE TABLE autores(
     fecha_nacimiento date NOT NULL,
     nacionalidad smallint unsigned NOT NULL,
     foto varchar(100) NULL,
-    FOREIGN KEY (nacionalidad) REFERENCES paises(id)
+    FOREIGN KEY (nacionalidad) REFERENCES paises(id) ON DELETE CASCADE
 );
 
 CREATE TABLE autores_libros(
@@ -91,8 +92,8 @@ CREATE TABLE libros_clubes(
     isbnLibro varchar(15) NOT NULL,
     finalizado boolean NOT NULL DEFAULT 0,
     fecha_fin date NOT NULL,
-    FOREIGN KEY (idClub) REFERENCES clubes(id),
-    FOREIGN KEY (isbnLibro) REFERENCES libros(isbn)
+    FOREIGN KEY (idClub) REFERENCES clubes(id) ON DELETE CASCADE,
+    FOREIGN KEY (isbnLibro) REFERENCES libros(isbn) ON DELETE CASCADE
 );
 
 CREATE TABLE comentarios_libros(
@@ -100,9 +101,9 @@ CREATE TABLE comentarios_libros(
     idClub smallint unsigned NOT NULL,
     idUsuario smallint unsigned NOT NULL,
     isbnLibro varchar(15) NOT NULL,
-    FOREIGN KEY (idClub) REFERENCES clubes(id),
-    FOREIGN KEY (idUsuario) REFERENCES usuarios(id),
-    FOREIGN KEY (isbnLibro) REFERENCES libros(isbn)
+    FOREIGN KEY (idClub) REFERENCES clubes(id) ON DELETE CASCADE,
+    FOREIGN KEY (idUsuario) REFERENCES usuarios(id) ON DELETE CASCADE,
+    FOREIGN KEY (isbnLibro) REFERENCES libros(isbn) ON DELETE CASCADE
 );
 
 CREATE TABLE libros_para_votar(
@@ -112,10 +113,10 @@ CREATE TABLE libros_para_votar(
     isbn2 varchar(15) NOT NULL,
     isbn3 varchar(15) NOT NULL,
     finalizado boolean DEFAULT 0 NOT NULL,
-    FOREIGN KEY (idClub) REFERENCES clubes(id),
-    FOREIGN KEY (isbn1) REFERENCES libros(isbn),
-    FOREIGN KEY (isbn2) REFERENCES libros(isbn),
-    FOREIGN KEY (isbn3) REFERENCES libros(isbn)
+    FOREIGN KEY (idClub) REFERENCES clubes(id) ON DELETE CASCADE,
+    FOREIGN KEY (isbn1) REFERENCES libros(isbn) ON DELETE CASCADE,
+    FOREIGN KEY (isbn2) REFERENCES libros(isbn) ON DELETE CASCADE,
+    FOREIGN KEY (isbn3) REFERENCES libros(isbn) ON DELETE CASCADE
 );
 
 CREATE TABLE votaciones(
@@ -123,8 +124,8 @@ CREATE TABLE votaciones(
     idClub smallint unsigned NOT NULL,
     idUsuario smallint unsigned NOT NULL,
     voto varchar(15) NOT NULL,
-    FOREIGN KEY (idClub) REFERENCES clubes(id),
-    FOREIGN KEY (idUsuario) REFERENCES usuarios(id)
+    FOREIGN KEY (idClub) REFERENCES clubes(id) ON DELETE CASCADE,
+    FOREIGN KEY (idUsuario) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
 INSERT INTO paises (id,iso,nombre,nicename,iso3,numcode,phonecode) VALUES

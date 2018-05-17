@@ -28,6 +28,19 @@ export class UsuariosService{
         return this._http.get(this.url+'dejarclub/'+id+'/'+idclub).map(res => res.json());
     }
 
+    editarClub(club:Club){
+        let json = JSON.stringify(club);
+        let params = 'json='+json;
+        let headers = new Headers({"Content-Type":"application/x-www-form-urlencoded"});
+
+        return this._http.post(this.url+'editclub',params,{headers:headers})
+                .map(res => res.json());
+    }
+
+    deleteClub(id:string){
+        return this._http.get(this.url+'deleteclub/'+id).map(res => res.json());
+    }
+
     getUsuariosSolicitudes(id: string){
         return this._http.get(this.url+'peticiones/'+id).map(res => res.json());
     }
@@ -40,12 +53,28 @@ export class UsuariosService{
         return this._http.get(this.url+'getclub/'+id).map(res => res.json());
     }
 
+    getPeticiones(idclub:string){
+        return this._http.get(this.url+'getrequests/'+idclub).map(res => res.json());   
+    }
+
     getClubesDisponibles(){
         return this._http.get(this.url+'freeclubs').map(res => res.json());   
     }
 
+    getClubesSolicitados(id:string){
+        return this._http.get(this.url+'requestedclubs/'+id).map(res => res.json());   
+    }
+
+    borrarSolicitudClub(id:string,idclub:string){
+        return this._http.get(this.url+'deleteclubreq/'+id+'/'+idclub).map(res => res.json());   
+    }
+
     unirseClub(id:string,idclub:string){
         return this._http.get(this.url+'joinclub/'+id+'/'+idclub).map(res => res.json());
+    }
+
+    solicitarClub(id:string,idclub:string){
+        return this._http.get(this.url+'requestclub/'+id+'/'+idclub).map(res => res.json());   
     }
 
     getMiembros(idclub:string){
