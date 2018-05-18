@@ -69,6 +69,14 @@ export class UsuariosService{
         return this._http.get(this.url+'deleteclubreq/'+id+'/'+idclub).map(res => res.json());   
     }
 
+    aceptarSolicitudClub(id:string,idclub:string){
+        return this._http.get(this.url+'confirmclubreq/'+id+'/'+idclub).map(res => res.json());   
+    }
+
+    expulsarMiembro(id:string,idclub:string){
+        return this._http.get(this.url+'kickmember/'+id+'/'+idclub).map(res => res.json());
+    }
+
     unirseClub(id:string,idclub:string){
         return this._http.get(this.url+'joinclub/'+id+'/'+idclub).map(res => res.json());
     }

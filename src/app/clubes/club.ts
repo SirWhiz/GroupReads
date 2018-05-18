@@ -4,7 +4,7 @@ export class Club{
 	constructor(
 		public id: string,
 		public nombreClub: string,
-		public creador: string,
+		public idCreador: string,
 		public genero: string,
 		public nombreGenero: string,
 		public privacidad: string,

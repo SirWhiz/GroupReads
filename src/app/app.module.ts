@@ -37,6 +37,7 @@ import { NuevoClubComponent } from './clubes/nuevoclub.component';
 import { DialogoEditarClubComponent } from './clubes/dialogoeditar.component';
 import { DialogoAbandonarComponent } from './clubes/dialogoabandonar.component';
 import { DialogoBorrarClubComponent } from './clubes/dialogoborrar.component';
+import { DialogoExpulsarComponent } from './clubes/dialogoexpulsar.component';
 
 import { MatInputModule,MatNativeDateModule } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -85,7 +86,8 @@ import { LoginGuard } from './login.guard';
     AgregarAmigosComponent,
     DialogoSolicitudesComponent,
     ClubesComponent,
-    NuevoClubComponent
+    NuevoClubComponent,
+    DialogoExpulsarComponent
   ],
   imports: [
     BrowserModule,
@@ -117,7 +119,8 @@ import { LoginGuard } from './login.guard';
                     DialogoSolicitudesComponent,
                     DialogoEditarClubComponent,
                     DialogoAbandonarComponent,
-                    DialogoBorrarClubComponent
+                    DialogoBorrarClubComponent,
+                    DialogoExpulsarComponent
                     ]
 })
 export class AppModule { }

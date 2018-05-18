@@ -42,7 +42,7 @@ export class NuevoClubComponent{
 	}
 
 	onSubmit(){
-		this.club.creador = this.usuario.id;
+		this.club.idCreador = this.usuario.id;
 		
 		this._usuariosService.addClub(this.club).subscribe(
 			result => {

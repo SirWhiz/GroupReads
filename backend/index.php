@@ -1196,7 +1196,7 @@
 
         $consulta = "INSERT INTO clubes VALUES (DEFAULT,".
             "'{$data['nombre']}',".
-            "{$data['creador']},".
+            "{$data['idCreador']},".
             "{$data['genero']},".
             "'{$data['privacidad']}',".
             "'{$data['descripcion']}');";
@@ -1210,7 +1210,7 @@
 
         if($query){
             $idclub = $db->insert_id;
-            $consulta = "INSERT INTO usuarios_clubes VALUES(".$idclub.",".$data['creador'].",DEFAULT)";
+            $consulta = "INSERT INTO usuarios_clubes VALUES(".$idclub.",".$data['idCreador'].",DEFAULT)";
             $db->query($consulta);
 
             $result = array(
@@ -1330,6 +1330,28 @@
                 'status'=>'success',
                 'code'=>200,
                 'message'=>'Solicitud borrada correctamente'
+            );            
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- ACEPTAR SOLICITUD A UN CLUB --- */
+       $app->get('/confirmclubreq/:id/:idclub',function($id,$idclub) use($app,$db){
+        $consulta = "UPDATE usuarios_clubes SET pendiente=0 WHERE idClub=".$idclub." AND idUsuario=".$id;
+        $query = $db->query($consulta);
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>$consulta
+        );
+
+        if($query){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Solicitud aceptada correctamente'
             );            
         }
 
@@ -1474,6 +1496,28 @@
                 'status'=>'success',
                 'code'=>200,
                 'data'=>$miembros
+            );            
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- EXPULSAR A UN MIEMBRO DE UN CLUB --- */
+    $app->get('/kickmember/:id/:idclub',function($id,$idclub) use($app,$db){
+        $consulta = "DELETE FROM usuarios_clubes WHERE idClub=".$idclub." AND idUsuario=".$id;
+        $query = $db->query($consulta);
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>$consulta
+        );
+
+        if($query){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Usuario expulsado correctamente'
             );            
         }
 

@@ -60,16 +60,18 @@
           <p class="card-text text-truncate">
             {{miembro.correo}}
           </p>
+          <span matTooltip="Propietario del club" *ngIf="club.idCreador==miembro.id"><i class="fas fa-star yellow"></i></span>
+          <span (click)="expulsar(miembro)" matTooltip="Expulsar del club" *ngIf="usuario.id==club.idCreador && club.idCreador!=miembro.id"><i class="fas fa-times red"></i></span>
         </div>
       </div>
     </div>
     <!--Si es el creador del club-->
     <hr/>
-    <div *ngIf="peticiones.length>'0'" class="row mt-3">
+    <div *ngIf="peticiones.length>'0' && club.idCreador==usuario.id" class="row mt-3">
         <span class="lead">Usuarios que quieren unirse al club:</span>
         <span class="w-100 amigoLista p-2 m-2" *ngFor="let peticion of peticiones">                {{peticion.nombre}} @{{peticion.nick}}
-        <button matTooltip="Descartar petición" class="btn btn-danger float-right"><i class="fas fa-times"></i></button>
-        <button matTooltip="Aceptar petición" class="btn btn-success float-right mr-2"><i class="fas fa-check"></i></button>
+        <button (click)="descartar(peticion)" matTooltip="Descartar petición" class="btn btn-danger float-right"><i class="fas fa-times"></i></button>
+        <button (click)="aceptar(peticion)" matTooltip="Aceptar petición" class="btn btn-success float-right mr-2"><i class="fas fa-check"></i></button>
         </span>
         <hr>
     </div>

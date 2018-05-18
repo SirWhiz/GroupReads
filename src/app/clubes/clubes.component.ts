@@ -8,6 +8,7 @@ import { Club } from './club';
 import { DialogoEditarClubComponent } from './dialogoeditar.component';
 import { DialogoAbandonarComponent } from './dialogoabandonar.component';
 import { DialogoBorrarClubComponent } from './dialogoborrar.component';
+import { DialogoExpulsarComponent } from './dialogoexpulsar.component';
 
 @Component({
 	selector: 'clubes',
@@ -157,6 +158,50 @@ export class ClubesComponent{
 			width:'500px',
 			data: { club: this.club,usuario: this.usuario.id }
 		});
+	}
+
+	expulsar(miembro:Usuario){
+		this.dialog.open(DialogoExpulsarComponent,{
+			width:'500px',
+			data: { club: this.club,miembro: miembro,miembros: this.miembros }
+		});
+	}
+
+	descartar(peticion:Usuario){
+		this._usuariosService.borrarSolicitudClub(peticion.id,this.club.id).subscribe(
+			result => {
+				if(result.code == 200){
+    				this.snackBar.open("Petición descartada", "Aceptar", {
+      					duration: 2500,
+    				});
+					var i=0;
+					for(i=0;i<this.peticiones.length;i++){
+						if(this.peticiones[i].id == peticion.id){
+							this.peticiones.splice(i,1);
+						}
+					}
+				}
+			}, error => {console.log(error);}
+		);
+	}
+
+	aceptar(peticion:Usuario){
+		this._usuariosService.aceptarSolicitudClub(peticion.id,this.club.id).subscribe(
+			result => {
+				if(result.code == 200){
+    				this.snackBar.open("Petición aceptada", "Aceptar", {
+      					duration: 2500,
+    				});
+					var i=0;
+					for(i=0;i<this.peticiones.length;i++){
+						if(this.peticiones[i].id == peticion.id){
+							this.peticiones.splice(i,1);
+						}
+					}
+					this.miembros.push(peticion);
+				}
+			}, error => {console.log(error);}
+		);
 	}
 
 	unirse(club:Club){
