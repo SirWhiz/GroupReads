@@ -1,0 +1,32 @@
+<menuadmin *ngIf="usuario.tipo=='a'"></menuadmin>
+<menucolaborador *ngIf="usuario.tipo=='c'"></menucolaborador>
+<menuusuario *ngIf="usuario.tipo=='n'"></menuusuario>
+<button [routerLink]="['/clubes']" class="btn btn-danger ml-4 mt-4"><i class="fas fa-arrow-left"></i> Volver</button>
+<div class="row justify-content-around">
+	<h4 *ngIf="noLibros"><i>¡Vaya! parece que no hay libros todavía..</i></h4>
+	<div *ngIf="!noLibros" class="col-md-10">
+	  <div class="row">
+	  	<div *ngFor="let libro of libros" class="p-2 col-md-3 card club mt-5 mb-3 m-2" style="width: 12rem;">
+	  		<div class="portada" *ngIf="libro.portada">
+	  			<img  class="card-img-top img-thumbnail" src="http://localhost/GroupReads/src/app/portadas/{{libro.portada}}">	
+	  		</div>
+	  		<div class="portada" *ngIf="!libro.portada">
+	  			<img  class="card-img-top img-thumbnail" src="http://localhost/GroupReads/src/app/portadas/nopic.jpg">	
+	  		</div>
+    		<div class="card-body">
+          		<h5 class="card-title">{{libro.titulo}}</h5>
+          		<h6 class="card-subtitle mb-2 text-muted">Páginas: {{libro.paginas}}</h6>
+          		<div class="genero">{{libro.nombre_genero}}</div>
+        		<button (click)="add(libro)" class="btn btn-block btn-warning">Seleccionar</button>          		
+        	</div>
+      	</div>
+	  </div>
+	</div>
+    <div *ngIf="librosElegidos.length>'0'" class="listaElegidos">
+		<span class="lead m-4">Libros elegidos:</span>
+		<ul>
+			<li matTooltip="Eliminar de la lista" *ngFor="let libro of librosElegidos" (click)="remove(libro)" class="m-2 w-100">{{libro.titulo}}</li>
+		</ul>
+		<button *ngIf="librosElegidos.length=='3'" (click)="confirmar()" class="btn btn-block btn-success">Confirmar selección <i class="fas fa-check"></i></button>
+    </div>
+</div>

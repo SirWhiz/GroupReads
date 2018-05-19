@@ -20,6 +20,7 @@ import { EditarAutorComponent } from './autores/editarautor.component';
 import { AgregarAmigosComponent } from './agregarAmigos/agregaramigos.component';
 import { ClubesComponent } from './clubes/clubes.component';
 import { NuevoClubComponent } from './clubes/nuevoclub.component';
+import { ElegirLibroComponent } from './elegirLibro/elegirlibro.component';
 
 const appRoutes: Routes = [
 	{path: '', component: PrincipalComponent},
@@ -38,6 +39,7 @@ const appRoutes: Routes = [
 	{path: 'amigos', component: AgregarAmigosComponent},
 	{path: 'clubes', component: ClubesComponent},
 	{path: 'nuevo-club', component: NuevoClubComponent},
+	{path: 'elegir-libro', component: ElegirLibroComponent},
 	{path: '**', component: PrincipalComponent}
 ];
 

@@ -25,6 +25,7 @@ export class ClubesComponent{
 	public clubes:Club[];
 	public solicitados:Club[];
 	public noClub:boolean;
+	public noLibro:boolean;
 
 	constructor(public dialog: MatDialog,public snackBar: MatSnackBar,private _router: Router,private _usuariosService: UsuariosService){
 		this.usuario = new Usuario("","","","","","","","","","","");
@@ -34,6 +35,7 @@ export class ClubesComponent{
 		this.solicitados = new Array();
 		this.peticiones = new Array();
 		this.noClub = false;
+		this.noLibro = true;
 		this.nombreMostrar = "";
 	}
 
@@ -51,7 +53,6 @@ export class ClubesComponent{
 					this.usuario = result.data;
 					this._usuariosService.comprobarTieneClub(this.usuario.id).subscribe(
 						result => {
-							console.log(result);
 							if(result.code == 200){
 								this.noClub = false;
 								this.getClub();
@@ -76,10 +77,27 @@ export class ClubesComponent{
 					if(this.club.idCreador == this.usuario.id && this.club.privacidad=='c'){
 						this.getPeticiones();
 					}
+					if(this.club.idCreador == this.usuario.id){
+						this.comprobarLibro();
+					}
 				}
 			}, error => {
 				console.log(error);
 			}
+		);
+	}
+
+	comprobarLibro(){
+		this._usuariosService.comprobarLibro(this.club.id).subscribe(
+			result => {
+				console.log(result);
+				if(result.code == 200){
+					//El club se está leyendo un libro
+					this.noLibro = false;
+				}else{
+					this.noLibro = true;
+				}
+			}, error => {console.log(error);}
 		);
 	}
 

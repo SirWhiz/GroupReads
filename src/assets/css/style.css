@@ -205,6 +205,27 @@ footer{
 .club{
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
+.listaElegidos{
+    position: fixed;
+    top:10rem;
+    right:15px;
+    height: 20rem;
+    width:16rem;
+    background:#eee;
+    border:1px solid #d3d3d3;
+    border-radius:5px;
+}
+.listaElegidos button{
+    position: absolute;
+    bottom: 5px;
+}
+.listaElegidos li{
+    list-style: none;
+    cursor: pointer;
+}
+.listaElegidos li:hover{
+    color:red;
+}
 .borrar:hover {
     background-color:red;
     cursor: pointer;

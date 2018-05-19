@@ -49,6 +49,18 @@ export class UsuariosService{
         return this._http.get(this.url+'librostop').map(res => res.json());
     }
 
+    elegirLibro(idclub:string,isbn:string){
+        return this._http.get(this.url+'bookforclub/'+idclub+'/'+isbn).map(res => res.json());   
+    }
+
+    getLibrosGenero(){
+        return this._http.get(this.url+'librosgenero').map(res => res.json());   
+    }
+
+    confirmarLibros(idclub:string,isbn1:string,isbn2:string,isbn3:string){
+        return this._http.get(this.url+'setvotacion/'+idclub+'/'+isbn1+'/'+isbn2+'/'+isbn3).map(res => res.json());
+    }
+
     getClub(id:string){
         return this._http.get(this.url+'getclub/'+id).map(res => res.json());
     }
@@ -75,6 +87,10 @@ export class UsuariosService{
 
     expulsarMiembro(id:string,idclub:string){
         return this._http.get(this.url+'kickmember/'+id+'/'+idclub).map(res => res.json());
+    }
+
+    comprobarLibro(idclub:string){
+        return this._http.get(this.url+'checkbook/'+idclub).map(res => res.json());   
     }
 
     unirseClub(id:string,idclub:string){

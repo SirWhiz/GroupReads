@@ -1223,6 +1223,56 @@
         echo json_encode($result);
     });
 
+    /* --- ASIGNAR LOS LIBROS QUE VA A VOTAR UN CLUB --- */
+    $app->get('/setvotacion/:idclub/:isbn1/:isbn2/:isbn3',function($idclub,$isbn1,$isbn2,$isbn3) use($app,$db){
+
+        $consulta = "DELETE FROM libros_para_votar WHERE idClub=".$idclub;
+        $db->query($consulta);
+
+        $consulta = "INSERT INTO libros_para_votar VALUES (DEFAULT,".$idclub.",".$isbn1.",".$isbn2.",".$isbn3.",0);";
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>$consulta
+        );
+
+        $insert = $db->query($consulta);
+        if($insert){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Club actualizado correctamente'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- ASIGNAR UN LIBRO A UN CLUB --- */
+    $app->get('/bookforclub/:idclub/:isbn',function($idclub,$isbn) use($app,$db){
+        $fechaAprox = date('Y-m-d', strtotime('+15 days'));
+        $consulta = "INSERT INTO libros_clubes VALUES (DEFAULT,".$idclub.",".$isbn.",0,'".$fechaAprox."');";
+        
+        $query = $db->query($consulta);
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>$consulta
+        );
+
+        if($query){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$clubes
+            );            
+        }
+
+        echo json_encode($result);
+    });
+
     /* --- OBTENER EL CLUB DE UN USUARIO --- */
     $app->get('/getclub/:id',function($id) use($app,$db){
         $consulta = "SELECT id,nombreClub,idCreador,idGenero,privacidad,descripcion FROM clubes INNER JOIN usuarios_clubes ON clubes.id=usuarios_clubes.idClub WHERE pendiente=0 AND idUsuario=".$id;
@@ -1550,6 +1600,28 @@
         echo json_encode($result);
     });
 
+    /* --- COMPROBAR SI UN CLUB SE ESTÁ LEYENDO UN LIBRO --- */
+    $app->get('/checkbook/:idclub',function($idclub) use($app,$db){
+        $consulta = "SELECT * FROM libros_clubes WHERE finalizado=0 AND idClub=".$idclub;
+        $query = $db->query($consulta);
+
+        if($query->num_rows>0){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'El club se está leyendo un libro'
+            );
+        }else{
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'El club no se está leyendo un libro'
+            ); 
+        }
+
+        echo json_encode($result);
+    });
+
     /* --- OBTENER UN LIBRO CONCRETO --- */
     $app->get('/libro/:isbn',function($isbn) use($app,$db){
         $consulta = "SELECT * FROM libros WHERE isbn=".$isbn;
@@ -1576,6 +1648,38 @@
     /* --- OBTENER TODOS LOS LIBROS --- */
     $app->get('/libros',function() use($app,$db){
         $consulta = "SELECT * FROM libros ORDER BY fechaAlta DESC";
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>'No hay libros'
+        );
+
+        $query = $db->query($consulta);
+        if($query->num_rows == 0){
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'No hay libros'
+            );
+        }else{
+            $libros = array();
+            while($libro = $query->fetch_assoc()){
+                $libros[] = $libro;
+            }
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$libros
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- OBTENER TODOS LOS LIBROS CON EL NOMBRE DEL GENERO --- */
+    $app->get('/librosgenero',function() use($app,$db){
+        $consulta = "SELECT isbn,titulo,paginas,fechaAlta,idGenero,portada,generos.nombre as nombre_genero FROM libros INNER JOIN generos ON libros.idGenero=generos.id";
 
         $result = array(
             'status'=>'error',

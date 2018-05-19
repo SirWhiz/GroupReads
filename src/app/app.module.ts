@@ -38,6 +38,7 @@ import { DialogoEditarClubComponent } from './clubes/dialogoeditar.component';
 import { DialogoAbandonarComponent } from './clubes/dialogoabandonar.component';
 import { DialogoBorrarClubComponent } from './clubes/dialogoborrar.component';
 import { DialogoExpulsarComponent } from './clubes/dialogoexpulsar.component';
+import { ElegirLibroComponent } from './elegirLibro/elegirlibro.component';
 
 import { MatInputModule,MatNativeDateModule } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -63,6 +64,7 @@ import { LoginGuard } from './login.guard';
     ConfiguracionComponent,
     DialogoComponent,
     DialogoLibroComponent,
+    ElegirLibroComponent,
     DialogoPortadaComponent,
     DialogoBorrarFotoAutor,
     MenuUsuarioComponent,
