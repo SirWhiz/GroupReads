@@ -9,5 +9,6 @@ export class Libro{
 		public genero: string,
 		public portada: string,
 		public nombre_genero: string,
+		public votos: any,
 	){}
 }

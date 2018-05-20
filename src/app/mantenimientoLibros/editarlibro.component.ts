@@ -31,7 +31,7 @@ export class EditarLibroComponent{
 	public tituloActual: string;
 
 	constructor(public dialog: MatDialog,private activatedRoute: ActivatedRoute,private snackBar:MatSnackBar,private _router: Router,public _libroService:LibrosService){
-		this.libro = new Libro("","","","","","","");
+		this.libro = new Libro("","","","","","","","");
 		this.perfil = "";
 		this.existeLibro = true;
 		this.generos = new Array();

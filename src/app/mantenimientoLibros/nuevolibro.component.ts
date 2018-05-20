@@ -26,7 +26,7 @@ export class NuevoLibroComponent{
 	public isbnRepetido: boolean;
 
 	constructor(private snackBar:MatSnackBar,private _router: Router,public _libroService:LibrosService){
-		this.libro = new Libro("","","","","","","");
+		this.libro = new Libro("","","","","","","","");
 		this.perfil = "";
 		this.isbnRepetido = false;
 		this.autoresLibro = new Array();

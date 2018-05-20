@@ -4,7 +4,9 @@
 
     $app = new \Slim\Slim();
     $db = new mysqli('localhost','root','','groupreads');
+    $db2 = new mysqli('localhost','root','','groupreads');
     $db->set_charset("utf8");
+    $db2->set_charset("utf8");
 
     /* --- CONFIGURAR CABECERAS --- */
     header('Access-Control-Allow-Origin: *');
@@ -1223,10 +1225,82 @@
         echo json_encode($result);
     });
 
+    /* --- COMPROBAR SI HAY UNA VOTACIÓN EN MARCHA --- */
+    $app->get('/checkvotacion/:idclub',function($idclub) use($app,$db){
+        $consulta = "SELECT * FROM libros_para_votar WHERE idClub=".$idclub;
+        $query = $db->query($consulta);
+
+        if($query){
+            if($query->num_rows>0){
+                $result = array(
+                    'status'=>'error',
+                    'code'=>200,
+                    'message'=>'Hay una votacion en curso'
+                );
+            }else{
+                $result = array(
+                    'status'=>'error',
+                    'code'=>404,
+                    'message'=>'No hay votacion en curso'
+                );    
+            }
+        }else{
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>$consulta
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- DEVOLVER LOS LIBROS QUE SE ESTÁN VOTANDO --- */
+    $app->get('/getvotingbooks/:idclub',function($idclub) use($app,$db,$db2){
+        $consulta = "SELECT isbn,titulo,paginas,portada FROM libros INNER JOIN libros_para_votar ON libros_para_votar.isbn1 = libros.isbn WHERE libros_para_votar.idClub=".$idclub." UNION
+            SELECT isbn,titulo,paginas,portada FROM libros INNER JOIN libros_para_votar ON libros_para_votar.isbn2 = libros.isbn WHERE libros_para_votar.idClub=".$idclub." UNION
+            SELECT isbn,titulo,paginas,portada FROM libros INNER JOIN libros_para_votar ON libros_para_votar.isbn3 = libros.isbn WHERE libros_para_votar.idClub=".$idclub;
+        $query = $db->query($consulta);
+
+        if($query){
+            $resultado = array();
+            while($fila = $query->fetch_assoc()){
+                $consulta = "SELECT COUNT(*) as votos FROM votaciones WHERE idClub=".$idclub." AND voto=".$fila['isbn'];
+                $queryVotos = $db2->query($consulta);
+                $total = $queryVotos->fetch_assoc();
+                $votos = $total['votos'];
+                $opcion = array(
+                    'isbn'=>$fila['isbn'],
+                    'titulo'=>$fila['titulo'],
+                    'portada'=>$fila['portada'],
+                    'paginas'=>$fila['paginas'],
+                    'votos'=>$votos
+                );
+                $resultado[] = $opcion;
+            }
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$resultado
+            );   
+        }else{
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>$consulta
+            );
+        }
+
+        echo json_encode($result);
+    });
+
     /* --- ASIGNAR LOS LIBROS QUE VA A VOTAR UN CLUB --- */
     $app->get('/setvotacion/:idclub/:isbn1/:isbn2/:isbn3',function($idclub,$isbn1,$isbn2,$isbn3) use($app,$db){
 
         $consulta = "DELETE FROM libros_para_votar WHERE idClub=".$idclub;
+        $db->query($consulta);
+
+        $consulta = "DELETE FROM votaciones WHERE idClub=".$idclub;
         $db->query($consulta);
 
         $consulta = "INSERT INTO libros_para_votar VALUES (DEFAULT,".$idclub.",".$isbn1.",".$isbn2.",".$isbn3.",0);";
@@ -1249,12 +1323,65 @@
         echo json_encode($result);
     });
 
-    /* --- ASIGNAR UN LIBRO A UN CLUB --- */
-    $app->get('/bookforclub/:idclub/:isbn',function($idclub,$isbn) use($app,$db){
-        $fechaAprox = date('Y-m-d', strtotime('+15 days'));
-        $consulta = "INSERT INTO libros_clubes VALUES (DEFAULT,".$idclub.",".$isbn.",0,'".$fechaAprox."');";
-        
-        $query = $db->query($consulta);
+    /* --- COMPROBAR SI UN USUARIO HA VOTADO UN LIBRO --- */
+    $app->get('/checkuservote/:id',function($id) use($app,$db){
+
+        $consulta = "SELECT * FROM votaciones WHERE idUsuario=".$id;
+        $insert = $db->query($consulta);
+
+        if($insert){
+            if($insert->num_rows==0){
+                $result = array(
+                    'status'=>'success',
+                    'code'=>201,
+                    'message'=>'El usuario no ha votado'
+                );    
+            }else{
+                $result = array(
+                    'status'=>'success',
+                    'code'=>200,
+                    'message'=>'El usuario ha votado'
+                );
+            }            
+        }else{
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'Error con la consulta'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- OBTENER EL LIBRO QUE LIBRO HA VOTADO UN USUARIO --- */
+    $app->get('/checkvotedbook/:id',function($id) use($app,$db){
+
+        $consulta = "SELECT isbn,titulo,portada,paginas FROM libros INNER JOIN votaciones ON libros.isbn=votaciones.voto WHERE idUsuario=".$id;
+        $insert = $db->query($consulta);
+
+        if($insert){
+            $libro = $insert->fetch_assoc();
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$libro
+            );           
+        }else{
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'Error con la consulta'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- VOTAR UN LIBRO --- */
+    $app->get('/votar/:id/:idclub/:isbn',function($id,$idclub,$isbn) use($app,$db){
+
+        $consulta = "INSERT INTO votaciones VALUES(DEFAULT,".$idclub.",".$id.",".$isbn.")";
 
         $result = array(
             'status'=>'error',
@@ -1262,12 +1389,66 @@
             'message'=>$consulta
         );
 
-        if($query){
+        $insert = $db->query($consulta);
+        if($insert){
             $result = array(
                 'status'=>'success',
                 'code'=>200,
-                'data'=>$clubes
-            );            
+                'message'=>'Voto correcto'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- QUITAR UN VOTO --- */
+    $app->get('/removevote/:id/:idclub/:isbn',function($id,$idclub,$isbn) use($app,$db){
+
+        $consulta = "DELETE FROM votaciones WHERE idClub=".$idclub." AND idUsuario=".$id." AND voto=".$isbn;
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>$consulta
+        );
+
+        $insert = $db->query($consulta);
+        if($insert){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Voto eliminado correctamente'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- ACABAR UNA VOTACION --- */
+    $app->get('/endvote/:idclub/:isbn',function($idclub,$isbn) use($app,$db){
+
+        $consulta = "DELETE FROM votaciones WHERE idClub=".$idclub;
+        $db->query($consulta);
+
+        $consulta = "DELETE FROM libros_para_votar WHERE idClub=".$idclub;
+        $db->query($consulta);
+
+        $fechaAprox = date('Y-m-d', strtotime('+15 days'));
+        $consulta = "INSERT INTO libros_clubes VALUES (DEFAULT,".$idclub.",".$isbn.",0,'".$fechaAprox."');";
+        $insert = $db->query($consulta);
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>$consulta
+        );
+
+        if($insert){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Libro asignado correctamente'
+            );
         }
 
         echo json_encode($result);

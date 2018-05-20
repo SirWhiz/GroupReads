@@ -66,7 +66,15 @@ export class ElegirLibroComponent{
 		if(this.librosElegidos.length<3){
 			if(!this.librosElegidos.includes(libro)){
 				this.librosElegidos.push(libro);
+			}else{
+				this.snackBar.open("El libro elegido ya está en la lista", "Aceptar", {
+  					duration: 2500,
+				});
 			}
+		}else{
+			this.snackBar.open("Has alcanzado el máximo de libros", "Aceptar", {
+				duration: 2500,
+			});
 		}
 	}
 

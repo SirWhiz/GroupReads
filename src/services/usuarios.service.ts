@@ -45,6 +45,34 @@ export class UsuariosService{
         return this._http.get(this.url+'peticiones/'+id).map(res => res.json());
     }
 
+    comprobarVotacion(idclub:string){
+        return this._http.get(this.url+'checkvotacion/'+idclub).map(res => res.json());
+    }
+
+    obtenerLibroVotado(id:string){
+        return this._http.get(this.url+'checkvotedbook/'+id).map(res => res.json());   
+    }
+
+    comprobarAvotado(id:string){
+        return this._http.get(this.url+'checkuservote/'+id).map(res => res.json());
+    }
+
+    votarLibro(id:string,idclub:string,isbn:string){
+        return this._http.get(this.url+'votar/'+id+'/'+idclub+'/'+isbn).map(res => res.json());   
+    }
+
+    quitarVoto(id:string,idclub:string,isbn:string){
+        return this._http.get(this.url+'removevote/'+id+'/'+idclub+'/'+isbn).map(res => res.json());
+    }
+
+    acabarVotacion(idclub:string,mayor:Libro){
+        return this._http.get(this.url+'endvote/'+idclub+'/'+mayor.isbn).map(res => res.json());
+    }
+
+    getLibrosVotacion(idclub:string){
+        return this._http.get(this.url+'getvotingbooks/'+idclub).map(res => res.json());   
+    }
+
     getLibros(){
         return this._http.get(this.url+'librostop').map(res => res.json());
     }

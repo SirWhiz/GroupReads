@@ -5,6 +5,7 @@
 <div class="row justify-content-around">
 	<h4 *ngIf="noLibros"><i>¡Vaya! parece que no hay libros todavía..</i></h4>
 	<div *ngIf="!noLibros" class="col-md-10">
+	  <h4 class="mt-3">Selecciona 3 libros para que los vote el club:</h4>
 	  <div class="row">
 	  	<div *ngFor="let libro of libros" class="p-2 col-md-3 card club mt-5 mb-3 m-2" style="width: 12rem;">
 	  		<div class="portada" *ngIf="libro.portada">
