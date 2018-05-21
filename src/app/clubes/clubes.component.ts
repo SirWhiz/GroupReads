@@ -180,6 +180,19 @@ export class ClubesComponent{
 		);
 	}
 
+	libroAcabado(){
+		this._usuariosService.acabarLibro(this.club.id,this.libroActual.isbn).subscribe(
+			result => {
+				if(result.code == 200){
+    				this.snackBar.open("Libro finalizado correctamente", "Aceptar", {
+      					duration: 2500,
+    				}); 
+    				this.noLibro = true;
+				}
+			}, error => {console.log(error);}
+		);
+	}
+
 	comprobarLibro(){
 		this._usuariosService.comprobarLibro(this.club.id).subscribe(
 			result => {

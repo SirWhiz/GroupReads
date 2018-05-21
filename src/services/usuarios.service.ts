@@ -138,6 +138,10 @@ export class UsuariosService{
         return this._http.get(this.url+'comment/'+id+'/'+idclub+'/'+isbn+'/'+comentario).map(res => res.json());   
     }
 
+    acabarLibro(idclub:string,isbn:string){
+        return this._http.get(this.url+'finishbook/'+idclub+'/'+isbn).map(res => res.json());
+    }
+
     getMiembros(idclub:string){
         return this._http.get(this.url+'miembros/'+idclub).map(res => res.json());
     }

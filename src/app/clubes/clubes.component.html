@@ -59,6 +59,7 @@
           <img *ngIf="!libroActual.portada" matTooltip="{{libroActual.titulo}}" class="img-thumbnail mb-2" src="http://localhost/GroupReads/src/app/portadas/nopic.jpg">
           <h5 class="card-title text-truncate">{{libroActual.titulo}}</h5>
           <h6 class="card-subtitle mb-2 text-muted">Páginas: {{libroActual.paginas}}</h6>
+          <button (click)="libroAcabado()" class="btn btn-danger mt-3" *ngIf="usuario.id==club.idCreador">Hemos terminado el libro</button>
         </div>
       </div>
       <!--Debate sobre el libro-->

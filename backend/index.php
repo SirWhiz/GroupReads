@@ -1896,6 +1896,28 @@
         echo json_encode($result);
     });
 
+    /* --- FINALIZAR UN LIBRO --- */
+    $app->get('/finishbook/:idclub/:isbn',function($idclub,$isbn) use($app,$db){
+        $consulta = "UPDATE libros_clubes SET finalizado=1 WHERE idClub=".$idclub." AND isbnLibro=".$isbn;
+        $query = $db->query($consulta);
+
+        if($query){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Libro finalizado correctamente'
+            );
+        }else{
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'Error al finalizar el libro'
+            ); 
+        }
+
+        echo json_encode($result);
+    });
+
     /* --- OBTENER TODOS LOS LIBROS --- */
     $app->get('/libros',function() use($app,$db){
         $consulta = "SELECT * FROM libros ORDER BY fechaAlta DESC";
