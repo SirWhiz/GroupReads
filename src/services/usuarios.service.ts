@@ -3,6 +3,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Usuario } from '../app/registro/usuario';
+import { Libro } from '../app/mantenimientoLibros/libro';
 import { Club } from '../app/clubes/club';
 import { GLOBAL } from './global';
 
@@ -127,6 +128,14 @@ export class UsuariosService{
 
     solicitarClub(id:string,idclub:string){
         return this._http.get(this.url+'requestclub/'+id+'/'+idclub).map(res => res.json());   
+    }
+
+    getComentarios(idclub:string,isbn:string){
+        return this._http.get(this.url+'getcomments/'+idclub+'/'+isbn).map(res => res.json());
+    }
+
+    comentar(id:string,idclub:string,isbn:string,comentario:string){
+        return this._http.get(this.url+'comment/'+id+'/'+idclub+'/'+isbn+'/'+comentario).map(res => res.json());   
     }
 
     getMiembros(idclub:string){

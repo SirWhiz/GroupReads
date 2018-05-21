@@ -1787,10 +1787,14 @@
         $query = $db->query($consulta);
 
         if($query->num_rows>0){
+            $fila = $query->fetch_assoc();
+            $consulta = "SELECT * FROM libros WHERE isbn=".$fila['isbnLibro'];
+            $resultado = $db->query($consulta);
+            $filaLibro = $resultado->fetch_assoc();
             $result = array(
                 'status'=>'success',
                 'code'=>200,
-                'message'=>'El club se está leyendo un libro'
+                'data'=>$filaLibro
             );
         }else{
             $result = array(
@@ -1820,6 +1824,72 @@
                 'status'=>'erro',
                 'code'=>404,
                 'message'=>'No se ha encontrado ningun libro con ese isbn'
+            ); 
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- OBTENER LOS COMENTARIOS DE UN LIBRO DE UN CLUB --- */
+    $app->get('/getcomments/:idclub/:isbn',function($idclub,$isbn) use($app,$db,$db2){
+        $consulta = "SELECT * FROM comentarios_libros WHERE idClub=".$idclub." AND isbnLibro=".$isbn;
+        $query = $db->query($consulta);
+
+        if($query){
+            $comentarios = array();
+            while($fila = $query->fetch_assoc()){
+                $id = $fila['idComentario'];
+                $idClub = $fila['idClub'];
+                $texto = $fila['comentario'];
+
+                $consulta = "SELECT * FROM usuarios WHERE id=".$fila['idUsuario'];
+                $resultado = $db2->query($consulta);
+                $fila = $resultado->fetch_assoc();
+                $nombreUsuario = $fila['nombre'];
+                $foto = $fila['foto'];
+
+                $comentario = array(
+                    'id'=>$id,
+                    'idclub'=>$idclub,
+                    'nombreUsuario'=>$nombreUsuario,
+                    'foto'=>$foto,
+                    'comentario'=>$texto
+                );
+                $comentarios[] = $comentario;
+            }
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$comentarios
+            );
+
+        }else{
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'Error al realizar la consulta'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- COMENTAR UN LIBRO --- */
+    $app->get('/comment/:id/:idclub/:isbn/:comentario',function($id,$idclub,$isbn,$comentario) use($app,$db){
+        $consulta = "INSERT INTO comentarios_libros VALUES(DEFAULT,".$idclub.",".$id.",".$isbn.",'".$comentario."')";
+        $query = $db->query($consulta);
+
+        if($query){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Comentario correcto'
+            );
+        }else{
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'Error al comentar'
             ); 
         }
 

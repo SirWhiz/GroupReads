@@ -198,6 +198,30 @@ footer{
     border: 1px solid #d3d3d3;
     margin: 0;
 }
+.debate{
+    background-color: #eee;
+    border:1px solid #d3d3d3;
+    height: 18em;
+    width: 100%;
+    overflow: scroll;
+    border-radius: 5px;
+}
+.comentario{
+    background:#fff;
+    border-radius: 7px;
+}
+.imgperfil{
+    width:45px;
+    height: 45px;
+}
+.bordeEnv{
+    border:1px solid #d3d3d3;
+}
+.fotoperfil{
+    border-radius: 50%;
+    width: 100%;
+    height: auto;
+}
 .noClub{
     border-radius:5px;
     border:1px solid #F44336;

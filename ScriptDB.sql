@@ -101,6 +101,7 @@ CREATE TABLE comentarios_libros(
     idClub smallint unsigned NOT NULL,
     idUsuario smallint unsigned NOT NULL,
     isbnLibro varchar(15) NOT NULL,
+    comentario text NOT NULL,
     FOREIGN KEY (idClub) REFERENCES clubes(id) ON DELETE CASCADE,
     FOREIGN KEY (idUsuario) REFERENCES usuarios(id) ON DELETE CASCADE,
     FOREIGN KEY (isbnLibro) REFERENCES libros(isbn) ON DELETE CASCADE

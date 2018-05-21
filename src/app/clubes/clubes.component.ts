@@ -6,10 +6,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Club } from './club';
 import { Libro } from '../mantenimientoLibros/libro';
+import { Comentario } from './comentario';
 import { DialogoEditarClubComponent } from './dialogoeditar.component';
 import { DialogoAbandonarComponent } from './dialogoabandonar.component';
 import { DialogoBorrarClubComponent } from './dialogoborrar.component';
 import { DialogoExpulsarComponent } from './dialogoexpulsar.component';
+import { Chart } from 'chart.js';
 
 @Component({
 	selector: 'clubes',
@@ -22,29 +24,37 @@ export class ClubesComponent{
 	public miembros:Usuario[];
 	public peticiones:Usuario[];
 	public librosVotar:Libro[];
+	public comentarios:Comentario[];
 	public libroVotado:Libro;
+	public libroActual:Libro;
 	public nombreMostrar: string;
 	public club:Club;
 	public clubes:Club[];
 	public solicitados:Club[];
 	public noClub:boolean;
 	public noLibro:boolean;
+	public nuevoComentario:string;
 	public votacion:boolean;
 	public votado:boolean;
+	public grafico:boolean;
 
 	constructor(public dialog: MatDialog,public snackBar: MatSnackBar,private _router: Router,private _usuariosService: UsuariosService){
 		this.usuario = new Usuario("","","","","","","","","","","");
 		this.libroVotado = new Libro("","","","","","","","");
+		this.libroActual = new Libro("","","","","","","","");
 		this.miembros = new Array();
 		this.club = new Club("","","","","","","");
 		this.clubes = new Array();
 		this.solicitados = new Array();
 		this.peticiones = new Array();
+		this.comentarios = new Array();
 		this.librosVotar = new Array();
 		this.noClub = false;
+		this.grafico = true;
 		this.noLibro = true;
 		this.votacion = false;
 		this.nombreMostrar = "";
+		this.nuevoComentario = "";
 		this.votado = false;
 	}
 
@@ -86,9 +96,7 @@ export class ClubesComponent{
 					if(this.club.idCreador == this.usuario.id && this.club.privacidad=='c'){
 						this.getPeticiones();
 					}
-					if(this.club.idCreador == this.usuario.id){
-						this.comprobarLibro();
-					}
+					this.comprobarLibro();
 					this.comprobarVotacion();
 				}
 			}, error => {
@@ -139,6 +147,34 @@ export class ClubesComponent{
 			result => {
 				if(result.code == 200){
 					this.libroVotado = result.data;
+					this.crearGrafico();
+				}
+			}, error => {console.log(error);}
+		);
+	}
+
+	getComentarios(){
+		this._usuariosService.getComentarios(this.club.id,this.libroActual.isbn).subscribe(
+			result => {
+				if(result.code == 200){
+					this.comentarios = result.data;
+				}
+			}, error => {console.log(error);}
+		);
+	}
+
+	comentar(){
+		this._usuariosService.comentar(this.usuario.id,this.club.id,this.libroActual.isbn,this.nuevoComentario).subscribe(
+			result => {
+				if(result.code == 200){
+    				var nuevoComment = new Comentario("","","","","");
+    				nuevoComment.idClub = this.club.id;
+    				nuevoComment.nombreUsuario = this.usuario.nombre;
+    				nuevoComment.foto = this.usuario.foto;
+    				nuevoComment.comentario = this.nuevoComentario;
+    				console.log(nuevoComment);
+    				this.comentarios.push(nuevoComment);
+    				this.nuevoComentario = "";
 				}
 			}, error => {console.log(error);}
 		);
@@ -151,6 +187,8 @@ export class ClubesComponent{
 				if(result.code == 200){
 					//El club se está leyendo un libro
 					this.noLibro = false;
+					this.libroActual = result.data;
+					this.getComentarios();
 				}else{
 					this.noLibro = true;
 				}
@@ -162,15 +200,56 @@ export class ClubesComponent{
 		this._usuariosService.votarLibro(this.usuario.id,this.club.id,libro.isbn).subscribe(
 			result => {
 				if(result.code == 200){
+					this.votado = true;
 					libro.votos++;
     				this.snackBar.open("Voto enviado correctamente", "Aceptar", {
       					duration: 2500,
-    				});
-    				this.votado = true;
-    				this.libroVotado = libro;
+    				});    				
+    				this.libroVotado = libro; 
+    				this.grafico = false;   				
 				}
 			}, error => {console.log(error);}
 		);
+	}
+
+	crearGrafico(){
+		var ctx = document.getElementById("myChart");
+		var myChart = new Chart(ctx, {
+		    type: 'bar',
+		    data: {
+		        labels: [this.librosVotar[0].titulo,this.librosVotar[1].titulo,this.librosVotar[2].titulo],
+		        datasets: [{
+		            label: 'Votos',
+		            data: [this.librosVotar[0].votos,this.librosVotar[1].votos,this.librosVotar[2].votos],
+		            backgroundColor: [
+		                'rgba(255, 99, 132, 0.2)',
+		                'rgba(54, 162, 235, 0.2)',
+		                'rgba(255, 206, 86, 0.2)',
+		                'rgba(75, 192, 192, 0.2)',
+		                'rgba(153, 102, 255, 0.2)',
+		                'rgba(255, 159, 64, 0.2)'
+		            ],
+		            borderColor: [
+		                'rgba(255,99,132,1)',
+		                'rgba(54, 162, 235, 1)',
+		                'rgba(255, 206, 86, 1)',
+		                'rgba(75, 192, 192, 1)',
+		                'rgba(153, 102, 255, 1)',
+		                'rgba(255, 159, 64, 1)'
+		            ],
+		            borderWidth: 1
+		        }]
+		    },
+		    options: {
+		        scales: {
+		            yAxes: [{
+		                ticks: {
+		                    beginAtZero:true
+		                }
+		            }]
+		        }
+		    }
+		});
 	}
 
 	quitarVoto(libro:Libro){
@@ -187,6 +266,7 @@ export class ClubesComponent{
 				}
 			}, error => {console.log(error);}
 		);
+		this.grafico = false;
 	}
 
 	finalizar(){
@@ -210,7 +290,13 @@ export class ClubesComponent{
 		this._usuariosService.acabarVotacion(this.club.id,mayor).subscribe(
 			result => {
 				if(result.code == 200){
-
+    				this.snackBar.open("Votación finalizada con éxito", "Aceptar", {
+      					duration: 2500,
+    				}); 
+    				this.votacion = false;
+    				this.libroActual = mayor;
+    				this.noLibro = false;
+    				this.getComentarios();
 				}
 			}, error => {console.log(error);}
 		);

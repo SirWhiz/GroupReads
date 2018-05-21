@@ -47,21 +47,95 @@
       </div>
     </div>
   </div>
+  <h4 *ngIf="!noClub" class="text-left">¡Actualmente formas parte de: <i>{{club.nombreClub}}</i>!</h4>
+  <!--Si el club se está leyendo un libro-->
+  <div *ngIf="!noClub && !noLibro" class="col-md-10 mt-4 mb-4">
+    <span class="lead">El club se está leyendo</span>
+    <div class="row justify-content-around">
+      <!--Libro actual-->
+      <div class="col-md-3 card m-2">
+        <div class="card-body">
+          <img *ngIf="libroActual.portada" matTooltip="{{libroActual.titulo}}" class="img-thumbnail mb-2" src="http://localhost/GroupReads/src/app/portadas/{{libroActual.portada}}">
+          <img *ngIf="!libroActual.portada" matTooltip="{{libroActual.titulo}}" class="img-thumbnail mb-2" src="http://localhost/GroupReads/src/app/portadas/nopic.jpg">
+          <h5 class="card-title text-truncate">{{libroActual.titulo}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Páginas: {{libroActual.paginas}}</h6>
+        </div>
+      </div>
+      <!--Debate sobre el libro-->
+      <div class="col-md-8 mt-2 mb-2 debate">
+        <span *ngIf="comentarios.length=='0'" class="lead">¡Vaya! parece que todavía no hay comentarios</span>
+        <div *ngFor="let comentario of comentarios" class=" mt-1 mb-1 comentario p-2 row">
+          <div class="col-md-2">
+            <div class="imgperfil">
+              <img *ngIf="comentario.foto" matTooltip="{{comentario.nombreUsuario}}" class="fotoperfil" src="http://localhost/GroupReads/src/app/upload/{{comentario.foto}}">
+              <img *ngIf="!comentario.foto" matTooltip="{{comentario.nombreUsuario}}" class="fotoperfil" src="http://localhost/GroupReads/src/app/upload/user.png">
+            </div>
+          </div>
+          <div class="col-md-2 align-self-center">{{comentario.nombreUsuario}}</div>
+          <div class="col-md-8 align-self-center">{{comentario.comentario}}</div>
+        </div>
+      </div>
+      <!--Formulario para comentar-->
+      <div class="col-md-8 mt-3">
+        <form #formComment="ngForm" (ngSubmit)="comentar()">
+          <textarea required="required" name="comentario" [(ngModel)]="nuevoComentario" placeholder="¡Únete al debate!" class="form-control mb-2" style="min-height:50px;max-height:120px"></textarea>
+          <input  type="submit" class="btn btn-light bordeEnv" name="enviar" value="Publicar" 
+          [disabled]="!formComment.form.valid">
+        </form>
+      </div>
+    </div>
+    <hr/>
+  </div>
+  <!--Si hay una votación en tu club-->
+  <div *ngIf="!noClub && votacion && !votado" class="col-md-8 mt-4 mb-4">
+    <span class="lead">Votación en curso:</span>
+    <div class="row">
+      <div *ngFor="let libro of librosVotar" class="col-md-3 card m-2">
+        <div class="card-body">
+          <img *ngIf="libro.portada" matTooltip="{{libro.titulo}}" class="img-thumbnail mb-2" src="http://localhost/GroupReads/src/app/portadas/{{libro.portada}}">
+          <img *ngIf="!libro.portada" matTooltip="{{libro.titulo}}" class="img-thumbnail mb-2" src="http://localhost/GroupReads/src/app/portadas/nopic.jpg">
+          <h5 class="card-title text-truncate">{{libro.titulo}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Votos: {{libro.votos}}</h6>
+          <p class="card-text text-truncate"><button (click)="votar(libro)" class="btn btn-primary">Votar</button></p>
+        </div>
+      </div>
+    </div>
+    <button (click)="finalizar()" matTooltip="En caso de empate el libro se decide aleatoriamente" class="btn btn-danger mt-3" *ngIf="club.idCreador==usuario.id">Finalizar votación</button>
+  </div>
+  <!--Si ya has votado-->
+  <div *ngIf="!noClub && votacion && votado" class="col-md-7 mt-4 mb-4">
+    <span class="lead">Votación en curso: has votado a</span>
+    <div class="row justify-content-around">
+      <div class="col-md-4 card mt-2 mb-1">
+        <div class="card-body">
+          <img *ngIf="libroVotado.portada" matTooltip="{{libroVotado.titulo}}" class="img-thumbnail mb-2" src="http://localhost/GroupReads/src/app/portadas/{{libroVotado.portada}}">
+          <img *ngIf="!libroVotado.portada" matTooltip="{{libroVotado.titulo}}" class="img-thumbnail mb-2" src="http://localhost/GroupReads/src/app/portadas/nopic.jpg">
+          <h5 class="card-title">{{libroVotado.titulo}}</h5>
+          <p class="card-text text-truncate"><button (click)="quitarVoto(libroVotado)" class="btn btn-warning">Cambiar voto</button></p>
+          <button *ngIf="!grafico" (click)="this.grafico=true;this.crearGrafico()" class="btn btn-primary">Ver resultados</button>
+        </div>
+      </div>
+      <div class="col-md-8 align-self-center">
+        <canvas id="myChart"></canvas>
+      </div>
+      <button (click)="finalizar()" matTooltip="En caso de empate el libro se decide aleatoriamente" class="btn btn-danger mt-3" *ngIf="club.idCreador==usuario.id">Finalizar votación</button>
+    </div>
+  </div>
   <!--Si estás en algún club-->
-  <div *ngIf="!noClub" class="col-md-6 mt-2">
-    <h4 class="text-left">¡Actualmente formas parte de: <i>{{club.nombreClub}}</i>!</h4>
+  <div *ngIf="!noClub" class="col-md-10 mt-2">
     <span class="text-left lead">Otros miembros del club:</span><br/>
     <!--Miembros del club-->
     <div *ngIf="miembros.length>'0'" class="row mt-3">
-      <div *ngFor="let miembro of miembros" class="card club col-md-4 m-2">
+      <div *ngFor="let miembro of miembros" class="card club col-md-3 m-1">
         <div class="card-body">
-          <h5 class="card-title">{{miembro.nombre}} {{miembro.apellidos}}</h5>
+          <h5 class="card-title text-truncate">
+            <span matTooltip="Propietario del club" *ngIf="club.idCreador==miembro.id"><i class="fas fa-star yellow"></i></span> 
+            <span (click)="expulsar(miembro)" matTooltip="Expulsar del club" *ngIf="usuario.id==club.idCreador && club.idCreador!=miembro.id"><i class="fas fa-times red"></i></span> {{miembro.nombre}} {{miembro.apellidos}}
+          </h5>
           <h6 class="card-subtitle mb-2 text-muted">@{{miembro.nick}}</h6>
           <p class="card-text text-truncate">
             {{miembro.correo}}
           </p>
-          <span matTooltip="Propietario del club" *ngIf="club.idCreador==miembro.id"><i class="fas fa-star yellow"></i></span>
-          <span (click)="expulsar(miembro)" matTooltip="Expulsar del club" *ngIf="usuario.id==club.idCreador && club.idCreador!=miembro.id"><i class="fas fa-times red"></i></span>
         </div>
       </div>
     </div>
@@ -85,34 +159,5 @@
     <div *ngIf="club.idCreador!=usuario.id" class="row mt-4 justify-content-around">
       <div class="col-md-5"><button (click)="abandonar()" class="btn btn-danger btn-block"><i class="fas fa-sign-out-alt"></i> Abandonar</button></div>
     </div>
-  </div>
-  <!--Si hay una votación en tu club-->
-  <div *ngIf="!noClub && votacion && !votado" class="col-md-5 mt-2 mb-3">
-    <h4 class="">Votación en curso:</h4>
-    <div class="row">
-      <div *ngFor="let libro of librosVotar" class="col-lg-4 card mt-2 mb-1">
-        <div class="card-body">
-          <img *ngIf="libro.portada" class="img-thumbnail mb-2" src="http://localhost/GroupReads/src/app/portadas/{{libro.portada}}">
-          <img *ngIf="!libro.portada" class="img-thumbnail mb-2" src="http://localhost/GroupReads/src/app/portadas/nopic.jpg">
-          <h5 class="card-title">{{libro.titulo}}</h5>
-          <h6 class="card-subtitle mb-2 text-muted">Votos: {{libro.votos}}</h6>
-          <p class="card-text text-truncate"><button (click)="votar(libro)" class="btn btn-primary">Votar</button></p>
-        </div>
-      </div>
-    </div>
-    <button (click)="finalizar()" matTooltip="En caso de empate el libro se decide aleatoriamente" class="btn btn-danger mt-3" *ngIf="club.idCreador==usuario.id">Finalizar votación</button>
-  </div>
-  <!--Si ya has votado-->
-  <div *ngIf="!noClub && votacion && votado" class="col-md-5 mt-2 mb-3">
-    <h4 class="">Votación en curso: has votado a</h4>
-    <div class="col-md-6 card mt-2 mb-1">
-      <div class="card-body">
-        <img *ngIf="libroVotado.portada" class="img-thumbnail mb-2" src="http://localhost/GroupReads/src/app/portadas/{{libroVotado.portada}}">
-        <img *ngIf="!libroVotado.portada" class="img-thumbnail mb-2" src="http://localhost/GroupReads/src/app/portadas/nopic.jpg">
-        <h5 class="card-title">{{libroVotado.titulo}}</h5>
-        <p class="card-text text-truncate"><button (click)="quitarVoto(libroVotado)" class="btn btn-warning">Cambiar voto</button></p>
-      </div>
-    </div>
-    <button (click)="finalizar()" matTooltip="En caso de empate el libro se decide aleatoriamente" class="btn btn-danger mt-3" *ngIf="club.idCreador==usuario.id">Finalizar votación</button>
   </div>
 </div>
