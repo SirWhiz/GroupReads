@@ -18,6 +18,11 @@
         die();
     }
 
+    /* --- ENVIAR CORREO CONTRASEÑA OLVIDADA --- */
+    $app->get('/forgotpwd/:mail',function($mail) use($app,$db){
+        
+    });
+
     /* --- CREAR UN NUEVO USUARIO --- */
     $app->post('/nuevousuario',function() use($app,$db){
         $json = $app->request->post('json');

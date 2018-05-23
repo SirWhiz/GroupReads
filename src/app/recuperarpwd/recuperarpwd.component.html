@@ -1,0 +1,17 @@
+<menu-superior></menu-superior>
+<h4 class="mt-5 mb-4 text-center display-4">¿Has olvidado tu contraseña?</h4>
+<p class="lead text-center">
+	No te preocupes, confirma tu dirección de correo electrónico y en breve tendrás tu nueva contraseña
+</p>
+<div class="row justify-content-around mb-5">
+	<div class="col-md-7">
+		<form class="form login mt-3 mb-4" #formPwd="ngForm" (ngSubmit)="onSubmit()">
+			<label for="correo">Correo electrónico:</label>
+			<input [(ngModel)]="correo" type="text" class="mb-3 form-control" name="correo" required="required" pattern=".+@.+\.[a-z]{2,6}">
+			<a [routerLink]="['/login']" class="btn btn-danger mt-4">Volver</a>
+			<div class="mt-4 float-right">
+			   <input type="submit" value="Enviar" class="btn btn-success" [disabled]="!formPwd.form.valid">
+			</div>
+		</form>	
+	</div>
+</div>

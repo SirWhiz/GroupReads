@@ -40,6 +40,7 @@ import { DialogoBorrarClubComponent } from './clubes/dialogoborrar.component';
 import { DialogoExpulsarComponent } from './clubes/dialogoexpulsar.component';
 import { ElegirLibroComponent } from './elegirLibro/elegirlibro.component';
 import { LibrosLeidosComponent } from './librosleidos/librosleidos.component';
+import { RecuperarpwdComponent } from './recuperarpwd/recuperarpwd.component';
 import { DialogoMasInformacionComponent } from './librosleidos/dialogomasinformacion.component';
 
 import { MatInputModule,MatNativeDateModule } from '@angular/material';
@@ -93,7 +94,8 @@ import { LoginGuard } from './login.guard';
     DialogoSolicitudesComponent,
     ClubesComponent,
     NuevoClubComponent,
-    DialogoExpulsarComponent
+    DialogoExpulsarComponent,
+    RecuperarpwdComponent
   ],
   imports: [
     BrowserModule,
