@@ -201,7 +201,7 @@ footer{
 .debate{
     background-color: #eee;
     border:1px solid #d3d3d3;
-    height: 18em;
+    height: 21em;
     width: 100%;
     overflow: scroll;
     border-radius: 5px;
@@ -265,6 +265,7 @@ footer{
     border-radius: 500px;
     padding-top: 5px;
     width:40%;
+    min-width: 80px;
     padding-bottom: 5px;
     margin-top: 1em !important;
     margin-bottom: 1em !important;
@@ -298,6 +299,9 @@ footer{
     background: #ccc;
     text-align: center;
     border-bottom: 1px solid #fff;
+    cursor: pointer;
+}
+.cursor{
     cursor: pointer;
 }
 .listaamigos li:hover{

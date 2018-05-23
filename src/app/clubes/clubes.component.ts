@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Club } from './club';
 import { Libro } from '../mantenimientoLibros/libro';
-import { Comentario } from './comentario';
+import { Comentario } from './comentarios';
 import { DialogoEditarClubComponent } from './dialogoeditar.component';
 import { DialogoAbandonarComponent } from './dialogoabandonar.component';
 import { DialogoBorrarClubComponent } from './dialogoborrar.component';
@@ -166,18 +166,21 @@ export class ClubesComponent{
 	comentar(){
 		this._usuariosService.comentar(this.usuario.id,this.club.id,this.libroActual.isbn,this.nuevoComentario).subscribe(
 			result => {
-				if(result.code == 200){
-    				var nuevoComment = new Comentario("","","","","");
-    				nuevoComment.idClub = this.club.id;
-    				nuevoComment.nombreUsuario = this.usuario.nombre;
-    				nuevoComment.foto = this.usuario.foto;
-    				nuevoComment.comentario = this.nuevoComentario;
-    				console.log(nuevoComment);
-    				this.comentarios.push(nuevoComment);
-    				this.nuevoComentario = "";
+				if(result.code == 200){    				
+					this.addComentario();					
 				}
 			}, error => {console.log(error);}
 		);
+	}
+
+	addComentario(){
+		var nuevoComment = new Comentario(0,"","","","");
+		nuevoComment.setidclub(this.club.id);
+		nuevoComment.setnombreUsuario(this.usuario.nombre);
+		nuevoComment.setfoto(this.usuario.foto);
+		nuevoComment.setcomentario(this.nuevoComentario);
+		this.comentarios.push(nuevoComment);
+		this.nuevoComentario = "";
 	}
 
 	libroAcabado(){
@@ -196,7 +199,6 @@ export class ClubesComponent{
 	comprobarLibro(){
 		this._usuariosService.comprobarLibro(this.club.id).subscribe(
 			result => {
-				console.log(result);
 				if(result.code == 200){
 					//El club se está leyendo un libro
 					this.noLibro = false;

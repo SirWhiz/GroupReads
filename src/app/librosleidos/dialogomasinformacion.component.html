@@ -1,0 +1,26 @@
+<h3 class="display-4 text-center mb-4">{{libro.titulo}}</h3>
+Escrito por:
+<div *ngFor="let autor of autores" class="row mt-3 mb-3 justify-content-around">
+	<div class="col-md-6">
+		<img *ngIf="autor.foto" class="text-center img-thumbnail mb-2" src="http://localhost/GroupReads/src/app/imgautores/{{autor.foto}}">
+		<img *ngIf="!autor.foto" class="img-thumbnail mb-2" src="http://localhost/GroupReads/src/app/imgautores/nopic.jpg"><br/>
+		</div>
+	<div class="col-md-6">
+		<strong>{{autor.nombre_ape}}</strong><br/>
+		<strong>Nacionalidad:</strong> {{autor.pais}}<br/> 
+		<strong>fecha de nacimiento:</strong> {{autor.fecha_nacimiento}}
+	</div>
+</div>
+<hr>
+Vuestra opinión del libro:
+<h3 *ngIf="opiniones.length=='0'" class="lead mt-3 mb-3">¡No habéis leído este libro!</h3>
+<div *ngFor="let comentario of opiniones" class="mt-1 mb-1 comentario p-2 row">
+  <div class="col-md-2">
+    <div class="imgperfil">
+      <img *ngIf="comentario.foto" matTooltip="{{comentario.nombreUsuario}}" class="fotoperfil" src="http://localhost/GroupReads/src/app/upload/{{comentario.foto}}">
+      <img *ngIf="!comentario.foto" matTooltip="{{comentario.nombreUsuario}}" class="fotoperfil" src="http://localhost/GroupReads/src/app/upload/user.png">
+    </div>
+  </div>
+  <div class="col-md-2 align-self-center">{{comentario.nombreUsuario}}</div>
+  <div class="col-md-8 align-self-center">{{comentario.comentario}}</div>
+</div>

@@ -39,6 +39,8 @@ import { DialogoAbandonarComponent } from './clubes/dialogoabandonar.component';
 import { DialogoBorrarClubComponent } from './clubes/dialogoborrar.component';
 import { DialogoExpulsarComponent } from './clubes/dialogoexpulsar.component';
 import { ElegirLibroComponent } from './elegirLibro/elegirlibro.component';
+import { LibrosLeidosComponent } from './librosleidos/librosleidos.component';
+import { DialogoMasInformacionComponent } from './librosleidos/dialogomasinformacion.component';
 
 import { MatInputModule,MatNativeDateModule } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -66,6 +68,7 @@ import { LoginGuard } from './login.guard';
     DialogoLibroComponent,
     ElegirLibroComponent,
     DialogoPortadaComponent,
+    LibrosLeidosComponent,
     DialogoBorrarFotoAutor,
     MenuUsuarioComponent,
     MenuAdminComponent,
@@ -75,6 +78,7 @@ import { LoginGuard } from './login.guard';
     NuevoLibroComponent,
     EditarLibroComponent,
     DialogoEditarClubComponent,
+    DialogoMasInformacionComponent,
     GenerosComponent,
     DialogoBorrarClubComponent,
     DialogoNuevoGenero,
@@ -122,7 +126,8 @@ import { LoginGuard } from './login.guard';
                     DialogoEditarClubComponent,
                     DialogoAbandonarComponent,
                     DialogoBorrarClubComponent,
-                    DialogoExpulsarComponent
+                    DialogoExpulsarComponent,
+                    DialogoMasInformacionComponent
                     ]
 })
 export class AppModule { }

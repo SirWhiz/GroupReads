@@ -59,7 +59,7 @@
           <img *ngIf="!libroActual.portada" matTooltip="{{libroActual.titulo}}" class="img-thumbnail mb-2" src="http://localhost/GroupReads/src/app/portadas/nopic.jpg">
           <h5 class="card-title text-truncate">{{libroActual.titulo}}</h5>
           <h6 class="card-subtitle mb-2 text-muted">Páginas: {{libroActual.paginas}}</h6>
-          <button (click)="libroAcabado()" class="btn btn-danger mt-3" *ngIf="usuario.id==club.idCreador">Hemos terminado el libro</button>
+          <button (click)="libroAcabado()" class="btn btn-danger mt-3 text-truncate" *ngIf="usuario.id==club.idCreador">Hemos terminado el libro</button>
         </div>
       </div>
       <!--Debate sobre el libro-->
@@ -79,7 +79,7 @@
       <!--Formulario para comentar-->
       <div class="col-md-8 mt-3">
         <form #formComment="ngForm" (ngSubmit)="comentar()">
-          <textarea required="required" name="comentario" [(ngModel)]="nuevoComentario" placeholder="¡Únete al debate!" class="form-control mb-2" style="min-height:50px;max-height:120px"></textarea>
+          <textarea required="required" name="comentario" [(ngModel)]="nuevoComentario" placeholder="¡Únete al debate!" pattern="^[A-Za-z0-9\,\s]+" class="form-control mb-2" style="min-height:50px;max-height:120px"></textarea>
           <input  type="submit" class="btn btn-light bordeEnv" name="enviar" value="Publicar" 
           [disabled]="!formComment.form.valid">
         </form>
@@ -122,6 +122,8 @@
       <button (click)="finalizar()" matTooltip="En caso de empate el libro se decide aleatoriamente" class="btn btn-danger mt-3" *ngIf="club.idCreador==usuario.id">Finalizar votación</button>
     </div>
   </div>
+  <!--Libros leídos y libros recomendados-->
+  <librosleidos class="col-md-10 mt-4 mb-4 scroll" *ngIf="!noClub && !votacion && noLibro"></librosleidos>
   <!--Si estás en algún club-->
   <div *ngIf="!noClub" class="col-md-10 mt-2">
     <span class="text-left lead">Otros miembros del club:</span><br/>

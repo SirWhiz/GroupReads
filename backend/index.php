@@ -1982,6 +1982,92 @@
         echo json_encode($result);
     });
 
+    /* --- OBTENER LOS LIBROS QUE HA LEIDO UN CLUB --- */
+    $app->get('/finishedbooks/:idclub',function($idclub) use($app,$db){
+        $consulta = "SELECT isbn,titulo,paginas,portada,generos.nombre as nombre_genero FROM libros INNER JOIN libros_clubes ON libros.isbn=libros_clubes.isbnLibro INNER JOIN generos ON libros.idGenero=generos.id WHERE libros_clubes.finalizado=1 AND idClub=".$idclub;
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>'No hay libros'
+        );
+
+        $query = $db->query($consulta);
+        if($query->num_rows == 0){
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'No hay libros'
+            );
+        }else{
+            $libros = array();
+            while($libro = $query->fetch_assoc()){
+                $libros[] = $libro;
+            }
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$libros
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- OBTENER LIBROS RECOMENDADOS PARA UN CLUB --- */
+    $app->get('/recommendedbooks/:idclub',function($idclub) use($app,$db){
+        $consulta = "SELECT idGenero FROM clubes WHERE id=".$idclub;
+        $query = $db->query($consulta);
+        $fila = $query->fetch_assoc();
+        $generoPreferido = $fila['idGenero'];
+
+        $librosLeidos = array();
+        $consulta = "SELECT isbn,titulo,paginas,portada,generos.nombre as nombre_genero FROM libros INNER JOIN generos ON libros.idGenero=generos.id INNER JOIN libros_clubes ON libros.isbn=libros_clubes.isbnLibro WHERE libros_clubes.idClub=".$idclub;
+        $query = $db->query($consulta);
+        while($libro = $query->fetch_assoc()){
+            $librosLeidos[] = $libro;
+        }
+
+        $consulta = "SELECT isbn,titulo,paginas,portada,generos.nombre as nombre_genero FROM libros INNER JOIN generos ON libros.idGenero=generos.id WHERE libros.idGenero=".$generoPreferido." LIMIT 2";
+        $query = $db->query($consulta);
+
+        $librosRecomendados = array();
+        while($libro = $query->fetch_assoc()){
+            if(!in_array($libro, $librosLeidos)){
+                $librosRecomendados[] = $libro;
+            }
+        }
+
+        $consulta = "SELECT id FROM autores_libros WHERE isbnLibro=(SELECT isbnLibro FROM libros_clubes WHERE finalizado=1 AND idClub=".$idclub." LIMIT 1)";
+        $query = $db->query($consulta);
+        $fila = $query->fetch_assoc();
+        $ultimoAutor = $fila['id'];
+
+        $consulta = "SELECT isbn,titulo,paginas,portada,generos.nombre as nombre_genero FROM libros INNER JOIN autores_libros ON libros.isbn=isbnLibro INNER JOIN generos ON libros.idGenero=generos.id WHERE autores_libros.id=".$ultimoAutor." LIMIT 1";
+        $query = $db->query($consulta);
+        while($libro = $query->fetch_assoc()){
+            if(!in_array($libro, $librosRecomendados) AND !in_array($libro, $librosLeidos)){
+                $librosRecomendados[] = $libro;
+            }
+        }
+
+        $consulta = "SELECT isbn,titulo,paginas,portada,generos.nombre as nombre_genero FROM libros INNER JOIN generos ON libros.idGenero=generos.id WHERE isbn NOT IN (SELECT isbnLibro FROM libros_clubes WHERE finalizado=1 AND idClub=".$idclub.") LIMIT 3";
+        $query = $db->query($consulta);
+        while($libro = $query->fetch_assoc()){
+            if(!in_array($libro, $librosRecomendados) AND !in_array($libro, $librosLeidos)){
+                $librosRecomendados[] = $libro;
+            }
+        }
+
+        $result = array(
+            'status'=>'success',
+            'code'=>200,
+            'data'=>$librosRecomendados,
+        );
+
+        echo json_encode($result);
+    });
+
     /* --- OBTENER LOS 5 ÚLTIMOS LIBROS --- */
     $app->get('/librostop',function() use($app,$db){
         $consulta = "SELECT * FROM libros ORDER BY fechaAlta DESC LIMIT 5";
@@ -2063,6 +2149,25 @@
     /* --- DEVOLVER EL AUTOR/AUTORES DE UN LIBRO --- */
     $app->get('/autores/:isbn',function($isbn) use($app,$db){
         $consulta = "SELECT * FROM autores_libros WHERE isbnLibro=".$isbn;
+        $query = $db->query($consulta);
+
+        $autores = array();
+        while($autor = $query->fetch_assoc()){
+            $autores[] = $autor;
+        }
+
+        $result = array(
+            'status'=>'success',
+            'code'=>200,
+            'data'=>$autores
+        );
+
+        echo json_encode($result);
+    });
+
+    /* --- DEVOLVER TODOS LOS DATOS DEL AUTOR/AUTORES DE UN LIBRO --- */
+    $app->get('/fullautores/:isbn',function($isbn) use($app,$db){
+        $consulta = "SELECT autores.id,nombre_ape,fecha_nacimiento,paises.nombre as pais,foto FROM autores INNER JOIN paises ON autores.nacionalidad=paises.id INNER JOIN autores_libros ON autores.id=autores_libros.id WHERE autores_libros.isbnLibro=".$isbn;
         $query = $db->query($consulta);
 
         $autores = array();

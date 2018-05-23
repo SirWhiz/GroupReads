@@ -1,0 +1,29 @@
+<span class="lead">Libros que os habéis leído:</span>
+<!--Si no se han leído ningún libro-->
+<h5 *ngIf="librosLeidos.length=='0'"><i>¡Vaya! parece que no habéis leido ningún libro</i></h5>
+<!--Libros que se han leído-->
+<div *ngIf="librosLeidos.length>'0'" class="row mt-3 mb-2">
+	<div *ngFor="let libro of librosLeidos" class="col-md-3 card club">
+        <div class="card-body">
+          	<img (click)="masInformacion(libro)" *ngIf="libro.portada" matTooltip="Click para más información" class="cursor img-thumbnail mb-2" src="http://localhost/GroupReads/src/app/portadas/{{libro.portada}}">
+          	<img (click)="masInformacion(libro)" *ngIf="!libro.portada" matTooltip="Click para más información" class="cursor img-thumbnail mb-2" src="http://localhost/GroupReads/src/app/portadas/nopic.jpg">
+        	<h5 class="card-title">{{libro.titulo}}</h5>
+          	<h6 class="card-subtitle mb-2 text-muted">{{libro.paginas}} páginas</h6>
+          	<div class="genero">{{libro.nombre_genero}}</div>
+        </div>
+	</div>
+</div>
+<!--Libros recomendados-->
+<span class="lead">Libros que os podrían interesar:</span>
+<!--Libros que se sugieren-->
+<div *ngIf="recomendados.length>'0'" class="row mt-3 mb-2">
+	<div *ngFor="let libro of recomendados" class="col-md-3 card club">
+        <div class="card-body">
+          	<img (click)="masInformacion(libro)" *ngIf="libro.portada" matTooltip="Click para más información" class="cursor img-thumbnail mb-2" src="http://localhost/GroupReads/src/app/portadas/{{libro.portada}}">
+          	<img (click)="masInformacion(libro)" *ngIf="!libro.portada" matTooltip="Click para más información" class="cursor img-thumbnail mb-2" src="http://localhost/GroupReads/src/app/portadas/nopic.jpg">
+        	<h5 class="card-title">{{libro.titulo}}</h5>
+          	<h6 class="card-subtitle mb-2 text-muted">{{libro.paginas}} páginas</h6>
+          	<div class="genero">{{libro.nombre_genero}}</div>
+        </div>
+	</div>
+</div>

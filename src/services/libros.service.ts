@@ -18,6 +18,14 @@ export class LibrosService{
         this.url=GLOBAL.url;
     }
 
+    getUsuario(correo:string){
+        return this._http.get(this.url+'usuarios/'+correo).map(res => res.json());
+    }
+
+    getClub(id:string){
+        return this._http.get(this.url+'getclub/'+id).map(res => res.json());
+    }
+
     getPaises(){
         return this._http.get(this.url+'paises').map(res => res.json());
     }
@@ -82,12 +90,28 @@ export class LibrosService{
         return this._http.get(this.url+'autores/'+isbn).map(res => res.json());
     }
 
+    getFullAutores(isbn:string){
+        return this._http.get(this.url+'fullautores/'+isbn).map(res => res.json());   
+    }
+
+    getComentarios(idclub:string,isbn:string){
+        return this._http.get(this.url+'getcomments/'+idclub+'/'+isbn).map(res => res.json());
+    }
+
     getLibros(){
         return this._http.get(this.url+'libros').map(res => res.json());
     }
 
     getLibro(isbn: string){
         return this._http.get(this.url+'libro/'+isbn).map(res => res.json());
+    }
+
+    getLibrosLeidos(idclub:string){
+        return this._http.get(this.url+'finishedbooks/'+idclub).map(res => res.json());
+    }
+
+    getLibrosRecomendados(idclub:string){
+        return this._http.get(this.url+'recommendedbooks/'+idclub).map(res => res.json());   
     }
 
     comprobarisbn(isbn: string){
