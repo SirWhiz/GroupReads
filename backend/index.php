@@ -21,6 +21,42 @@
     /* --- ENVIAR CORREO CONTRASEÑA OLVIDADA --- */
     $app->get('/forgotpwd/:mail',function($mail) use($app,$db){
         
+        /*Generar contraseña aleatoria*/
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < 10; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+        $copia = $randomString;
+        $randomString = password_hash($randomString, PASSWORD_BCRYPT);
+        $consulta = "UPDATE usuarios SET pwd='".$randomString."' WHERE correo='".$mail."'";
+        $query = $db->query($consulta);
+
+        if($query){
+            $texto = "Hola, para acceder a tu cuenta usa esta contraseña: <b>".$copia."</b> recuerda que debes cambiarla para mayor seguridad";
+            $destinatario = $mail;
+            $asunto = "Recuperación de contraseña";
+            $header='MIME-Version: 1.0'."\r\n";
+            $header.= 'Content-type: text/html; charset=iso-8859-1'."\r\n";
+            $header.= 'From: Password <info@groupreads.com>' . "\r\n";
+            $exito = mail($destinatario,$asunto,$texto,$header);
+
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Contraseña modificada correctamente'
+            );
+        }else{
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'Error al modificar la contraseña'
+            );
+        }
+
+        echo json_encode($result);
     });
 
     /* --- CREAR UN NUEVO USUARIO --- */

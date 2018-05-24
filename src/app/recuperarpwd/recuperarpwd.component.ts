@@ -24,13 +24,29 @@ export class RecuperarpwdComponent{
 		this._usuariosService.getUsuario(this.correo).subscribe(
 			result => {
 				if(result.code == 200){
-
+					this.cambiarPwd();
 				}else{
     				this.snackBar.open("Parece que no hay nadie registrado con ese correo, revísalo", "OK",{
       					duration: 3000,
     				});
 				}
 			}, error => {console.log(error);}
+		);
+	}
+
+	cambiarPwd(){
+		this._usuariosService.cambiarPassword(this.correo).subscribe(
+			result => {
+				if(result.code == 200){
+    				this.snackBar.open("Se ha enviado la nueva contraseña a "+this.correo, "OK",{
+      					duration: 3000,
+    				});	
+				}else{
+					this.snackBar.open("Se ha producido un error", "OK",{
+      					duration: 3000,
+    				});
+				}
+			},error => {console.log(error);}
 		);
 	}
 
