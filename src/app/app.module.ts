@@ -41,6 +41,7 @@ import { DialogoExpulsarComponent } from './clubes/dialogoexpulsar.component';
 import { ElegirLibroComponent } from './elegirLibro/elegirlibro.component';
 import { LibrosLeidosComponent } from './librosleidos/librosleidos.component';
 import { RecuperarpwdComponent } from './recuperarpwd/recuperarpwd.component';
+import { DialogoPwdComponent } from './home/dialogopwd.component';
 import { DialogoMasInformacionComponent } from './librosleidos/dialogomasinformacion.component';
 
 import { MatInputModule,MatNativeDateModule } from '@angular/material';
@@ -66,6 +67,7 @@ import { LoginGuard } from './login.guard';
     HomeComponent,
     ConfiguracionComponent,
     DialogoComponent,
+    DialogoPwdComponent,
     DialogoLibroComponent,
     ElegirLibroComponent,
     DialogoPortadaComponent,
@@ -129,7 +131,8 @@ import { LoginGuard } from './login.guard';
                     DialogoAbandonarComponent,
                     DialogoBorrarClubComponent,
                     DialogoExpulsarComponent,
-                    DialogoMasInformacionComponent
+                    DialogoMasInformacionComponent,
+                    DialogoPwdComponent
                     ]
 })
 export class AppModule { }

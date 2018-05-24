@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { UsuariosService } from '../../services/usuarios.service';
 import { Usuario } from '../registro/usuario';
 import { Libro } from '../mantenimientoLibros/libro';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { DialogoPwdComponent } from './dialogopwd.component';
+import { Chart } from 'chart.js';
 
 @Component({
 	selector: 'home',
@@ -19,10 +22,12 @@ export class HomeComponent{
 	public totalUsuarios:string;
 	public totalLibros:string;
 	public totalAutores:string;
+	public totales:Array<any>;
 
-	constructor(private _router: Router,private _usuariosService: UsuariosService){
+	constructor(private dialog:MatDialog,private _router: Router,private _usuariosService: UsuariosService){
 		this.usuario = new Usuario("","","","","","","","","","","");
 		this.libros = new Array();
+		this.totales = new Array();
 		this.esAdmin = false;
 		this.noClub = false;
 		this.noLibros = false;
@@ -43,6 +48,7 @@ export class HomeComponent{
 							result => {
 								if(result.code==200){
 									this.totalUsuarios = result.data;
+									this.totales.push(result.data);
 								}
 							},
 							error => {
@@ -54,6 +60,7 @@ export class HomeComponent{
 							result => {
 								if(result.code==200){
 									this.totalLibros = result.data;
+									this.totales.push(result.data);
 								}
 							},
 							error => {
@@ -65,11 +72,37 @@ export class HomeComponent{
 							result => {
 								if(result.code == 200){
 									this.totalAutores = result.data;
+									this.totales.push(result.data);
 								}
 							}, error => {
 								console.log(error);
 							}
 						);
+						//Comprobar si ha cambiado la contraseña
+						this.usuario.pwd = "admin";
+						this._usuariosService.loginUsuario(this.usuario).subscribe(
+							result => {
+								if(result.code == 200){
+									this.dialog.open(DialogoPwdComponent,{
+										width:'500px',
+									});
+								}
+							}, error => {console.log(error);}
+						);
+						//Gráfico
+						var chart = new Chart(document.getElementById("myChart"), {
+						    type: 'doughnut',
+						    data: {
+						      labels: ["Usuarios", "Libros", "Autores"],
+						      datasets: [
+						        {
+						          label: "Total",
+						          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
+						          data: this.totales
+						        }
+						      ]
+						    }
+						});
 					}else{
 						this._usuariosService.comprobarTieneClub(this.usuario.id).subscribe(
 							result => {
@@ -96,4 +129,5 @@ export class HomeComponent{
 			}, error => {console.log(error);}
 		);
 	}
+
 }
