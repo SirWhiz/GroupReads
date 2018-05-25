@@ -218,16 +218,8 @@ export class UsuariosService{
         return this._http.get(this.url+'normal/'+id).map(res => res.json());
     }
 
-    totalUsuarios(){
-        return this._http.get(this.url+'totalusuarios').map(res => res.json());
-    }
-
-    totalLibros(){
-        return this._http.get(this.url+'totallibros').map(res => res.json());   
-    }
-
-    totalAutores(){
-        return this._http.get(this.url+'totalautores').map(res => res.json());   
+    totalesAdmin(){
+        return this._http.get(this.url+'totalesadmin').map(res => res.json());
     }
 
     addClub(club:Club){

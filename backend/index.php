@@ -352,48 +352,35 @@
         echo json_encode($result);
     });
 
-    /* --- DEVOLVER TOTAL DE USUARIOS --- */
-    $app->get('/totalusuarios',function() use($app,$db){
-        $consulta = "SELECT COUNT(*) as total FROM usuarios WHERE tipo<>'a'";
+    /* --- DEVOLVER TOTALES PARA EL ADMIN --- */
+    $app->get('/totalesadmin',function() use($app,$db){
+        $consulta = "SELECT COUNT(*) as usuarios FROM usuarios WHERE tipo<>'a'";
         $query = $db->query($consulta);
-        $datos = $query->fetch_assoc();
-        $total = $datos['total'];
+        $fila = $query->fetch_assoc();
+        $usuarios = $fila['usuarios'];
+
+        $consulta = "SELECT COUNT(*) as libros FROM libros";
+        $query = $db->query($consulta);
+        $fila = $query->fetch_assoc();
+        $libros = $fila['libros'];
+
+        $consulta = "SELECT COUNT(*) as autores FROM autores";
+        $query = $db->query($consulta);
+        $fila = $query->fetch_assoc();
+        $autores = $fila['autores'];        
+
+        $data = array(
+            'usuarios'=>$usuarios,
+            'libros'=>$libros,
+            'autores'=>$autores
+        );
 
         $result = array(
             'status'=>'success',
             'code'=>200,
-            'data'=>$total
+            'data'=>$data
         );
-        echo json_encode($result);
-    });
 
-    /* --- DEVOLVER TOTAL DE LIBROS --- */
-    $app->get('/totallibros',function() use($app,$db){
-        $consulta = "SELECT COUNT(isbn) as total FROM libros";
-        $query = $db->query($consulta);
-        $datos = $query->fetch_assoc();
-        $total = $datos['total'];
-
-        $result = array(
-            'status'=>'success',
-            'code'=>200,
-            'data'=>$total
-        );
-        echo json_encode($result);
-    });
-
-    /* --- DEVOLVER TOTAL DE AUTORES --- */
-    $app->get('/totalautores',function() use($app,$db){
-        $consulta = "SELECT COUNT(id) as total FROM autores";
-        $query = $db->query($consulta);
-        $datos = $query->fetch_assoc();
-        $total = $datos['total'];
-
-        $result = array(
-            'status'=>'success',
-            'code'=>200,
-            'data'=>$total
-        );
         echo json_encode($result);
     });
 

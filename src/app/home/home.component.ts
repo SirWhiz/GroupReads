@@ -19,21 +19,13 @@ export class HomeComponent{
 	public esAdmin:boolean;
 	public noClub:boolean;
 	public noLibros:boolean;
-	public totalUsuarios:string;
-	public totalLibros:string;
-	public totalAutores:string;
-	public totales:Array<any>;
 
 	constructor(private dialog:MatDialog,private _router: Router,private _usuariosService: UsuariosService){
 		this.usuario = new Usuario("","","","","","","","","","","");
 		this.libros = new Array();
-		this.totales = new Array();
 		this.esAdmin = false;
 		this.noClub = false;
 		this.noLibros = false;
-		this.totalUsuarios = "";
-		this.totalLibros = "";
-		this.totalAutores = "";
 	}
 
 	ngOnInit(){
@@ -43,41 +35,6 @@ export class HomeComponent{
 				if(result.code==200){
 					this.usuario = result.data;
 					if(this.usuario.tipo == "a"){
-						//Total de usuarios
-						this._usuariosService.totalUsuarios().subscribe(
-							result => {
-								if(result.code==200){
-									this.totalUsuarios = result.data;
-									this.totales.push(result.data);
-								}
-							},
-							error => {
-								console.log(error);
-							}
-						);
-						//Total de libros
-						this._usuariosService.totalLibros().subscribe(
-							result => {
-								if(result.code==200){
-									this.totalLibros = result.data;
-									this.totales.push(result.data);
-								}
-							},
-							error => {
-								console.log(error);
-							}
-						);
-						//Total de autores
-						this._usuariosService.totalAutores().subscribe(
-							result => {
-								if(result.code == 200){
-									this.totalAutores = result.data;
-									this.totales.push(result.data);
-								}
-							}, error => {
-								console.log(error);
-							}
-						);
 						//Comprobar si ha cambiado la contraseña
 						this.usuario.pwd = "admin";
 						this._usuariosService.loginUsuario(this.usuario).subscribe(
@@ -89,20 +46,13 @@ export class HomeComponent{
 								}
 							}, error => {console.log(error);}
 						);
-						//Gráfico
-						var chart = new Chart(document.getElementById("myChart"), {
-						    type: 'doughnut',
-						    data: {
-						      labels: ["Usuarios", "Libros", "Autores"],
-						      datasets: [
-						        {
-						          label: "Total",
-						          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
-						          data: this.totales
-						        }
-						      ]
-						    }
-						});
+						this._usuariosService.totalesAdmin().subscribe(
+							result => {
+								if(result.code == 200){
+									this.crearGrafico(result.data.usuarios,result.data.libros,result.data.autores);
+								}
+							}, error => {console.log(error);}
+						);
 					}else{
 						this._usuariosService.comprobarTieneClub(this.usuario.id).subscribe(
 							result => {
@@ -128,6 +78,46 @@ export class HomeComponent{
 				}
 			}, error => {console.log(error);}
 		);
+	}
+
+	crearGrafico(usuarios:number,libros:number,autores:number){
+		var ctx = document.getElementById("myChart");
+		var myChart = new Chart(ctx, {
+		    type: 'bar',
+		    data: {
+		        labels: ["Usuarios","Libros","Autores"],
+		        datasets: [{
+		            label: 'Total',
+		            data: [usuarios,libros,autores],
+		            backgroundColor: [
+		                'rgba(255, 99, 132, 0.2)',
+		                'rgba(54, 162, 235, 0.2)',
+		                'rgba(255, 206, 86, 0.2)',
+		                'rgba(75, 192, 192, 0.2)',
+		                'rgba(153, 102, 255, 0.2)',
+		                'rgba(255, 159, 64, 0.2)'
+		            ],
+		            borderColor: [
+		                'rgba(255,99,132,1)',
+		                'rgba(54, 162, 235, 1)',
+		                'rgba(255, 206, 86, 1)',
+		                'rgba(75, 192, 192, 1)',
+		                'rgba(153, 102, 255, 1)',
+		                'rgba(255, 159, 64, 1)'
+		            ],
+		            borderWidth: 1
+		        }]
+		    },
+		    options: {
+		        scales: {
+		            yAxes: [{
+		                ticks: {
+		                    beginAtZero:true
+		                }
+		            }]
+		        }
+		    }
+		});
 	}
 
 }
