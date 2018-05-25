@@ -6,7 +6,7 @@
     <button [routerLink]="['/colaboradores']" class="btn btn-light btn-block text-truncate">Colaboradores</button>
     <button [routerLink]="['/generos']" class="btn btn-light btn-block text-truncate">Géneros</button>
     <button [routerLink]="['/libros']" class="btn btn-light btn-block text-truncate">Libros</button>
-    <button class="btn btn-danger btn-block text-truncate">Reinstalar Aplicación</button>
+    <button (click)="reinstalar()" class="btn btn-danger btn-block text-truncate">Reinstalar Aplicación</button>
   </div>
   <div class="col-sm-9 pt-4 pb-5 panel">
     <h3>Datos generales:</h3>

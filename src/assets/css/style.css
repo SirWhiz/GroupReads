@@ -162,6 +162,43 @@ footer{
 .filtro:-moz-placeholder{
     color: pink;
 }
+/* ------ Botón de reinstalar la aplicación ------*/
+.re{
+  background:#1AAB8A;
+  color:#fff;
+  border:none;
+  position:relative;
+  height:60px;
+  font-size:1.6em;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+}
+.re:hover{
+  background:#fff;
+  color:#1AAB8A;
+}
+.re:before,.re:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #1AAB8A;
+  transition:400ms ease all;
+}
+.re:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+.re:hover:before,.re:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
 /* ------ Home ------ */
 .avatar{
     width:30%;

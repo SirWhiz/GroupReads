@@ -59,6 +59,38 @@
         echo json_encode($result);
     });
 
+    /* --- REINSTALAR APLICACIÓN --- */
+    $app->get('/restart',function() use($app,$db){
+        $consulta = "DELETE FROM amigos";
+        $db->query($consulta);
+
+        $consulta = "DELETE FROM usuarios WHERE correo<>'admin@admin.com'";
+        $db->query($consulta);
+
+        $consulta = "DELETE FROM autores";
+        $db->query($consulta);
+
+        $consulta = "DELETE FROM libros";
+        $db->query($consulta);
+
+        $consulta = "DELETE FROM clubes";
+        $db->query($consulta);
+
+        $consulta = "DELETE FROM libros_para_votar";
+        $db->query($consulta);
+
+        $consulta = "DELETE FROM generos";
+        $db->query($consulta);
+
+        $result = array(
+            'status'=>'success',
+            'code'=>200,
+            'message'=>'Datos borrados correctamente'
+        );
+
+        echo json_encode($result);
+    });
+
     /* --- CREAR UN NUEVO USUARIO --- */
     $app->post('/nuevousuario',function() use($app,$db){
         $json = $app->request->post('json');

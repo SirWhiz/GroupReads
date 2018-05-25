@@ -4,6 +4,7 @@ import { UsuariosService } from '../../services/usuarios.service';
 import { Usuario } from '../registro/usuario';
 import { Libro } from '../mantenimientoLibros/libro';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { ReinstalarComponent } from '../reinstalar/reinstalar.component';
 import { DialogoPwdComponent } from './dialogopwd.component';
 import { Chart } from 'chart.js';
 
@@ -117,6 +118,12 @@ export class HomeComponent{
 		            }]
 		        }
 		    }
+		});
+	}
+
+	reinstalar(){
+		this.dialog.open(ReinstalarComponent,{
+			width:'500px',
 		});
 	}
 

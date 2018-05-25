@@ -21,6 +21,10 @@ export class UsuariosService{
         return this._http.get(this.url+'forgotpwd/'+correo).map(res => res.json());
     }
 
+    reinstalarAplicacion(){
+        return this._http.get(this.url+'restart').map(res => res.json());
+    }
+
     getSolicitudesPendientes(id: string){
         return this._http.get(this.url+'solicitudespen/'+id).map(res => res.json());
     }

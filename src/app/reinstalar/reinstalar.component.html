@@ -1,0 +1,22 @@
+<h1 *ngIf="control=='c'" class="display-4 mt-3 mb-3 text-center">Cuidado</h1>
+<p *ngIf="control=='c'" class="lead text-center">
+	Estás a punto de reinstalar la aplicación y borrar todos los datos almacenados.
+	<br/>¿Estás seguro?
+</p>
+<div *ngIf="control=='c'" class="row mt-4 justify-content-around">
+	<div class="col-8">
+		<button (click)="control='f'" class="re">Estoy seguro</button>	
+	</div>
+</div>
+
+<h1 *ngIf="control=='f'" class="display-4 mt-3 mb-3 text-center">Una última cosa</h1>
+<p *ngIf="control=='f'"class="lead text-center">
+	Antes de borrar todo, por favor indica la contraseña de la cuenta de
+	administrador. 
+</p>
+<div *ngIf="control=='f'" class="row">
+	<form class="col-12" #formRestart="ngForm" (ngSubmit)="onSubmit()">
+		<input (keyup)="comprobar()" type="password" autocomplete="off" class="form-control mb-3" name="pwd" required="required" [(ngModel)]="usuario.pwd">
+		<button matTooltip="Eliminar todos los datos" class="btn btn-warning" [disabled]="!formRestart.form.valid || !pwdok">Confirmar</button>
+	</form>
+</div>
