@@ -1131,13 +1131,13 @@
     });
 
     /* --- BORRAR UN AUTOR --- */
-    $app->get('/deleteautor/:id',function($id) use($app,$db){
+    $app->get('/deleteautor/:id',function($id) use($app,$db,$db2){
 
-        $consulta = "SELECT * FROM autores_libros WHERE idAutor=".$id;
+        $consulta = "SELECT * FROM autores_libros WHERE id=".$id;
         $query = $db->query($consulta);
         while($libro = $query->fetch_assoc()){
             $consulta = "DELETE FROM libros WHERE isbn=".$libro['isbnLibro'].";";
-            $db->query($consulta);
+            $db2->query($consulta);
         }
 
         $consulta = "DELETE FROM autores WHERE id=".$id;
