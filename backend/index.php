@@ -1257,7 +1257,7 @@
         $data = json_decode($json,true);
 
         $consulta = "INSERT INTO clubes VALUES (DEFAULT,".
-            "'{$data['nombre']}',".
+            "'{$data['nombreClub']}',".
             "{$data['idCreador']},".
             "{$data['idGenero']},".
             "'{$data['privacidad']}',".
@@ -1750,6 +1750,9 @@
         $consulta = "DELETE FROM usuarios_clubes WHERE idClub=".$idclub." AND idUsuario=".$id;
         $query = $db->query($consulta);
 
+        $consulta = "DELETE FROM votaciones WHERE idUsuario=".$id;
+        $query = $db->query($consulta);
+
         $result = array(
             'status'=>'error',
             'code'=>404,
@@ -2044,7 +2047,7 @@
 
     /* --- OBTENER LOS LIBROS QUE HA LEIDO UN CLUB --- */
     $app->get('/finishedbooks/:idclub',function($idclub) use($app,$db){
-        $consulta = "SELECT isbn,titulo,paginas,portada,generos.nombre as nombre_genero FROM libros INNER JOIN libros_clubes ON libros.isbn=libros_clubes.isbnLibro INNER JOIN generos ON libros.idGenero=generos.id WHERE libros_clubes.finalizado=1 AND idClub=".$idclub;
+        $consulta = "SELECT DISTINCT isbn,titulo,paginas,portada,generos.nombre as nombre_genero FROM libros INNER JOIN libros_clubes ON libros.isbn=libros_clubes.isbnLibro INNER JOIN generos ON libros.idGenero=generos.id WHERE libros_clubes.finalizado=1 AND idClub=".$idclub;
 
         $result = array(
             'status'=>'error',
