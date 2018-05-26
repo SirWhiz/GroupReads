@@ -21,7 +21,7 @@
 			<textarea [(ngModel)]="club.descripcion" #descripcion=ngModel required="required" name="descripcion" style="min-height:50px;max-height:120px" class="mb-3 form-control" pattern="^[0-9A-Za-z\u00f1\u00d1À-ÿ\s\,\.\-]+"></textarea>
 			<!--Género--->
 			<label for="genero">Género preferido:</label>
-			<select class="mb-3 form-control" name="genero" [(ngModel)]="club.genero" required="required">
+			<select class="mb-3 form-control" name="genero" [(ngModel)]="club.idGenero" required="required">
 				<option *ngFor="let genero of generos" value="{{genero.id}}">
 					{{genero.nombre}}
 				</option>

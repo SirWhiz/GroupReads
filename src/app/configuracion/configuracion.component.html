@@ -89,7 +89,7 @@
       <!--Actualizar foto de perfil-->
       <mat-tab label="Foto de perfil">
         <h3 class="mt-4">Imagen actual:</h3>
-        <div *ngIf="usuario.foto=='' || usuario.foto==NULL" class="mb-5">
+        <div *ngIf="!usuario.foto" class="mb-5">
           <p>¡No tienes ninguna foto de perfil!</p>
           <form #formimg="ngForm" class="form login" (ngSubmit)="onSubmitimg()">
             <label for="foto">Subir una imagen</label>
@@ -97,7 +97,7 @@
             <input type="submit" [disabled]="!formimg.form.valid" class="btn btn-primary" value="Subir imagen">
           </form>
         </div>
-        <div *ngIf="usuario.foto!='' && usuario.foto!=NULL" class="mb-5 col-md-4">
+        <div *ngIf="usuario.foto" class="mb-5 col-md-4">
           <img (click)="abrirDialogo()" src="http://localhost/GroupReads/src/app/upload/{{usuario.foto}}" matTooltip="Click para borrar" class="img-thumbnail borrar" alt="Foto de perfil">
         </div>
       </mat-tab>

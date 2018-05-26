@@ -14,7 +14,7 @@
 	</div>
 </div>
 <!--Libros recomendados-->
-<span class="lead">Libros que os podrían interesar:</span>
+<span *ngIf="recomendados.length>'0'" class="lead">Libros que os podrían interesar:</span>
 <!--Libros que se sugieren-->
 <div *ngIf="recomendados.length>'0'" class="row mt-3 mb-2">
 	<div *ngFor="let libro of recomendados" class="col-md-3 card club">

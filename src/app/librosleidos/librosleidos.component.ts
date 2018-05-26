@@ -37,7 +37,6 @@ export class LibrosLeidosComponent{
 							if(result.code == 200){
 								this.club = result.data;
 								this.obtenerLibrosLeidos(this.club.id);
-								this.obtenerLibrosRecomendados(this.club.id);
 							}
 						}, error => {console.log(error);}
 					);
@@ -51,6 +50,7 @@ export class LibrosLeidosComponent{
 			result => {
 				if(result.code == 200){
 					this.librosLeidos = result.data;
+					this.obtenerLibrosRecomendados(idclub);
 				}
 			}, error => {console.log(error);}
 		);

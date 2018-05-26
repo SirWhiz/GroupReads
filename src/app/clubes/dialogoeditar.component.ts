@@ -26,6 +26,7 @@ export class DialogoEditarClubComponent{
         public _router:Router,
     ){
         this.club = data.club;
+        console.log(this.club);
         this.nombreMostrar = this.club.nombreClub;
     }
 

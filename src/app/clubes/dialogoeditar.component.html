@@ -1,12 +1,12 @@
 <h5 class="text-center">Editar {{nombreMostrar}}</h5>
 <form #formClub="ngForm" class="form login" (ngSubmit)="onSubmit()">
 	<!--Nombre-->
-	<label for="nombre">Nombre:</label>
-	<span *ngIf="nombre.touched && club.nombre!='' && !nombre.valid"><br/>Introduzca un nombre válido</span>
-	<span class="valido" *ngIf="nombre.touched && club.nombre!='' && nombre.valid">
+	<label for="nombreClub">Nombre:</label>
+	<span *ngIf="nombreClub.touched && nombreClub.nombre!='' && !nombreClub.valid"><br/>Introduzca un nombre válido</span>
+	<span class="valido" *ngIf="nombreClub.touched && club.nombreClub!='' && nombreClub.valid">
 		<i class="fas fa-check fa-2x"></i>
 	</span>
-	<input [(ngModel)]="club.nombreClub" #nombre=ngModel required="required" type="text" name="nombre" class="mb-3 form-control" pattern="^[\-\_A-Za-z\u00f1\u00d1À-ÿ\s]+">
+	<input [(ngModel)]="club.nombreClub" #nombreClub=ngModel required="required" type="text" name="nombreClub" class="mb-3 form-control" pattern="^[\-\_A-Za-z\u00f1\u00d1À-ÿ\s]+">
 	<!--Descripción-->
 	<label for="descripcion">Breve descripción del club:</label>
 	<span *ngIf="descripcion.touched && club.descripcion!='' && !descripcion.valid"><br/>Introduzca una descripción válida</span>

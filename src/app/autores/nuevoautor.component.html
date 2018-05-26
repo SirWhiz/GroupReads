@@ -13,7 +13,7 @@
       	<label for="nombre">Nombre y apellidos:</label>
       	<input type="text" class="form-control mb-3" name="nombre" #nombre="ngModel" [(ngModel)]="autor.nombre_ape" required="required" pattern="^[A-Za-z\u00f1\u00d1À-ÿ\s\-]+">
 		<mat-form-field>
-			<input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento" disabled [(ngModel)]="autor.fecha" name="fecha">
+			<input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento" disabled [(ngModel)]="autor.fecha_nacimiento" name="fecha">
 			<mat-datepicker-toggle matSuffix [for]="picker" required="required"></mat-datepicker-toggle>
 			<mat-datepicker required="true" #picker touchUi="true" disabled="false"></mat-datepicker>
 		</mat-form-field><br/>
@@ -23,7 +23,7 @@
 		</select>
 		<label for="foto">Imagen: (Opcional)</label>
 		<input (change)="fileChangeEvent($event)" type="file" name="img" class="form-control mb-3">
-        <input type="submit" value="Enviar" class="btn btn-primary" [disabled]="!formAutor.form.valid || autor.fecha=='' || autor.pais==''">
+        <input type="submit" value="Enviar" class="btn btn-primary" [disabled]="!formAutor.form.valid || autor.fecha_nacimiento=='' || autor.pais==''">
       </form>
     </div>
   </div>

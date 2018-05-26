@@ -82,6 +82,7 @@ export class NuevoAutorComponent{
 	saveAutor(){
 		this._librosService.addAutor(this.autor).subscribe(
 			result => {
+				console.log(result);
 				if(result.code == 200){
 					this.snackBar.open("Autor registrado correctamente", "OK", {
 						duration: 2500,

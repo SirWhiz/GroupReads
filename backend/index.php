@@ -1034,7 +1034,7 @@
 
         $consulta = "INSERT INTO autores VALUES (DEFAULT,".
             "'{$data['nombre_ape']}',".
-            "'{$data['fecha']}',".
+            "'{$data['fecha_nacimiento']}',".
             "'{$data['pais']}',".
             "'{$data['foto']}');";
         
@@ -1259,7 +1259,7 @@
         $consulta = "INSERT INTO clubes VALUES (DEFAULT,".
             "'{$data['nombre']}',".
             "{$data['idCreador']},".
-            "{$data['genero']},".
+            "{$data['idGenero']},".
             "'{$data['privacidad']}',".
             "'{$data['descripcion']}');";
         $query = $db->query($consulta);

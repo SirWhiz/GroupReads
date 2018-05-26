@@ -47,7 +47,11 @@
       </div>
     </div>
   </div>
-  <h4 *ngIf="!noClub" class="text-left">¡Actualmente formas parte de: <i>{{club.nombreClub}}</i>!</h4>
+  <div *ngIf="!noClub" class="col-12">
+    <h4 class="text-center">
+      ¡Actualmente formas parte de: <i>{{club.nombreClub}}</i>!
+    </h4>
+  </div>
   <!--Si el club se está leyendo un libro-->
   <div *ngIf="!noClub && !noLibro" class="col-md-10 mt-4 mb-4">
     <span class="lead">El club se está leyendo</span>
