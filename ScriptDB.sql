@@ -34,6 +34,15 @@ CREATE TABLE amigos(
     FOREIGN KEY (idAmigo) REFERENCES usuarios(id)
 );
 
+CREATE TABLE mensajes(
+    id smallint unsigned PRIMARY KEY,
+    de smallint unsigned NOT NULL,
+    para smallint unsigned NOT NULL,
+    texto text NOT NULL,
+    FOREIGN KEY (de) REFERENCES usuarios(id),
+    FOREIGN KEY (para) REFERENCES usuarios(id)
+);
+
 CREATE TABLE generos(
     id smallint unsigned AUTO_INCREMENT PRIMARY KEY,
     nombre varchar(60) NOT NULL

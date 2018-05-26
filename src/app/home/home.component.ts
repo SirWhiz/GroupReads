@@ -7,6 +7,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ReinstalarComponent } from '../reinstalar/reinstalar.component';
 import { DialogoPwdComponent } from './dialogopwd.component';
 import { Chart } from 'chart.js';
+import io from 'socket.io-client';
 
 @Component({
 	selector: 'home',

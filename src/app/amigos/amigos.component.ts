@@ -25,6 +25,8 @@ export class AmigosComponent{
 
 	ngOnInit(){
 
+		var socket = io();
+
 		this.usuario.correo = localStorage.getItem('correo');
 
 		this._usuariosService.getUsuario(this.usuario.correo).subscribe(
