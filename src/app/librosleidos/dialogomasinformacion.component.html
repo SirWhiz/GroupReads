@@ -13,7 +13,7 @@ Escrito por:
 </div>
 <hr>
 Vuestra opinión del libro:
-<h3 *ngIf="opiniones.length=='0'" class="lead mt-3 mb-3">¡No habéis leído este libro!</h3>
+<h3 *ngIf="opiniones.length==0" class="lead mt-3 mb-3">¡No habéis leído este libro!</h3>
 <div *ngFor="let comentario of opiniones" class="mt-1 mb-1 comentario p-2 row">
   <div class="col-md-2">
     <div class="imgperfil">

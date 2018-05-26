@@ -59,7 +59,6 @@ export class LibrosLeidosComponent{
 	obtenerLibrosRecomendados(idclub:string){
 		this._librosService.getLibrosRecomendados(idclub).subscribe(
 			result => {
-				console.log(result);
 				if(result.code == 200){
 					this.recomendados = result.data;
 				}

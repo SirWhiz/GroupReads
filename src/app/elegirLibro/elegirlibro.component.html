@@ -23,7 +23,7 @@
       	</div>
 	  </div>
 	</div>
-    <div *ngIf="librosElegidos.length>'0'" class="listaElegidos">
+    <div *ngIf="librosElegidos.length>0" class="listaElegidos">
 		<span class="lead m-4">Libros elegidos:</span>
 		<ul>
 			<li matTooltip="Eliminar de la lista" *ngFor="let libro of librosElegidos" (click)="remove(libro)" class="m-2 w-100">{{libro.titulo}}</li>
