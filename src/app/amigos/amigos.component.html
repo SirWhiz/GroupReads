@@ -10,6 +10,6 @@
 <span *ngIf="amigos.length==0"><br/><i>¡Vaya! no tienes ningún amigo agregado</i></span>
 <span *ngIf="amigos.length>0">
 	<ul class="listaamigos mt-3">
-		<li *ngFor="let amigo of amigos">{{amigo.nombre}} (@{{amigo.nick}})</li>
+		<li *ngFor="let amigo of amigos" (click)="abrirChat(amigo)">{{amigo.nombre}} (@{{amigo.nick}})</li>
 	</ul>
 </span>

@@ -781,6 +781,57 @@
         echo json_encode($result);
     });
 
+    /* --- OBTENER LOS MENSAJES DEL CHAT --- */
+    $app->get('/getmessages/:id/:idamigo',function($id,$idamigo) use($app,$db){
+        $consulta = "SELECT * FROM mensajes WHERE de=".$id." AND para=".$idamigo." OR de=".$idamigo." AND para=".$id;
+        $query = $db->query($consulta);
+
+        if($query){
+            $mensajes = array();
+            while($fila = $query->fetch_assoc()){
+                $mensajes[] = $fila;
+            }
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$mensajes
+            );
+        }else{
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'Error'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
+    /* --- ENVIAR MENSAJE CHAT --- */
+    $app->post('/sendmessage',function() use($app,$db){
+        $json = $app->request->post('json');
+        $data = json_decode($json,true);
+
+        $consulta = "INSERT INTO mensajes VALUES(DEFAULT,".$data['de'].",".$data['para'].",'".$data['texto']."')";
+        $query=$db->query($consulta);
+
+        if($query){
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'message'=>'Mensaje enviado correctamente',
+            );
+        }else{
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'Error al enviar el mensaje'
+            );
+        }
+
+        echo json_encode($result);
+    });
+
     /* --- BORRAR SOLICITUD DE AMISTAD --- */
     $app->get('/deletesolicitud/:id/:idamigo',function($id,$idamigo) use($app,$db){
         $consulta = "DELETE FROM amigos WHERE idUsuario=".$idamigo." AND idAmigo=".$id." AND pendiente=1";

@@ -511,7 +511,7 @@ var AgregarAmigosComponent = /** @class */ (function () {
 /***/ "./src/app/amigos/amigos.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h5>Amigos</h5>\r\n<hr>\r\n<span *ngIf=\"usuario.peticiones>1\">\r\n\t<button (click)=\"verSolicitudes()\" class=\"btn btn-success\">{{usuario.peticiones}}</button> Solicitudes pendientes<hr>\r\n</span>\r\n<span *ngIf=\"usuario.peticiones==1\">\r\n\t<button (click)=\"verSolicitudes()\" class=\"btn btn-success\">{{usuario.peticiones}}</button> Solicitud pendiente<hr>\r\n</span>\r\n<span>Mis amigos:</span>\r\n<span *ngIf=\"amigos.length==0\"><br/><i>¡Vaya! no tienes ningún amigo agregado</i></span>\r\n<span *ngIf=\"amigos.length>0\">\r\n\t<ul class=\"listaamigos mt-3\">\r\n\t\t<li *ngFor=\"let amigo of amigos\">{{amigo.nombre}} (@{{amigo.nick}})</li>\r\n\t</ul>\r\n</span>"
+module.exports = "<h5>Amigos</h5>\r\n<hr>\r\n<span *ngIf=\"usuario.peticiones>1\">\r\n\t<button (click)=\"verSolicitudes()\" class=\"btn btn-success\">{{usuario.peticiones}}</button> Solicitudes pendientes<hr>\r\n</span>\r\n<span *ngIf=\"usuario.peticiones==1\">\r\n\t<button (click)=\"verSolicitudes()\" class=\"btn btn-success\">{{usuario.peticiones}}</button> Solicitud pendiente<hr>\r\n</span>\r\n<span>Mis amigos:</span>\r\n<span *ngIf=\"amigos.length==0\"><br/><i>¡Vaya! no tienes ningún amigo agregado</i></span>\r\n<span *ngIf=\"amigos.length>0\">\r\n\t<ul class=\"listaamigos mt-3\">\r\n\t\t<li *ngFor=\"let amigo of amigos\" (click)=\"abrirChat(amigo)\">{{amigo.nombre}} (@{{amigo.nick}})</li>\r\n\t</ul>\r\n</span>"
 
 /***/ }),
 
@@ -526,6 +526,7 @@ module.exports = "<h5>Amigos</h5>\r\n<hr>\r\n<span *ngIf=\"usuario.peticiones>1\
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__registro_usuariop__ = __webpack_require__("./src/app/registro/usuariop.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dialogoSolicitudes_dialogosolicitudes_component__ = __webpack_require__("./src/app/dialogoSolicitudes/dialogosolicitudes.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_material__ = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__chat_chat_component__ = __webpack_require__("./src/app/chat/chat.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -535,6 +536,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -574,6 +576,13 @@ var AmigosComponent = /** @class */ (function () {
             }
         }, function (error) {
             console.log(error);
+        });
+    };
+    AmigosComponent.prototype.abrirChat = function (amigo) {
+        this.dialog.open(__WEBPACK_IMPORTED_MODULE_6__chat_chat_component__["a" /* ChatComponent */], {
+            width: '600px',
+            height: '600px',
+            data: { usuario: this.usuario, amigo: amigo }
         });
     };
     AmigosComponent.prototype.verSolicitudes = function () {
@@ -707,24 +716,26 @@ var AppComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_41__recuperarpwd_recuperarpwd_component__ = __webpack_require__("./src/app/recuperarpwd/recuperarpwd.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_42__home_dialogopwd_component__ = __webpack_require__("./src/app/home/dialogopwd.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_43__reinstalar_reinstalar_component__ = __webpack_require__("./src/app/reinstalar/reinstalar.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_44__librosleidos_dialogomasinformacion_component__ = __webpack_require__("./src/app/librosleidos/dialogomasinformacion.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_45__angular_material__ = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_46__angular_material_form_field__ = __webpack_require__("./node_modules/@angular/material/esm5/form-field.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_47__angular_material_tabs__ = __webpack_require__("./node_modules/@angular/material/esm5/tabs.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_48__angular_material_datepicker__ = __webpack_require__("./node_modules/@angular/material/esm5/datepicker.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_49__angular_platform_browser_animations__ = __webpack_require__("./node_modules/@angular/platform-browser/esm5/animations.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_50__angular_material_tooltip__ = __webpack_require__("./node_modules/@angular/material/esm5/tooltip.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_51__angular_material_toolbar__ = __webpack_require__("./node_modules/@angular/material/esm5/toolbar.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_52__angular_material_menu__ = __webpack_require__("./node_modules/@angular/material/esm5/menu.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_53__angular_material_snack_bar__ = __webpack_require__("./node_modules/@angular/material/esm5/snack-bar.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_54__angular_material_dialog__ = __webpack_require__("./node_modules/@angular/material/esm5/dialog.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_55__login_guard__ = __webpack_require__("./src/app/login.guard.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_44__chat_chat_component__ = __webpack_require__("./src/app/chat/chat.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_45__librosleidos_dialogomasinformacion_component__ = __webpack_require__("./src/app/librosleidos/dialogomasinformacion.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_46__angular_material__ = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_47__angular_material_form_field__ = __webpack_require__("./node_modules/@angular/material/esm5/form-field.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_48__angular_material_tabs__ = __webpack_require__("./node_modules/@angular/material/esm5/tabs.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_49__angular_material_datepicker__ = __webpack_require__("./node_modules/@angular/material/esm5/datepicker.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_50__angular_platform_browser_animations__ = __webpack_require__("./node_modules/@angular/platform-browser/esm5/animations.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_51__angular_material_tooltip__ = __webpack_require__("./node_modules/@angular/material/esm5/tooltip.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_52__angular_material_toolbar__ = __webpack_require__("./node_modules/@angular/material/esm5/toolbar.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_53__angular_material_menu__ = __webpack_require__("./node_modules/@angular/material/esm5/menu.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_54__angular_material_snack_bar__ = __webpack_require__("./node_modules/@angular/material/esm5/snack-bar.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_55__angular_material_dialog__ = __webpack_require__("./node_modules/@angular/material/esm5/dialog.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_56__login_guard__ = __webpack_require__("./src/app/login.guard.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -810,7 +821,8 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_23__mantenimientoLibros_nuevolibro_component__["a" /* NuevoLibroComponent */],
                 __WEBPACK_IMPORTED_MODULE_24__mantenimientoLibros_editarlibro_component__["a" /* EditarLibroComponent */],
                 __WEBPACK_IMPORTED_MODULE_35__clubes_dialogoeditar_component__["a" /* DialogoEditarClubComponent */],
-                __WEBPACK_IMPORTED_MODULE_44__librosleidos_dialogomasinformacion_component__["a" /* DialogoMasInformacionComponent */],
+                __WEBPACK_IMPORTED_MODULE_44__chat_chat_component__["a" /* ChatComponent */],
+                __WEBPACK_IMPORTED_MODULE_45__librosleidos_dialogomasinformacion_component__["a" /* DialogoMasInformacionComponent */],
                 __WEBPACK_IMPORTED_MODULE_25__generos_generos_component__["a" /* GenerosComponent */],
                 __WEBPACK_IMPORTED_MODULE_37__clubes_dialogoborrar_component__["a" /* DialogoBorrarClubComponent */],
                 __WEBPACK_IMPORTED_MODULE_26__generos_dialogonuevogenero_component__["a" /* DialogoNuevoGenero */],
@@ -833,21 +845,21 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
                 __WEBPACK_IMPORTED_MODULE_4__app_routing__["b" /* routing */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_forms__["c" /* FormsModule */],
-                __WEBPACK_IMPORTED_MODULE_48__angular_material_datepicker__["a" /* MatDatepickerModule */],
-                __WEBPACK_IMPORTED_MODULE_45__angular_material__["b" /* MatButtonModule */],
-                __WEBPACK_IMPORTED_MODULE_46__angular_material_form_field__["c" /* MatFormFieldModule */],
-                __WEBPACK_IMPORTED_MODULE_45__angular_material__["f" /* MatNativeDateModule */],
-                __WEBPACK_IMPORTED_MODULE_45__angular_material__["e" /* MatInputModule */],
-                __WEBPACK_IMPORTED_MODULE_49__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
-                __WEBPACK_IMPORTED_MODULE_50__angular_material_tooltip__["a" /* MatTooltipModule */],
-                __WEBPACK_IMPORTED_MODULE_51__angular_material_toolbar__["a" /* MatToolbarModule */],
-                __WEBPACK_IMPORTED_MODULE_52__angular_material_menu__["a" /* MatMenuModule */],
+                __WEBPACK_IMPORTED_MODULE_49__angular_material_datepicker__["a" /* MatDatepickerModule */],
+                __WEBPACK_IMPORTED_MODULE_46__angular_material__["b" /* MatButtonModule */],
+                __WEBPACK_IMPORTED_MODULE_47__angular_material_form_field__["c" /* MatFormFieldModule */],
+                __WEBPACK_IMPORTED_MODULE_46__angular_material__["f" /* MatNativeDateModule */],
+                __WEBPACK_IMPORTED_MODULE_46__angular_material__["e" /* MatInputModule */],
+                __WEBPACK_IMPORTED_MODULE_50__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
+                __WEBPACK_IMPORTED_MODULE_51__angular_material_tooltip__["a" /* MatTooltipModule */],
+                __WEBPACK_IMPORTED_MODULE_52__angular_material_toolbar__["a" /* MatToolbarModule */],
+                __WEBPACK_IMPORTED_MODULE_53__angular_material_menu__["a" /* MatMenuModule */],
                 __WEBPACK_IMPORTED_MODULE_3__angular_http__["c" /* HttpModule */],
-                __WEBPACK_IMPORTED_MODULE_53__angular_material_snack_bar__["b" /* MatSnackBarModule */],
-                __WEBPACK_IMPORTED_MODULE_47__angular_material_tabs__["a" /* MatTabsModule */],
-                __WEBPACK_IMPORTED_MODULE_54__angular_material_dialog__["c" /* MatDialogModule */]
+                __WEBPACK_IMPORTED_MODULE_54__angular_material_snack_bar__["b" /* MatSnackBarModule */],
+                __WEBPACK_IMPORTED_MODULE_48__angular_material_tabs__["a" /* MatTabsModule */],
+                __WEBPACK_IMPORTED_MODULE_55__angular_material_dialog__["c" /* MatDialogModule */]
             ],
-            providers: [__WEBPACK_IMPORTED_MODULE_4__app_routing__["a" /* appRoutingProviders */], __WEBPACK_IMPORTED_MODULE_55__login_guard__["a" /* LoginGuard */]],
+            providers: [__WEBPACK_IMPORTED_MODULE_4__app_routing__["a" /* appRoutingProviders */], __WEBPACK_IMPORTED_MODULE_56__login_guard__["a" /* LoginGuard */]],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_5__app_component__["a" /* AppComponent */]],
             entryComponents: [__WEBPACK_IMPORTED_MODULE_11__dialogoImagen_dialogo_component__["a" /* DialogoComponent */],
                 __WEBPACK_IMPORTED_MODULE_12__dialogoLibro_dialogolibro_component__["a" /* DialogoLibroComponent */],
@@ -861,9 +873,10 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_36__clubes_dialogoabandonar_component__["a" /* DialogoAbandonarComponent */],
                 __WEBPACK_IMPORTED_MODULE_37__clubes_dialogoborrar_component__["a" /* DialogoBorrarClubComponent */],
                 __WEBPACK_IMPORTED_MODULE_38__clubes_dialogoexpulsar_component__["a" /* DialogoExpulsarComponent */],
-                __WEBPACK_IMPORTED_MODULE_44__librosleidos_dialogomasinformacion_component__["a" /* DialogoMasInformacionComponent */],
+                __WEBPACK_IMPORTED_MODULE_45__librosleidos_dialogomasinformacion_component__["a" /* DialogoMasInformacionComponent */],
                 __WEBPACK_IMPORTED_MODULE_42__home_dialogopwd_component__["a" /* DialogoPwdComponent */],
-                __WEBPACK_IMPORTED_MODULE_43__reinstalar_reinstalar_component__["a" /* ReinstalarComponent */]
+                __WEBPACK_IMPORTED_MODULE_43__reinstalar_reinstalar_component__["a" /* ReinstalarComponent */],
+                __WEBPACK_IMPORTED_MODULE_44__chat_chat_component__["a" /* ChatComponent */]
             ]
         })
     ], AppModule);
@@ -1520,6 +1533,120 @@ var NuevoAutorComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__angular_material_snack_bar__["a" /* MatSnackBar */], __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */], __WEBPACK_IMPORTED_MODULE_2__services_libros_service__["a" /* LibrosService */]])
     ], NuevoAutorComponent);
     return NuevoAutorComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/chat/chat.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<h3 class=\"mb-3 text-center\">Chat con {{amigo.nombre}}</h3>\r\n<div id=\"chatSocketmsg\">\r\n\t<div *ngFor=\"let msg of mensajes\">\r\n\t\t<div [ngClass]=\"{'msgde':msg.de==this.usuario.id, 'msgpara':msg.para==this.usuario.id}\">\r\n\t\t\t{{msg.texto}}\r\n\t\t</div>\r\n\t\t<div class=\"clear\"></div>\r\n\t</div>\t\r\n</div>\r\n<form class=\"chatSocket\" #formChat=\"ngForm\">\r\n  <input id=\"m\" autocomplete=\"off\" required=\"required\" name=\"mensaje\" [(ngModel)]=\"this.texto\" />\r\n  <button class=\"btn btn-dark\" matTooltip=\"Enviar\" (click)=\"enviar()\" [disabled]=\"!formChat.form.valid\"><i class=\"fas fa-envelope\"></i></button>\r\n</form>"
+
+/***/ }),
+
+/***/ "./src/app/chat/chat.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_usuarios_service__ = __webpack_require__("./src/services/usuarios.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material_snack_bar__ = __webpack_require__("./node_modules/@angular/material/esm5/snack-bar.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_material__ = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__mensaje__ = __webpack_require__("./src/app/chat/mensaje.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_socket_io_client__ = __webpack_require__("./node_modules/socket.io-client/lib/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_socket_io_client___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_socket_io_client__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
+
+
+
+
+
+
+var ChatComponent = /** @class */ (function () {
+    function ChatComponent(dialogRef, data, _usuariosService, snackBar, _router) {
+        this.dialogRef = dialogRef;
+        this.data = data;
+        this._usuariosService = _usuariosService;
+        this.snackBar = snackBar;
+        this._router = _router;
+        this.usuario = data.usuario;
+        this.amigo = data.amigo;
+        this.mensajes = new Array();
+        this.texto = "";
+        this.socket = __WEBPACK_IMPORTED_MODULE_6_socket_io_client__();
+    }
+    ChatComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this._usuariosService.obtenerMensajes(this.usuario.id, this.amigo.id).subscribe(function (result) {
+            if (result.code == 200) {
+                _this.mensajes = result.data;
+            }
+        }, function (error) { console.log(error); });
+        this.socket.on('message', function (msg) {
+            console.log(msg);
+        });
+    };
+    ChatComponent.prototype.enviar = function () {
+        var _this = this;
+        this.socket.emit('message', this.texto);
+        var nuevoMensaje = new __WEBPACK_IMPORTED_MODULE_5__mensaje__["a" /* Mensaje */]("", "", "", "");
+        nuevoMensaje.de = this.usuario.id;
+        nuevoMensaje.para = this.amigo.id;
+        nuevoMensaje.texto = this.texto;
+        this._usuariosService.enviarMensaje(nuevoMensaje).subscribe(function (result) {
+            if (result.code == 200) {
+                _this.mensajes.push(nuevoMensaje);
+                _this.texto = "";
+            }
+        }, function (error) { console.log(error); });
+    };
+    ChatComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'chat',
+            template: __webpack_require__("./src/app/chat/chat.component.html"),
+            providers: [__WEBPACK_IMPORTED_MODULE_2__services_usuarios_service__["a" /* UsuariosService */]]
+        }),
+        __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_4__angular_material__["a" /* MAT_DIALOG_DATA */])),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4__angular_material__["d" /* MatDialogRef */], Object, __WEBPACK_IMPORTED_MODULE_2__services_usuarios_service__["a" /* UsuariosService */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_material_snack_bar__["a" /* MatSnackBar */],
+            __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]])
+    ], ChatComponent);
+    return ChatComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/chat/mensaje.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Mensaje; });
+var Mensaje = /** @class */ (function () {
+    function Mensaje(id, de, para, texto) {
+        this.id = id;
+        this.de = de;
+        this.para = para;
+        this.texto = texto;
+    }
+    return Mensaje;
 }());
 
 
@@ -3718,8 +3845,6 @@ module.exports = "<menuadmin *ngIf=\"this.usuario.tipo=='a'\"></menuadmin>\r\n<!
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__dialogopwd_component__ = __webpack_require__("./src/app/home/dialogopwd.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_chart_js__ = __webpack_require__("./node_modules/chart.js/src/chart.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_chart_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_chart_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_socket_io_client__ = __webpack_require__("./node_modules/socket.io-client/lib/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_socket_io_client___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_socket_io_client__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3729,7 +3854,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
 
 
 
@@ -3751,7 +3875,6 @@ var HomeComponent = /** @class */ (function () {
     }
     HomeComponent.prototype.ngOnInit = function () {
         var _this = this;
-        var socket = __WEBPACK_IMPORTED_MODULE_8_socket_io_client___default()();
         this.usuario.tipo = localStorage.getItem('perfil');
         this._usuariosService.getUsuario(localStorage.getItem('correo')).subscribe(function (result) {
             if (result.code == 200) {
@@ -5610,6 +5733,16 @@ var UsuariosService = /** @class */ (function () {
         this._http = _http;
         this.url = __WEBPACK_IMPORTED_MODULE_3__global__["a" /* GLOBAL */].url;
     }
+    UsuariosService.prototype.obtenerMensajes = function (id, idamigo) {
+        return this._http.get(this.url + 'getmessages/' + id + '/' + idamigo).map(function (res) { return res.json(); });
+    };
+    UsuariosService.prototype.enviarMensaje = function (mensaje) {
+        var json = JSON.stringify(mensaje);
+        var params = 'json=' + json;
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ "Content-Type": "application/x-www-form-urlencoded" });
+        return this._http.post(this.url + 'sendmessage', params, { headers: headers })
+            .map(function (res) { return res.json(); });
+    };
     UsuariosService.prototype.cambiarPassword = function (correo) {
         return this._http.get(this.url + 'forgotpwd/' + correo).map(function (res) { return res.json(); });
     };

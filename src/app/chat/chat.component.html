@@ -1,0 +1,13 @@
+<h3 class="mb-3 text-center">Chat con {{amigo.nombre}}</h3>
+<div id="chatSocketmsg">
+	<div *ngFor="let msg of mensajes">
+		<div [ngClass]="{'msgde':msg.de==this.usuario.id, 'msgpara':msg.para==this.usuario.id}">
+			{{msg.texto}}
+		</div>
+		<div class="clear"></div>
+	</div>	
+</div>
+<form class="chatSocket" #formChat="ngForm">
+  <input id="m" autocomplete="off" required="required" name="mensaje" [(ngModel)]="this.texto" />
+  <button class="btn btn-dark" matTooltip="Enviar" (click)="enviar()" [disabled]="!formChat.form.valid"><i class="fas fa-envelope"></i></button>
+</form>

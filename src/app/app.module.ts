@@ -43,6 +43,7 @@ import { LibrosLeidosComponent } from './librosleidos/librosleidos.component';
 import { RecuperarpwdComponent } from './recuperarpwd/recuperarpwd.component';
 import { DialogoPwdComponent } from './home/dialogopwd.component';
 import { ReinstalarComponent } from './reinstalar/reinstalar.component';
+import { ChatComponent } from './chat/chat.component';
 import { DialogoMasInformacionComponent } from './librosleidos/dialogomasinformacion.component';
 
 import { MatInputModule,MatNativeDateModule } from '@angular/material';
@@ -82,6 +83,7 @@ import { LoginGuard } from './login.guard';
     NuevoLibroComponent,
     EditarLibroComponent,
     DialogoEditarClubComponent,
+    ChatComponent,
     DialogoMasInformacionComponent,
     GenerosComponent,
     DialogoBorrarClubComponent,
@@ -135,7 +137,8 @@ import { LoginGuard } from './login.guard';
                     DialogoExpulsarComponent,
                     DialogoMasInformacionComponent,
                     DialogoPwdComponent,
-                    ReinstalarComponent
+                    ReinstalarComponent,
+                    ChatComponent
                     ]
 })
 export class AppModule { }

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { Usuario } from '../app/registro/usuario';
 import { Libro } from '../app/mantenimientoLibros/libro';
 import { Club } from '../app/clubes/club';
+import { Mensaje } from '../app/chat/mensaje';
 import { GLOBAL } from './global';
 
 @Injectable()
@@ -15,6 +16,19 @@ export class UsuariosService{
         public _http: Http
     ){
         this.url=GLOBAL.url;
+    }
+
+    obtenerMensajes(id:string,idamigo:string){
+        return this._http.get(this.url+'getmessages/'+id+'/'+idamigo).map(res => res.json());
+    }
+
+    enviarMensaje(mensaje:Mensaje){
+        let json = JSON.stringify(mensaje);
+        let params = 'json='+json;
+        let headers = new Headers({"Content-Type":"application/x-www-form-urlencoded"});
+
+        return this._http.post(this.url+'sendmessage',params,{headers:headers})
+                .map(res => res.json());
     }
 
     cambiarPassword(correo:string){

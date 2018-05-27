@@ -12,9 +12,11 @@ app.all('*', function(req,res){
     res.status(200).sendFile(__dirname + '/dist/index.html');
 });
 
-io.on('connection', function(data){
-	console.log('a user connected');
-});
+io.on('connection', (socket) => {
+  console.log("Connected to Socket!!");
+})
 
 // Start the server
-app.listen(process.env.PORT || 3000);
+app.listen(3000, function(){
+  console.log('listening on *:3000');
+});

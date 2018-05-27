@@ -35,7 +35,7 @@ CREATE TABLE amigos(
 );
 
 CREATE TABLE mensajes(
-    id smallint unsigned PRIMARY KEY,
+    id smallint unsigned AUTO_INCREMENT PRIMARY KEY,
     de smallint unsigned NOT NULL,
     para smallint unsigned NOT NULL,
     texto text NOT NULL,

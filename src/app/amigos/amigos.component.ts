@@ -5,6 +5,7 @@ import { UsuarioP } from '../registro/usuariop';
 import { Usuario } from '../registro/usuario';
 import { DialogoSolicitudesComponent } from '../dialogoSolicitudes/dialogosolicitudes.component'
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { ChatComponent } from '../chat/chat.component';
 
 @Component({
 	selector: 'amigos',
@@ -24,9 +25,6 @@ export class AmigosComponent{
 	}
 
 	ngOnInit(){
-
-		var socket = io();
-
 		this.usuario.correo = localStorage.getItem('correo');
 
 		this._usuariosService.getUsuario(this.usuario.correo).subscribe(
@@ -56,6 +54,14 @@ export class AmigosComponent{
 				console.log(error);
 			}
 		);
+	}
+
+	abrirChat(amigo:Usuario){
+		this.dialog.open(ChatComponent,{
+			width:'600px',
+			height:'600px',
+			data: { usuario: this.usuario, amigo: amigo }
+		});
 	}
 
 	verSolicitudes(){
