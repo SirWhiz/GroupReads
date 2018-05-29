@@ -2,7 +2,8 @@
 const express = require('express');
 const app = express();
 var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var server = app.listen(3001);
+var io = require('socket.io').listen(server);
 
 // Use the /dist directory
 app.use(express.static(__dirname + '/dist'));
@@ -13,10 +14,11 @@ app.all('*', function(req,res){
 });
 
 io.on('connection', (socket) => {
-  console.log("Connected to Socket!!");
-})
 
-// Start the server
-app.listen(3000, function(){
-  console.log('listening on *:3000');
-});
+  console.log("User connected");
+
+  socket.on('message', function(msg){
+    io.emit('message', msg);
+  });
+
+})

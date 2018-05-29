@@ -18,7 +18,7 @@ export class ChatComponent{
     public amigo:Usuario;
     public mensajes:Mensaje[];
     public texto:string;
-    private socket;
+    public socket:SocketIOClient.Socket;
 
 	constructor(
         public dialogRef: MatDialogRef<ChatComponent>,
@@ -31,7 +31,7 @@ export class ChatComponent{
         this.amigo = data.amigo;
         this.mensajes = new Array();
         this.texto = "";
-        this.socket = io();
+        this.socket = io('http://localhost:3001');
     }
 
     ngOnInit(){
@@ -43,18 +43,21 @@ export class ChatComponent{
             }, error => {console.log(error);}
         );
 
-        this.socket.on('message', function(msg){
-            console.log(msg);
+        this.socket.on('message', (data) => {
+            if(data.de==this.amigo.id){
+                this.mensajes.push(data);
+            }
         });
     }
 
     enviar(){
-        this.socket.emit('message',this.texto);
-
         var nuevoMensaje = new Mensaje("","","","");
         nuevoMensaje.de = this.usuario.id;
         nuevoMensaje.para = this.amigo.id;
         nuevoMensaje.texto = this.texto;
+
+        this.socket.emit('message', nuevoMensaje);
+
         this._usuariosService.enviarMensaje(nuevoMensaje).subscribe(
             result => {
                 if(result.code == 200){

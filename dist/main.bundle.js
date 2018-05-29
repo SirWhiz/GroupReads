@@ -1589,7 +1589,7 @@ var ChatComponent = /** @class */ (function () {
         this.amigo = data.amigo;
         this.mensajes = new Array();
         this.texto = "";
-        this.socket = __WEBPACK_IMPORTED_MODULE_6_socket_io_client__();
+        this.socket = __WEBPACK_IMPORTED_MODULE_6_socket_io_client__('http://localhost:3001');
     }
     ChatComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -1598,17 +1598,19 @@ var ChatComponent = /** @class */ (function () {
                 _this.mensajes = result.data;
             }
         }, function (error) { console.log(error); });
-        this.socket.on('message', function (msg) {
-            console.log(msg);
+        this.socket.on('message', function (data) {
+            if (data.de == _this.amigo.id) {
+                _this.mensajes.push(data);
+            }
         });
     };
     ChatComponent.prototype.enviar = function () {
         var _this = this;
-        this.socket.emit('message', this.texto);
         var nuevoMensaje = new __WEBPACK_IMPORTED_MODULE_5__mensaje__["a" /* Mensaje */]("", "", "", "");
         nuevoMensaje.de = this.usuario.id;
         nuevoMensaje.para = this.amigo.id;
         nuevoMensaje.texto = this.texto;
+        this.socket.emit('message', nuevoMensaje);
         this._usuariosService.enviarMensaje(nuevoMensaje).subscribe(function (result) {
             if (result.code == 200) {
                 _this.mensajes.push(nuevoMensaje);
