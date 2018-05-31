@@ -3324,7 +3324,7 @@ var DialogoSolicitudesComponent = /** @class */ (function () {
 /***/ "./src/app/elegirLibro/elegirlibro.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<menuadmin *ngIf=\"usuario.tipo=='a'\"></menuadmin>\r\n<menucolaborador *ngIf=\"usuario.tipo=='c'\"></menucolaborador>\r\n<menuusuario *ngIf=\"usuario.tipo=='n'\"></menuusuario>\r\n<button [routerLink]=\"['/clubes']\" class=\"btn btn-danger ml-4 mt-4\"><i class=\"fas fa-arrow-left\"></i> Volver</button>\r\n<div class=\"row justify-content-around\">\r\n\t<h4 *ngIf=\"noLibros\"><i>¡Vaya! parece que no hay libros todavía..</i></h4>\r\n\t<div *ngIf=\"!noLibros\" class=\"col-md-10\">\r\n\t  <h4 class=\"mt-3\">Selecciona 3 libros para que los vote el club:</h4>\r\n\t  <div class=\"row\">\r\n\t  \t<div *ngFor=\"let libro of libros\" class=\"p-2 col-md-3 card club mt-5 mb-3 m-2\" style=\"width: 12rem;\">\r\n\t  \t\t<div class=\"portada\" *ngIf=\"libro.portada\">\r\n\t  \t\t\t<img  class=\"card-img-top img-thumbnail\" src=\"http://localhost/GroupReads/src/app/portadas/{{libro.portada}}\">\t\r\n\t  \t\t</div>\r\n\t  \t\t<div class=\"portada\" *ngIf=\"!libro.portada\">\r\n\t  \t\t\t<img  class=\"card-img-top img-thumbnail\" src=\"http://localhost/GroupReads/src/app/portadas/nopic.jpg\">\t\r\n\t  \t\t</div>\r\n    \t\t<div class=\"card-body\">\r\n          \t\t<h5 class=\"card-title\">{{libro.titulo}}</h5>\r\n          \t\t<h6 class=\"card-subtitle mb-2 text-muted\">Páginas: {{libro.paginas}}</h6>\r\n          \t\t<div class=\"genero\">{{libro.nombre_genero}}</div>\r\n        \t\t<button (click)=\"add(libro)\" class=\"btn btn-block btn-warning\">Seleccionar</button>          \t\t\r\n        \t</div>\r\n      \t</div>\r\n\t  </div>\r\n\t</div>\r\n    <div *ngIf=\"librosElegidos.length>0\" class=\"listaElegidos\">\r\n\t\t<span class=\"lead m-4\">Libros elegidos:</span>\r\n\t\t<ul>\r\n\t\t\t<li matTooltip=\"Eliminar de la lista\" *ngFor=\"let libro of librosElegidos\" (click)=\"remove(libro)\" class=\"m-2 w-100\">{{libro.titulo}}</li>\r\n\t\t</ul>\r\n\t\t<button *ngIf=\"librosElegidos.length=='3'\" (click)=\"confirmar()\" class=\"btn btn-block btn-success\">Confirmar selección <i class=\"fas fa-check\"></i></button>\r\n    </div>\r\n</div>"
+module.exports = "<menuadmin *ngIf=\"usuario.tipo=='a'\"></menuadmin>\r\n<menucolaborador *ngIf=\"usuario.tipo=='c'\"></menucolaborador>\r\n<menuusuario *ngIf=\"usuario.tipo=='n'\"></menuusuario>\r\n<button [routerLink]=\"['/clubes']\" class=\"btn btn-danger ml-4 mt-4\"><i class=\"fas fa-arrow-left\"></i> Volver</button>\r\n<div class=\"row justify-content-around\">\r\n\t<h4 *ngIf=\"noLibros\"><i>¡Vaya! parece que no hay libros todavía..</i></h4>\r\n\t<div *ngIf=\"!noLibros\" class=\"col-md-10\">\r\n\t  <h4 class=\"mt-3 mb-3\">Selecciona 3 libros para que los vote el club:</h4>\r\n\t  <form>\r\n\t  \t<select (change)=\"filtrar()\" name=\"generos\" [(ngModel)]=\"generoFiltro\" class=\"form-control w-50\">\r\n\t  \t\t<option *ngFor=\"let genero of generos\" value=\"{{genero.id}}\">\r\n\t  \t\t\t{{genero.nombre}}\r\n\t  \t\t</option>\r\n\t  \t</select>\r\n\t  </form>\r\n\t  <div class=\"row\">\r\n\t  \t<h5 *ngIf=\"this.libros.length==0\" class=\"mt-5 mb-5 text-center\">\r\n\t  \t\t<i>¡Vaya! parece que no hemos encontrado ningún libro</i>\r\n\t  \t</h5>\r\n\t  \t<div *ngFor=\"let libro of libros\" class=\"p-2 col-md-3 card club mt-5 mb-3 m-2\" style=\"width: 12rem;\">\r\n\t  \t\t<div class=\"portada\" *ngIf=\"libro.portada\">\r\n\t  \t\t\t<img  class=\"card-img-top img-thumbnail\" src=\"http://localhost/GroupReads/src/app/portadas/{{libro.portada}}\">\t\r\n\t  \t\t</div>\r\n\t  \t\t<div class=\"portada\" *ngIf=\"!libro.portada\">\r\n\t  \t\t\t<img  class=\"card-img-top img-thumbnail\" src=\"http://localhost/GroupReads/src/app/portadas/nopic.jpg\">\t\r\n\t  \t\t</div>\r\n    \t\t<div class=\"card-body\">\r\n          \t\t<h5 class=\"card-title\">{{libro.titulo}}</h5>\r\n          \t\t<h6 class=\"card-subtitle mb-2 text-muted\">Páginas: {{libro.paginas}}</h6>\r\n          \t\t<div class=\"genero\">{{libro.nombre_genero}}</div>\r\n        \t\t<button (click)=\"add(libro)\" class=\"btn btn-block btn-warning\">Seleccionar</button>          \t\t\r\n        \t</div>\r\n      \t</div>\r\n\t  </div>\r\n\t</div>\r\n    <div *ngIf=\"librosElegidos.length>0\" class=\"listaElegidos\">\r\n\t\t<span class=\"lead m-4\">Libros elegidos:</span>\r\n\t\t<ul>\r\n\t\t\t<li matTooltip=\"Eliminar de la lista\" *ngFor=\"let libro of librosElegidos\" (click)=\"remove(libro)\" class=\"m-2 w-100\">{{libro.titulo}}</li>\r\n\t\t</ul>\r\n\t\t<button *ngIf=\"librosElegidos.length=='3'\" (click)=\"confirmar()\" class=\"btn btn-block btn-success\">Confirmar selección <i class=\"fas fa-check\"></i></button>\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -3338,7 +3338,8 @@ module.exports = "<menuadmin *ngIf=\"usuario.tipo=='a'\"></menuadmin>\r\n<menuco
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_usuarios_service__ = __webpack_require__("./src/services/usuarios.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__registro_usuario__ = __webpack_require__("./src/app/registro/usuario.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__clubes_club__ = __webpack_require__("./src/app/clubes/club.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_material_snack_bar__ = __webpack_require__("./node_modules/@angular/material/esm5/snack-bar.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__mantenimientoLibros_genero__ = __webpack_require__("./src/app/mantenimientoLibros/genero.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_material_snack_bar__ = __webpack_require__("./node_modules/@angular/material/esm5/snack-bar.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3354,13 +3355,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var ElegirLibroComponent = /** @class */ (function () {
     function ElegirLibroComponent(snackBar, _router, _usuariosService) {
         this.snackBar = snackBar;
         this._router = _router;
         this._usuariosService = _usuariosService;
         this.usuario = new __WEBPACK_IMPORTED_MODULE_3__registro_usuario__["a" /* Usuario */]("", "", "", "", "", "", "", "", "", "", "");
+        this.generoFiltro = 0;
         this.libros = new Array();
+        this.generos = new Array();
         this.club = new __WEBPACK_IMPORTED_MODULE_4__clubes_club__["a" /* Club */]("", "", "", "", "", "", "");
         this.noLibros = false;
         this.librosElegidos = new Array();
@@ -3392,6 +3396,7 @@ var ElegirLibroComponent = /** @class */ (function () {
                 }
                 else {
                     _this.obtenerLibros();
+                    _this.obtenerGeneros();
                 }
             }
             else {
@@ -3414,6 +3419,32 @@ var ElegirLibroComponent = /** @class */ (function () {
             this.snackBar.open("Has alcanzado el máximo de libros", "Aceptar", {
                 duration: 2500,
             });
+        }
+    };
+    ElegirLibroComponent.prototype.obtenerGeneros = function () {
+        var _this = this;
+        this._usuariosService.getGeneros().subscribe(function (result) {
+            if (result.code == 200) {
+                _this.generos = result.data;
+                var todos = new __WEBPACK_IMPORTED_MODULE_5__mantenimientoLibros_genero__["a" /* Genero */]("0", "Todos los generos");
+                _this.generos.unshift(todos);
+            }
+        }, function (error) { console.log(error); });
+    };
+    ElegirLibroComponent.prototype.filtrar = function () {
+        var _this = this;
+        if (this.generoFiltro != 0) {
+            this._usuariosService.getLibrosGeneroFiltrados(this.generoFiltro).subscribe(function (result) {
+                if (result.code == 200) {
+                    _this.libros = result.data;
+                }
+                else {
+                    _this.libros = [];
+                }
+            }, function (error) { console.log(error); });
+        }
+        else {
+            this.obtenerLibros();
         }
     };
     ElegirLibroComponent.prototype.remove = function (libro) {
@@ -3458,7 +3489,7 @@ var ElegirLibroComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/elegirLibro/elegirlibro.component.html"),
             providers: [__WEBPACK_IMPORTED_MODULE_2__services_usuarios_service__["a" /* UsuariosService */]]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5__angular_material_snack_bar__["a" /* MatSnackBar */], __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */], __WEBPACK_IMPORTED_MODULE_2__services_usuarios_service__["a" /* UsuariosService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6__angular_material_snack_bar__["a" /* MatSnackBar */], __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */], __WEBPACK_IMPORTED_MODULE_2__services_usuarios_service__["a" /* UsuariosService */]])
     ], ElegirLibroComponent);
     return ElegirLibroComponent;
 }());
@@ -5802,6 +5833,9 @@ var UsuariosService = /** @class */ (function () {
     };
     UsuariosService.prototype.getLibrosGenero = function () {
         return this._http.get(this.url + 'librosgenero').map(function (res) { return res.json(); });
+    };
+    UsuariosService.prototype.getLibrosGeneroFiltrados = function (filtro) {
+        return this._http.get(this.url + 'librosgenerofilter/' + filtro).map(function (res) { return res.json(); });
     };
     UsuariosService.prototype.confirmarLibros = function (idclub, isbn1, isbn2, isbn3) {
         return this._http.get(this.url + 'setvotacion/' + idclub + '/' + isbn1 + '/' + isbn2 + '/' + isbn3).map(function (res) { return res.json(); });

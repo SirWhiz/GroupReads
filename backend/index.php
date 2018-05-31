@@ -2096,6 +2096,38 @@
         echo json_encode($result);
     });
 
+    /* --- OBTENER TODOS LOS LIBROS CON EL NOMBRE DEL GENERO FILTRADOS --- */
+    $app->get('/librosgenerofilter/:filtro',function($filtro) use($app,$db){
+        $consulta = "SELECT isbn,titulo,paginas,fechaAlta,idGenero,portada,generos.nombre as nombre_genero FROM libros INNER JOIN generos ON libros.idGenero=generos.id WHERE libros.idGenero=".$filtro;
+
+        $result = array(
+            'status'=>'error',
+            'code'=>404,
+            'message'=>'No hay libros'
+        );
+
+        $query = $db->query($consulta);
+        if($query->num_rows == 0){
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'No hay libros'
+            );
+        }else{
+            $libros = array();
+            while($libro = $query->fetch_assoc()){
+                $libros[] = $libro;
+            }
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$libros
+            );
+        }
+
+        echo json_encode($result);
+    });
+
     /* --- OBTENER LOS LIBROS QUE HA LEIDO UN CLUB --- */
     $app->get('/finishedbooks/:idclub',function($idclub) use($app,$db){
         $consulta = "SELECT DISTINCT isbn,titulo,paginas,portada,generos.nombre as nombre_genero FROM libros INNER JOIN libros_clubes ON libros.isbn=libros_clubes.isbnLibro INNER JOIN generos ON libros.idGenero=generos.id WHERE libros_clubes.finalizado=1 AND idClub=".$idclub;

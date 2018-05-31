@@ -108,6 +108,10 @@ export class UsuariosService{
         return this._http.get(this.url+'librosgenero').map(res => res.json());   
     }
 
+    getLibrosGeneroFiltrados(filtro:number){
+        return this._http.get(this.url+'librosgenerofilter/'+filtro).map(res => res.json());   
+    }
+
     confirmarLibros(idclub:string,isbn1:string,isbn2:string,isbn3:string){
         return this._http.get(this.url+'setvotacion/'+idclub+'/'+isbn1+'/'+isbn2+'/'+isbn3).map(res => res.json());
     }

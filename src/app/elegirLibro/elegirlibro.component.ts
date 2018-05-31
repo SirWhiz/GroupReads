@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { UsuariosService } from '../../services/usuarios.service';
 import { Usuario } from '../registro/usuario';
 import { Club } from '../clubes/club';
+import { Genero } from '../mantenimientoLibros/genero';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Libro } from '../mantenimientoLibros/libro';
 
@@ -13,6 +14,8 @@ import { Libro } from '../mantenimientoLibros/libro';
 })
 export class ElegirLibroComponent{
 
+	public generos:Genero[];
+	public generoFiltro:number;
 	public usuario:Usuario;
 	public libros:Libro[];
 	public club:Club;
@@ -21,13 +24,16 @@ export class ElegirLibroComponent{
 
 	constructor(public snackBar: MatSnackBar,private _router: Router,private _usuariosService: UsuariosService){
 		this.usuario = new Usuario("","","","","","","","","","","");
+		this.generoFiltro = 0;
 		this.libros = new Array();
+		this.generos = new Array();
 		this.club = new Club("","","","","","","");
 		this.noLibros = false;
 		this.librosElegidos = new Array();
 	}
 
 	ngOnInit(){
+
 
 		if(localStorage.getItem('correo')==null){
 			this._router.navigate(['/login']);
@@ -54,6 +60,7 @@ export class ElegirLibroComponent{
 						this._router.navigate(['/login']);	
 					}else{
 						this.obtenerLibros();
+						this.obtenerGeneros();
 					}
 				}else{
 					this._router.navigate(['/login']);
@@ -75,6 +82,34 @@ export class ElegirLibroComponent{
 			this.snackBar.open("Has alcanzado el máximo de libros", "Aceptar", {
 				duration: 2500,
 			});
+		}
+	}
+
+	obtenerGeneros(){
+		this._usuariosService.getGeneros().subscribe(
+			result => {
+				if(result.code == 200){
+					this.generos = result.data;
+					var todos = new Genero("0","Todos los generos");
+					this.generos.unshift(todos);
+				}
+			}, error => {console.log(error);}
+		);
+	}
+
+	filtrar(){
+		if(this.generoFiltro!=0){
+			this._usuariosService.getLibrosGeneroFiltrados(this.generoFiltro).subscribe(
+				result => {
+					if(result.code == 200){
+						this.libros = result.data;
+					}else{
+						this.libros = [];
+					}
+				}, error => {console.log(error);}
+			);
+		}else{
+			this.obtenerLibros();
 		}
 	}
 
