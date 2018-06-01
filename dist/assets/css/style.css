@@ -290,12 +290,14 @@ footer{
     border:1px solid #d3d3d3;
     height: 21em;
     width: 100%;
-    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: visible;
     border-radius: 5px;
 }
 .comentario{
     background:#fff;
     border-radius: 7px;
+    overflow-wrap: break-word;
 }
 .imgperfil{
     width:45px;

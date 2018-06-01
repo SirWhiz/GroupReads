@@ -67,7 +67,7 @@
         </div>
       </div>
       <!--Debate sobre el libro-->
-      <div class="col-md-8 mt-2 mb-2 debate">
+      <div id="botscroll" class="col-md-8 mt-2 mb-2 debate">
         <span *ngIf="comentarios.length=='0'" class="lead">¡Vaya! parece que todavía no hay comentarios</span>
         <div *ngFor="let comentario of comentarios" class=" mt-1 mb-1 comentario p-2 row">
           <div class="col-md-2">

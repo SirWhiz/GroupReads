@@ -21,4 +21,8 @@ io.on('connection', (socket) => {
     io.emit('message', msg);
   });
 
+  socket.on('comment', function(msg){
+    io.emit('comment', msg);
+  });
+
 })

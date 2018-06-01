@@ -12,6 +12,7 @@ import { DialogoAbandonarComponent } from './dialogoabandonar.component';
 import { DialogoBorrarClubComponent } from './dialogoborrar.component';
 import { DialogoExpulsarComponent } from './dialogoexpulsar.component';
 import { Chart } from 'chart.js';
+import * as io from 'socket.io-client';
 
 @Component({
 	selector: 'clubes',
@@ -37,6 +38,7 @@ export class ClubesComponent{
 	public votacion:boolean;
 	public votado:boolean;
 	public grafico:boolean;
+	public socket:SocketIOClient.Socket;
 
 	constructor(public dialog: MatDialog,public snackBar: MatSnackBar,private _router: Router,private _usuariosService: UsuariosService){
 		this.usuario = new Usuario("","","","","","","","","","","");
@@ -56,6 +58,7 @@ export class ClubesComponent{
 		this.nombreMostrar = "";
 		this.nuevoComentario = "";
 		this.votado = false;
+		this.socket = io('http://localhost:3001');
 	}
 
 	ngOnInit(){
@@ -84,6 +87,16 @@ export class ClubesComponent{
 				}
 			}, error => {console.log(error);}
 		);
+
+        this.socket.on('comment', (data) => {
+            if(data.idclub==this.club.id){
+                var div = document.getElementById("botscroll");
+                div.scrollTop = div.scrollHeight - div.clientHeight;
+                this.comentarios.push(data);
+                div.scrollTop = div.scrollHeight - div.clientHeight;
+            }
+        });
+
 	}
 
 	getClub(){
@@ -164,23 +177,21 @@ export class ClubesComponent{
 	}
 
 	comentar(){
+
+		var comentario = new Comentario(0,"","","","");
+		comentario.idclub = this.club.id;
+		comentario.nombreUsuario = this.usuario.nombre;
+		comentario.foto = this.usuario.foto;
+		comentario.comentario = this.nuevoComentario;
+		this.socket.emit('comment', comentario);
+
 		this._usuariosService.comentar(this.usuario.id,this.club.id,this.libroActual.isbn,this.nuevoComentario).subscribe(
 			result => {
-				if(result.code == 200){    				
-					this.addComentario();					
+				if(result.code == 200){
+					this.nuevoComentario = "";
 				}
 			}, error => {console.log(error);}
 		);
-	}
-
-	addComentario(){
-		var nuevoComment = new Comentario(0,"","","","");
-		nuevoComment.setidclub(this.club.id);
-		nuevoComment.setnombreUsuario(this.usuario.nombre);
-		nuevoComment.setfoto(this.usuario.foto);
-		nuevoComment.setcomentario(this.nuevoComentario);
-		this.comentarios.push(nuevoComment);
-		this.nuevoComentario = "";
 	}
 
 	libroAcabado(){

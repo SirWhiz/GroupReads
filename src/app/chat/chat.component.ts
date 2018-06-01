@@ -44,7 +44,7 @@ export class ChatComponent{
         );
 
         this.socket.on('message', (data) => {
-            if(data.de==this.amigo.id){
+            if(data.de==this.amigo.id && data.para==this.usuario.id){
                 this.mensajes.push(data);
             }
         });
