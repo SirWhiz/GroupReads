@@ -56,31 +56,37 @@ export class EditarLibroComponent{
 			this.libro.isbn = params['isbn'];
 		});
 
-		this._libroService.getLibro(this.libro.isbn).subscribe(
-			result => {
-				if(result.code == 200){
-					this.libro = result.data;
-					this.obtenerAutoresTodos();
-					this.obtenerAutoresLibro(this.libro.isbn);
-					this.isbnActual = this.libro.isbn;
-					this.tituloActual = this.libro.titulo;
-				}else{
-					this.existeLibro = false;
+		var expIsbn = new RegExp(/^[0-9]{9,15}$/);
+		if(expIsbn.test(this.libro.isbn)){
+			this._libroService.getLibro(this.libro.isbn).subscribe(
+				result => {
+					console.log(result);
+					if(result.code == 200){
+						this.libro = result.data;
+						this.obtenerAutoresTodos();
+						this.obtenerAutoresLibro(this.libro.isbn);
+						this.isbnActual = this.libro.isbn;
+						this.tituloActual = this.libro.titulo;
+					}else{
+						this.existeLibro = false;
+					}
+				}, error => {
+					console.log(error);
 				}
-			}, error => {
-				console.log(error);
-			}
 		);
 
-		this._libroService.getGeneros().subscribe(
-			result => {
-				if(result.code == 200){
-					this.generos = result.data;
+			this._libroService.getGeneros().subscribe(
+				result => {
+					if(result.code == 200){
+						this.generos = result.data;
+					}
+				},error => {
+					console.log(error);
 				}
-			},error => {
-				console.log(error);
-			}
-		);
+			);
+		}else{
+			this.existeLibro = false;
+		}
 	}
 
 	obtenerAutoresLibro(isbn: string){
