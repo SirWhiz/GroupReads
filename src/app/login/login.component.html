@@ -7,8 +7,10 @@
 		<form #formLogin="ngForm" class="form login" (ngSubmit)="comprobar()">
 			<label for="correo">Correo:</label>
 			<input type="text" name="correo" required="required" id="correo" class="form-control" [(ngModel)]="usuario.correo" pattern=".+@.+\.[a-z]{2,7}">
+			
 			<label for="pwd" class="mt-3">Contraseña:</label>
 			<input type="password" name="pwd" required="required" id="pwd" class="form-control mb-3" [(ngModel)]="usuario.pwd">
+			
 			<a [routerLink]="['/recuperar-password']" href="#">Olvidé mi contraseña</a><br/>
 			<a [routerLink]="['/']" class="btn btn-danger mt-4">Volver</a>
 			<div class="mt-4 float-right">

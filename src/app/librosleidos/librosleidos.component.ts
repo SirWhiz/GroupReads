@@ -68,7 +68,7 @@ export class LibrosLeidosComponent{
 
 	masInformacion(libro:Libro){
 		this.dialog.open(DialogoMasInformacionComponent,{
-			width:'500px',
+			width:'650px',
 			height:'600px',
 			data: { club:this.club.id,libro: libro }
 		});
