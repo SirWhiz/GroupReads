@@ -63,7 +63,7 @@ export class ClubesComponent{
 
 	ngOnInit(){
 
-		if(localStorage.getItem('correo')==null){
+		if(localStorage.getItem('correo')==null || localStorage.getItem('perfil')=='a'){
 			this._router.navigate(['/login']);
 		}else{
 			this.usuario.tipo = localStorage.getItem('perfil');
