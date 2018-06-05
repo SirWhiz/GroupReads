@@ -83,6 +83,9 @@ export class RegistroComponent{
 			response => {
 				if(response.code==200){
 					//Usuario registrado correctamente
+					this.snackBar.open("Usuario registrado correctamente", "OK", {
+						duration: 2500,
+					});
 					this._router.navigate(['/login']);
 				}else{
 					//Error al registrar usuario
