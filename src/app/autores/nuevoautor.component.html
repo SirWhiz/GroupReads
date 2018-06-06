@@ -11,6 +11,7 @@
     <div class="row justify-content-around">
       <form class="form mt-4 login col-sm-8" #formAutor="ngForm" (submit)="onSubmit()">
       	<label for="nombre">Nombre y apellidos:</label>
+        <span *ngIf="autor.nombre_ape!='' && nombre.touched && !nombre.valid"><br/>Introduzca un nombre válido</span>
       	<input type="text" class="form-control mb-3" name="nombre" #nombre="ngModel" [(ngModel)]="autor.nombre_ape" required="required" pattern="^[A-Za-z\u00f1\u00d1À-ÿ\s\-]+">
 		<mat-form-field>
 			<input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento" disabled [(ngModel)]="autor.fecha_nacimiento" name="fecha">

@@ -34,6 +34,9 @@ export class DialogoLibroComponent{
             result => {
                 if(result.code == 200){
                     this.dialogRef.close();
+                    this.snackBar.open("Libro borrado correctamente", "Aceptar", {
+                        duration: 2500,
+                    });
                     this._router.navigate(['/libros']);
                 }
             }, error => {

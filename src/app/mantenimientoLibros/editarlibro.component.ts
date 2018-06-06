@@ -29,6 +29,8 @@ export class EditarLibroComponent{
 	public autoresElegidos: Array<any>;
 	public isbnActual: string;
 	public tituloActual: string;
+	public isbnRepetido: boolean;
+	public isbnUrl: string;
 
 	constructor(public dialog: MatDialog,private activatedRoute: ActivatedRoute,private snackBar:MatSnackBar,private _router: Router,public _libroService:LibrosService){
 		this.libro = new Libro("","","","","","","","");
@@ -41,7 +43,9 @@ export class EditarLibroComponent{
 		this.nombreArray = new Array();
 		this.filesToUpload = new Array();
 		this.isbnActual = "";
+		this.isbnRepetido = false;
 		this.tituloActual = "";
+		this.isbnUrl = "";
 	}
 
 	ngOnInit(){
@@ -54,9 +58,10 @@ export class EditarLibroComponent{
 
 		this.activatedRoute.params.forEach((params: Params) => {
 			this.libro.isbn = params['isbn'];
+			this.isbnUrl = params['isbn'];
 		});
 
-		var expIsbn = new RegExp(/^[0-9]{9,15}$/);
+		var expIsbn = new RegExp(/^[0-9]{8,18}$/);
 		if(expIsbn.test(this.libro.isbn)){
 			this._libroService.getLibro(this.libro.isbn).subscribe(
 				result => {
@@ -87,6 +92,20 @@ export class EditarLibroComponent{
 		}else{
 			this.existeLibro = false;
 		}
+	}
+
+	comprobarisbn(){
+		this._libroService.comprobarisbn(this.libro.isbn).subscribe(
+			result => {
+				if(result.code == 200 && this.libro.isbn!=this.isbnUrl){
+					this.isbnRepetido = true;
+				}else{
+					this.isbnRepetido = false;
+				}
+			}, error => {
+				console.log(error);
+			}
+		);
 	}
 
 	obtenerAutoresLibro(isbn: string){

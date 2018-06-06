@@ -33,6 +33,7 @@ export class DialogoNuevoGenero{
 
 	onSubmit(){
 
+		console.log(this.genero);
 		this._librosService.addGenero(this.genero).subscribe(
 			result => {
 				if(result.code == 200){
