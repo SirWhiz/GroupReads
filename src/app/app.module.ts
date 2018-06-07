@@ -44,6 +44,7 @@ import { RecuperarpwdComponent } from './recuperarpwd/recuperarpwd.component';
 import { DialogoPwdComponent } from './home/dialogopwd.component';
 import { ReinstalarComponent } from './reinstalar/reinstalar.component';
 import { ChatComponent } from './chat/chat.component';
+import { InstalacionComponent } from './instalacion/instalacion.component';
 import { DialogoConvertirComponent } from './clubes/dialogoconvertir.component';
 import { DialogoMasInformacionComponent } from './librosleidos/dialogomasinformacion.component';
 
@@ -103,7 +104,8 @@ import { LoginGuard } from './login.guard';
     DialogoExpulsarComponent,
     RecuperarpwdComponent,
     ReinstalarComponent,
-    DialogoConvertirComponent
+    DialogoConvertirComponent,
+    InstalacionComponent
   ],
   imports: [
     BrowserModule,

@@ -18,6 +18,14 @@ export class LibrosService{
         this.url=GLOBAL.url;
     }
 
+    instalar(pwd:string){
+        return this._http.get(this.url+'install/'+pwd).map(res => res.json());
+    }
+
+    comprobarInstalacion(){
+        return this._http.get(this.url+'checkinstall').map(res => res.json());
+    }
+
     getUsuario(correo:string){
         return this._http.get(this.url+'usuarios/'+correo).map(res => res.json());
     }

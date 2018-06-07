@@ -21,6 +21,7 @@ import { AgregarAmigosComponent } from './agregarAmigos/agregaramigos.component'
 import { ClubesComponent } from './clubes/clubes.component';
 import { NuevoClubComponent } from './clubes/nuevoclub.component';
 import { ElegirLibroComponent } from './elegirLibro/elegirlibro.component';
+import { InstalacionComponent } from './instalacion/instalacion.component';
 import { RecuperarpwdComponent } from './recuperarpwd/recuperarpwd.component';
 
 const appRoutes: Routes = [
@@ -42,6 +43,7 @@ const appRoutes: Routes = [
 	{path: 'nuevo-club', component: NuevoClubComponent},
 	{path: 'elegir-libro', component: ElegirLibroComponent},
 	{path: 'recuperar-password', component: RecuperarpwdComponent},
+	{path: 'instalacion', component: InstalacionComponent},
 	{path: '**', component: PrincipalComponent}
 ];
 

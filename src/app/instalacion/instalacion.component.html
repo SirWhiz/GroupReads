@@ -1,0 +1,26 @@
+<menu-superior></menu-superior>
+<h1 class="display-3 text-center mt-3 mb-3">Instalación</h1>
+<p *ngIf="control=='c' && instalar" class="text-center lead">
+	El siguiente proceso creará la estructura necesaria de tablas,relaciones<br/> y todo
+	lo necesario para el correcto funcionamiento de la aplicación. ¿Estás seguro?
+</p>
+<p *ngIf="!instalar" class="text-center lead">
+	No se puede instalar la estructura de tablas y relaciones<br/> porque ya existe o porque
+	la base de datos no existe.
+</p>
+<div class="row mt-4 justify-content-around mb-5">
+	<div *ngIf="control=='c' && instalar" class="col-3">
+		<button (click)="control='f'" class="re">Estoy seguro</button>	
+	</div>
+	<form #formInstalacion="ngForm" *ngIf="control=='f' && instalar" class="form login col-md-6" (ngSubmit)="onSubmit()">
+		<label class="lead">Introduce la nueva contraseña del administrador</label>
+		<div class="input-group">
+  			<span class="input-group-btn">
+    			<button matTooltip="Ver contraseña" class="btn btn-default" (mousedown)="ver()" (mouseup)="nover()" type="button"><i class="fas fa-eye"></i></button>
+  			</span>
+  			<input type="password" id="pwd" class="form-control" #pwd="ngModel" name="pwd" [(ngModel)]="usuario.pwd" required="required" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)([A-Za-z\d]|[^$@!%*?&]){8,20}">
+  			<span *ngIf="usuario.pwd!='' && pwd.touched && !pwd.valid">La contraseña debe tener mayúsculas, minúsculas, números y 8 caracteres mínimo<br/></span>
+		</div>
+		<input type="submit" class="btn btn-primary mt-3" value="Enviar" [disabled]="!formInstalacion.form.valid">
+	</form>
+</div>
