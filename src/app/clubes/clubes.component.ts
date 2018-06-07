@@ -12,6 +12,7 @@ import { DialogoAbandonarComponent } from './dialogoabandonar.component';
 import { DialogoBorrarClubComponent } from './dialogoborrar.component';
 import { DialogoExpulsarComponent } from './dialogoexpulsar.component';
 import { Chart } from 'chart.js';
+import { DialogoConvertirComponent } from './dialogoconvertir.component';
 import * as io from 'socket.io-client';
 
 @Component({
@@ -402,6 +403,13 @@ export class ClubesComponent{
 		this.dialog.open(DialogoAbandonarComponent,{
 			width:'500px',
 			data: { club: this.club,usuario: this.usuario.id }
+		});
+	}
+
+	convertir(miembro:Usuario){
+		this.dialog.open(DialogoConvertirComponent,{
+			width:'500px',
+			data: { usuario: miembro,club: this.club }
 		});
 	}
 

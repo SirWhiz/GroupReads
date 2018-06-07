@@ -136,6 +136,7 @@
         <div class="card-body">
           <h5 class="card-title text-truncate">
             <span matTooltip="Propietario del club" *ngIf="club.idCreador==miembro.id"><i class="fas fa-star yellow"></i></span> 
+            <span style="color:#00ACC1;cursor: pointer;" (click)="convertir(miembro)" matTooltip="Convertir en lider" *ngIf="usuario.id==club.idCreador && club.idCreador!=miembro.id"><i class="fas fa-arrow-circle-up"></i></span>
             <span (click)="expulsar(miembro)" matTooltip="Expulsar del club" *ngIf="usuario.id==club.idCreador && club.idCreador!=miembro.id"><i class="fas fa-times red"></i></span> {{miembro.nombre}} {{miembro.apellidos}}
           </h5>
           <h6 class="card-subtitle mb-2 text-muted">@{{miembro.nick}}</h6>

@@ -161,6 +161,28 @@
         echo json_encode($result);
     });
 
+    /* --- CONVERTIR USUARIO A PROPIETARIO DE CLUB --- */
+    $app->get('/convertuser/:idusuario/:idclub',function($idusuario,$idclub) use($app,$db){
+        $consulta = "UPDATE clubes SET idCreador=".$idusuario." WHERE id=".$idclub;
+
+        $query = $db->query($consulta);
+        if($query){
+            $result = array(
+                'status' => 'success',
+                'code' => 200,
+                'message' => 'Usuario convertido correctamente'
+            );
+        }else{
+            $result = array(
+                'status' => 'error',
+                'code' => 404,
+                'message' => $consulta
+            );
+        }
+
+        echo json_encode($result);
+    });
+
     /* --- SUBIR IMAGEN DE UN USUARIO --- */
     $app->post('/upload-file',function() use($app,$db){
         $result = array(

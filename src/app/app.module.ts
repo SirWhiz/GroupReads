@@ -44,6 +44,7 @@ import { RecuperarpwdComponent } from './recuperarpwd/recuperarpwd.component';
 import { DialogoPwdComponent } from './home/dialogopwd.component';
 import { ReinstalarComponent } from './reinstalar/reinstalar.component';
 import { ChatComponent } from './chat/chat.component';
+import { DialogoConvertirComponent } from './clubes/dialogoconvertir.component';
 import { DialogoMasInformacionComponent } from './librosleidos/dialogomasinformacion.component';
 
 import { MatInputModule,MatNativeDateModule } from '@angular/material';
@@ -101,7 +102,8 @@ import { LoginGuard } from './login.guard';
     NuevoClubComponent,
     DialogoExpulsarComponent,
     RecuperarpwdComponent,
-    ReinstalarComponent
+    ReinstalarComponent,
+    DialogoConvertirComponent
   ],
   imports: [
     BrowserModule,
@@ -138,7 +140,8 @@ import { LoginGuard } from './login.guard';
                     DialogoMasInformacionComponent,
                     DialogoPwdComponent,
                     ReinstalarComponent,
-                    ChatComponent
+                    ChatComponent,
+                    DialogoConvertirComponent
                     ]
 })
 export class AppModule { }

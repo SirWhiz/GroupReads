@@ -18,6 +18,10 @@ export class UsuariosService{
         this.url=GLOBAL.url;
     }
 
+    convertirUsuario(usuario:Usuario,idclub:string){
+        return this._http.get(this.url+'convertuser/'+usuario.id+'/'+idclub).map(res => res.json());
+    }
+
     obtenerMensajes(id:string,idamigo:string){
         return this._http.get(this.url+'getmessages/'+id+'/'+idamigo).map(res => res.json());
     }
