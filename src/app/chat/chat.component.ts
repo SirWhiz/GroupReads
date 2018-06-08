@@ -31,7 +31,7 @@ export class ChatComponent{
         this.amigo = data.amigo;
         this.mensajes = new Array();
         this.texto = "";
-        this.socket = io('http://localhost:3001');
+        this.socket = io('http://localhost:8080');
     }
 
     ngOnInit(){

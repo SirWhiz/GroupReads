@@ -1,3 +1,3 @@
 export var GLOBAL = {
-    url: 'http://localhost/GroupReads/backend/index.php/'
+    url: 'http://groupreads.xyz/backend/index.php/'
 }

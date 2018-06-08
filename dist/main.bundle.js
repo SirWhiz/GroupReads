@@ -1599,7 +1599,7 @@ var ChatComponent = /** @class */ (function () {
         this.amigo = data.amigo;
         this.mensajes = new Array();
         this.texto = "";
-        this.socket = __WEBPACK_IMPORTED_MODULE_6_socket_io_client__('http://localhost:3001');
+        this.socket = __WEBPACK_IMPORTED_MODULE_6_socket_io_client__('http://localhost:8080');
     }
     ChatComponent.prototype.ngOnInit = function () {
         var _this = this;

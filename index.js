@@ -2,7 +2,7 @@
 const express = require('express');
 const app = express();
 var http = require('http').Server(app);
-var server = app.listen(3001);
+var server = app.listen(8080);
 var io = require('socket.io').listen(server);
 
 // Use the /dist directory

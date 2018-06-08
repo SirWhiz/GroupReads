@@ -18,6 +18,17 @@
         die();
     }
 
+    /* --- Comprobar si hay conexion --- */
+    $app->get('/checkconn',function() use($app,$db){
+        $conn = new mysqli('localhost','root','Alvaroadcarry','groupreads');
+
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        echo "Bien";
+    });
+
     /* --- ENVIAR CORREO CONTRASEÑA OLVIDADA --- */
     $app->get('/forgotpwd/:mail',function($mail) use($app,$db){
         
