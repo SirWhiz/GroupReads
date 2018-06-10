@@ -8,31 +8,31 @@
 			
 			<!--Nombre-->
 			<label for="nombre">Nombre:</label>
-			<span *ngIf="nombre.touched && !nombre.valid"><br/>Introduzca un nombre válido</span>
+			<span *ngIf="usuario.nombre!='' && nombre.touched && !nombre.valid"><br/>Introduzca un nombre válido</span>
 			<span class="valido" *ngIf="nombre.touched && nombre.valid">
 				<i class="fas fa-check fa-2x"></i>
 			</span>
-			<input type="text" required="required" id="nombre" #nombre="ngModel" [(ngModel)]="usuario.nombre" name="nombre" class="form-control mb-3" pattern="^[A-Za-z\u00f1\u00d1À-ÿ\s]+">
+			<input type="text" required="required" id="nombre" #nombre="ngModel" [(ngModel)]="usuario.nombre" name="nombre" class="form-control mb-3" pattern="^[A-Za-z\u00f1\u00d1À-ÿ/s]+">
 
 			<!--Apellidos-->
 			<label for="apellidos">Apellidos:</label>
-			<span *ngIf="apellidos.touched && !apellidos.valid"><br/>Introduzca un apellido válido</span>
+			<span *ngIf="usuario.apellidos!='' && apellidos.touched && !apellidos.valid"><br/>Introduzca un apellido válido</span>
 			<span class="valido" *ngIf="apellidos.touched && apellidos.valid">
 				<i class="fas fa-check fa-2x"></i>
 			</span>
-			<input type="text" required="required" id="apellidos" #apellidos="ngModel" [(ngModel)]="usuario.apellidos" name="apellidos" class="form-control mb-3" pattern="^[A-Za-z\u00f1\u00d1À-ÿ\s]+">
+			<input type="text" required="required" id="apellidos" #apellidos="ngModel" [(ngModel)]="usuario.apellidos" name="apellidos" class="form-control mb-3" pattern="^[A-Za-z\u00f1\u00d1À-ÿ/s]+">
 
 			<!--Nombre de usuario-->
 			<label for="nick">Nombre de usuario:</label>
-			<span *ngIf="nick.touched && !nick.valid"><br/>Introduzca un nick válido<br/></span>
+			<span *ngIf="usuario.nick!='' && nick.touched && !nick.valid"><br/>Introduzca un nick válido<br/></span>
 			<span class="valido" *ngIf="nick.touched && nick.valid">
 				<i class="fas fa-check fa-2x"></i>
 			</span>
-			<input type="text" id="nick" required="required" #nick="ngModel" [(ngModel)]="usuario.nick" class="form-control mb-3" name="nick" pattern="^[A-Za-z0-9\u00f1\u00d1À\_\-\s]+">
+			<input type="text" id="nick" required="required" #nick="ngModel" [(ngModel)]="usuario.nick" class="form-control mb-3" name="nick" pattern="^[A-Za-z\u00f1\u00d1À-ÿ/s0-9]+">
 
 			<!--Correo-->
 			<label for="correo">Correo:</label>
-			<span *ngIf="correo.touched && !correo.valid"><br/>Introduzca un correo válido<br/></span>
+			<span *ngIf="usuario.correo!='' && correo.touched && !correo.valid"><br/>Introduzca un correo válido<br/></span>
 			<span *ngIf="existeCorreo"><br/>Ya existe un usuario con ese correo<br/></span>
 			<span class="valido" *ngIf="correo.touched && correo.valid && !existeCorreo">
 				<i class="fas fa-check fa-2x"></i>
@@ -41,7 +41,7 @@
 			
 			<!--Contraseña-->
 			<label for="pwd">Contraseña:</label>
-			<span *ngIf="pwd.touched && !pwd.valid"><br/>La contraseña debe tener mayúsculas, minúsculas, números y 8 caracteres mínimo<br/></span>
+			<span *ngIf="usuario.pwd!='' && pwd.touched && !pwd.valid"><br/>La contraseña debe tener mayúsculas, minúsculas, números y 8 caracteres mínimo<br/></span>
 			<span class="valido" *ngIf="pwd.touched && pwd.valid">
 				<i class="fas fa-check fa-2x"></i>
 			</span>
@@ -49,7 +49,7 @@
 			
 			<!--Confirmar contraseña-->
 			<label for="pwd2">Confirmar contraseña:</label>
-			<span *ngIf="pwd2.touched && usuario.pwd2!=usuario.pwd"><br/>Las contraseñas no coinciden<br/></span>
+			<span *ngIf="usuario.pwd2!='' && pwd2.touched && usuario.pwd2!=usuario.pwd"><br/>Las contraseñas no coinciden<br/></span>
 			<span class="valido" *ngIf="pwd2.touched && usuario.pwd!='' && usuario.pwd==usuario.pwd2 ">
 				<i class="fas fa-check fa-2x"></i>
 			</span>
