@@ -1157,7 +1157,8 @@
             $result = array(
                 'status'=>'success',
                 'code'=>200,
-                'message'=>'Autor registrado correctamente'
+                'message'=>'Autor registrado correctamente',
+                'query'=>$consulta
             );
         }
 

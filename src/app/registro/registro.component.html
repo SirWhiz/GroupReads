@@ -20,7 +20,7 @@
 			<span class="valido" *ngIf="apellidos.touched && apellidos.valid">
 				<i class="fas fa-check fa-2x"></i>
 			</span>
-			<input type="text" required="required" id="apellidos" #apellidos="ngModel" [(ngModel)]="usuario.apellidos" name="apellidos" class="form-control mb-3" pattern="^[A-Za-z\u00f1\u00d1À-ÿ/s]+">
+			<input type="text" required="required" id="apellidos" #apellidos="ngModel" [(ngModel)]="usuario.apellidos" name="apellidos" class="form-control mb-3" pattern="^[A-Za-z\u00f1\u00d1À-ÿ\s]+">
 
 			<!--Nombre de usuario-->
 			<label for="nick">Nombre de usuario:</label>
@@ -28,7 +28,7 @@
 			<span class="valido" *ngIf="nick.touched && nick.valid">
 				<i class="fas fa-check fa-2x"></i>
 			</span>
-			<input type="text" id="nick" required="required" #nick="ngModel" [(ngModel)]="usuario.nick" class="form-control mb-3" name="nick" pattern="^[A-Za-z\u00f1\u00d1À-ÿ/s0-9]+">
+			<input type="text" id="nick" required="required" #nick="ngModel" [(ngModel)]="usuario.nick" class="form-control mb-3" name="nick" pattern="^[A-Za-z\u00f1\u00d1À-ÿ\s0-9]+">
 
 			<!--Correo-->
 			<label for="correo">Correo:</label>

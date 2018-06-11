@@ -80,6 +80,11 @@ export class NuevoAutorComponent{
 	}
 
 	saveAutor(){
+		let mes = this.autor.fecha_nacimiento.getMonth()+1;
+		let dia = this.autor.fecha_nacimiento.getDate();
+		let anio = this.autor.fecha_nacimiento.getFullYear();
+		let fecha = anio+'-'+mes+'-'+dia;
+		this.autor.fecha_nacimiento = fecha;
 		this._librosService.addAutor(this.autor).subscribe(
 			result => {
 				console.log(result);
