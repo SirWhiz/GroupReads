@@ -48,7 +48,8 @@ export class UsuariosService{
     }
 
     getGeneros(){
-        return this._http.get(this.url+'generos').map(res => res.json());
+        let headers = new Headers({'Accept': 'application/json','Content-Type': 'application/json'});
+        return this._http.get(this.url+'generos',{headers:headers}).map(res => res.json());
     }
 
     abandonarClub(id:string,idclub:string){
