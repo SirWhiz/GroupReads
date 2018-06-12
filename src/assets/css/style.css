@@ -439,6 +439,9 @@ footer{
 .img-thumbnail{
     max-height: 180px;
 }
+.cursor{
+    cursor: pointer;
+}
 /* --- Media Queries --- */
 @media only screen and (max-width: 770px) {
     .display-1 {

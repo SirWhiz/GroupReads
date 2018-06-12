@@ -16,16 +16,20 @@ import { Chart } from 'chart.js';
 export class HomeComponent{
 
 	public usuario:Usuario;
+	public sugerencias:Usuario[];
 	public libros:Libro[];
 	public esAdmin:boolean;
 	public noClub:boolean;
+	public noGente:boolean;
 	public noLibros:boolean;
 
 	constructor(private dialog:MatDialog,private _router: Router,private _usuariosService: UsuariosService){
 		this.usuario = new Usuario("","","","","","","","","","","");
+		this.sugerencias = new Array();
 		this.libros = new Array();
 		this.esAdmin = false;
 		this.noClub = false;
+		this.noGente = false;
 		this.noLibros = false;
 	}
 
@@ -62,6 +66,7 @@ export class HomeComponent{
 								}else{
 									this.noClub = true;
 								}
+								this.obtenerSugerencias(this.usuario.id);
 							}, error => {console.log(error);}
 						);
 					}
@@ -76,6 +81,24 @@ export class HomeComponent{
 					this.libros = result.data;
 				}else{
 					this.noLibros = true;
+				}
+			}, error => {console.log(error);}
+		);
+	}
+
+	agregar(){
+		this._router.navigate(['/amigos']);
+	}
+
+	obtenerSugerencias(id:string){
+		//Personas que quizá conozcas
+		this._usuariosService.getSugerencias(id).subscribe(
+			result => {
+				console.log(result);
+				if(result.code == 200){
+					this.sugerencias = result.data;
+				}else{
+					this.noGente = true;
 				}
 			}, error => {console.log(error);}
 		);

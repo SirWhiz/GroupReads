@@ -92,6 +92,7 @@ export class EditarAutorComponent{
 	onSubmit(){
 		this._librosService.updateAutor(this.autor).subscribe(
 			result => {
+				console.log(result);
 				if(result.code == 200) {
     				this.snackBar.open("Autor modificado correctamente", "Aceptar", {
       					duration: 2500,

@@ -1322,6 +1322,39 @@
         echo json_encode($result);
     });
 
+    /* --- OBTENER SUGERENCIAS DE AMIGOS --- */
+    $app->get('/sugerencias/:id',function($id) use($app,$db){
+        $consulta = "SELECT * FROM usuarios WHERE usuarios.id NOT IN (SELECT  id FROM usuarios INNER JOIN amigos ON usuarios.id=amigos.idUsuario WHERE idAmigo=".$id." AND idUsuario<>".$id." UNION SELECT  id FROM usuarios INNER JOIN amigos ON usuarios.id=amigos.idAmigo WHERE idUsuario=".$id." AND idAmigo<>".$id.") AND id<>1 AND id<>".$id." LIMIT 4";
+        $query = $db->query($consulta);
+        
+        if(!$query){
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>$consulta
+            );
+        }
+
+        if($query->num_rows==0){
+            $result = array(
+                'status'=>'error',
+                'code'=>404,
+                'message'=>'No se han encontrado usuarios'
+            );
+        }else{
+            $usuarios = array();
+            while($usuario = $query->fetch_assoc()){
+                $usuarios[] = $usuario;
+            }
+            $result = array(
+                'status'=>'success',
+                'code'=>200,
+                'data'=>$usuarios
+            );
+        }
+        echo json_encode($result);
+    });
+
     /* --- CREAR NUEVO LIBRO --- */
     $app->post('/nuevolibro',function() use($app,$db){
         $json = $app->request->post('json');

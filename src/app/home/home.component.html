@@ -49,6 +49,22 @@
     </div>
     <h3>Últimas novedades:</h3>
     <hr>
+    <!--Gente que quizá conozcas-->
+    <div class="mt-4 p-3 ultimosLibros">
+      <h5>Personas que quizá conozcas:</h5>
+      <hr>
+      <div (click)="agregar()" *ngIf="!noGente" class="row mt-3 justify-content-around">
+        <div class="row justify-content-around mb-3 mt-3 p-2">
+          <div *ngFor="let amigo of sugerencias" class="col-md-5 mb-4">
+            <div class="portada">
+                <img *ngIf="amigo.foto" src="http://localhost/GroupReads/src/app/upload/{{amigo.foto}}" matTooltip="{{amigo.foto}}" class="img-thumbnail cursor">
+                <img *ngIf="!amigo.foto" src="http://localhost/GroupReads/src/app/upload/user.png" matTooltip="{{amigo.nombre}}" class="img-thumbnail cursor">
+            </div>
+            <i>{{amigo.nombre}} {{amigo.apellidos}}</i><br/>@{{amigo.nick}}
+          </div>
+        </div>
+      </div>
+    </div>
     <!--Libros recientes-->
     <div class="mt-4 p-3 ultimosLibros">
       <h5>Libros añadidos recientemente:</h5>
