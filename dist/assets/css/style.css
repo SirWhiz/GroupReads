@@ -1,0 +1,489 @@
+/* -- Color del texto seleccionado -- */
+::selection {
+  background: #28a745; /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: #28a745; /* Gecko Browsers */
+}
+html, body {
+    height: 100%;
+    max-width:100%;
+    padding: 0;
+    margin: 0;
+}
+body {
+    margin: 0;
+}
+.row{
+    margin:0;
+}
+.feature{
+    padding:2em 0;
+    border:1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    color:#03A9F4;
+}
+.feature:hover{
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+.feature h2, p{
+    color:#212121;
+}
+.feature p{
+    padding:1em;
+}
+.enlacePrincipal{
+    color:white;
+}
+.enlacePrincipal:hover{
+    color:#eee;
+    text-decoration: none;
+}
+#primera{
+    height: 100%;
+    background-image: url("../img/banner-principal.jpg");
+    background-size: cover;
+    margin:0;
+    margin-bottom: 3em;
+}
+#banner{
+    color:white;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+#empezar{
+    background:#0288D1;
+    color:#fff;
+}
+/* -- Cursor animado -- */
+.typed-cursor {
+    opacity: 1;
+    animation: blink .7s infinite;
+    font-size:4.5rem;
+    font-weight:100;
+}
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+/* -- Boton volver arriba -- */
+#scroll {
+    position:fixed;
+    right:10px;
+    bottom:10px;
+    cursor:pointer;
+    width:50px;
+    height:50px;
+    background-color:#3498db;
+    text-indent:-9999px;
+    display:none;
+    -webkit-border-radius:60px;
+    -moz-border-radius:60px;
+    border-radius:60px;
+    z-index:0;
+}
+#scroll span {
+    position:absolute;
+    top:50%;
+    left:50%;
+    margin-left:-8px;
+    margin-top:-12px;
+    height:0;
+    width:0;
+    border:8px solid transparent;
+    border-bottom-color:#ffffff;
+    z-index:0;
+}
+#scroll:hover {
+    background-color:#e74c3c;
+    opacity:1;filter:"alpha(opacity=100)";
+    -ms-filter:"alpha(opacity=100)";
+}
+footer{
+    background:#ccc;
+}
+/* ------ Pagina de inicio de sesión ------ */
+.login{
+    padding:2em;
+    border:1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+.login span{
+    color:#D32F2F;
+    font-weight: bold;
+}
+.valido{
+    color:#4CAF50 !important;
+    float:right;
+}
+.cursor{
+    cursor: pointer;
+}
+.fondoLogin{
+    background:#0288D1;
+    color:#fff;
+}
+.fondoLogin form{
+    color:#212121;
+    background:#fff;
+}
+/* ------ Pagina de inicio de sesión ------ */
+.fondoRegistro{
+    background:#4CAF50;
+    color:#fff;
+}
+.fondoRegistro form{
+    color:#212121;
+    background:#fff;
+}
+.filtro::-webkit-input-placeholder{
+    font-style: italic;
+}
+.filtro::-moz-placeholder{
+    font-style: italic;   
+}
+.filtro:-ms-input-placeholder{
+    font-style: italic;
+}
+.filtro:-moz-placeholder{
+    color: pink;
+}
+/* ------ Botón de reinstalar la aplicación ------*/
+.re{
+  background:#1AAB8A;
+  color:#fff;
+  border:none;
+  position:relative;
+  height:60px;
+  font-size:1.6em;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+}
+.re:hover{
+  background:#fff;
+  color:#1AAB8A;
+}
+.re:before,.re:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #1AAB8A;
+  transition:400ms ease all;
+}
+.re:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+.re:hover:before,.re:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+/* --- Chat --- */
+#chatSocketmsg{
+    width: 100%;
+    height: 80%;
+    overflow: scroll;
+    margin-bottom: 1em;
+}
+.clear{
+    clear: both;
+}
+.chatSocket{
+    width:100%;
+}
+.chatSocket input{
+    width:85%;
+    border:1px solid #d3d3d3;
+    padding:0.5em;
+}
+.chatSocket button{
+    width:13%;
+    padding: 0.5em;
+    cursor: pointer;
+}
+.clear{
+    clear: both;
+}
+.msgpara{
+  padding: 10px 20px;
+  color: black;
+  background: #E5E5EA;
+  max-width: 50%;
+  overflow-wrap: break-word;
+  border-radius: 25px;
+  float: left;
+  margin-top: 5px;
+  margin-left: 30px;
+  margin-bottom: 10px;
+}
+.msgde {
+  padding: 10px 20px;
+  color: white;
+  background: #0B93F6;
+  max-width: 50%;
+  overflow-wrap: break-word;
+  border-radius: 25px;
+  float: right;
+  margin-top: 5px;
+  margin-right: 30px;
+  margin-bottom: 10px;    
+}
+/* ------ Home ------ */
+.avatar{
+    width:30%;
+    border-radius: 50%;
+}
+.menu a:hover{
+    cursor: pointer;
+}
+.background{
+    background-color:#0097A7;
+    width:100%;
+    height: 3em;
+}
+.yellow{
+    color:gold;
+}
+.red{
+    color:red;
+    cursor: pointer;
+}
+.perfil{
+    max-height: 17em;
+    background:#eee;
+    border-radius:5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    overflow: hidden;
+    min-width: 187px;
+}
+.perfil:hover {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+.perfil hr{
+    border: 1px solid #d3d3d3;
+    margin: 0;
+}
+.debate{
+    background-color: #eee;
+    border:1px solid #d3d3d3;
+    height: 21em;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: visible;
+    border-radius: 5px;
+}
+.comentario{
+    background:#fff;
+    border-radius: 7px;
+    overflow-wrap: break-word;
+}
+.imgperfil{
+    width:45px;
+    height: 45px;
+}
+.bordeEnv{
+    border:1px solid #d3d3d3;
+}
+.fotoperfil{
+    border-radius: 50%;
+    width: 100%;
+    height: auto;
+}
+.noClub{
+    border-radius:5px;
+    border:1px solid #F44336;
+}
+.club{
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+.listaElegidos{
+    position: fixed;
+    top:10rem;
+    right:15px;
+    height: 20rem;
+    width:16rem;
+    background:#eee;
+    border:1px solid #d3d3d3;
+    border-radius:5px;
+}
+.listaElegidos button{
+    position: absolute;
+    bottom: 5px;
+}
+.listaElegidos li{
+    list-style: none;
+    cursor: pointer;
+}
+.listaElegidos li:hover{
+    color:red;
+}
+.borrar:hover {
+    background-color:red;
+    cursor: pointer;
+}
+.amigoLista{
+    background-color:#eee;
+    overflow: hidden;
+    border: 1px solid #d3d3d3;
+    border-radius: 5px;
+}
+.genero{
+    background-color:#E64A19;
+    border-radius: 500px;
+    padding-top: 5px;
+    width:40%;
+    min-width: 80px;
+    padding-bottom: 5px;
+    margin-top: 1em !important;
+    margin-bottom: 1em !important;
+    color:#fff;
+    text-align: center;
+}
+.ultimosLibros{
+    overflow: hidden;
+    border: 1px solid #d3d3d3;
+    border-radius: 5px;
+}
+.portada {
+    width: 70%;
+    max-width: 70% !important;
+    height: 75% !important;
+    margin-bottom: 0.5em;
+}
+.portada img {
+    width:100%;
+    height: auto;
+}
+.listaamigos{
+    list-style: none;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 7px;
+}
+.listaamigos li{
+    padding-top: 0.4em;
+    height: 2em;
+    background: #ccc;
+    text-align: center;
+    border-bottom: 1px solid #fff;
+    cursor: pointer;
+}
+.cursor{
+    cursor: pointer;
+}
+.listaamigos li:hover{
+    background: #9E9E9E;
+    -webkit-transition: background-color 1000ms linear;
+    -ms-transition: background-color 1000ms linear;
+    transition: background-color 1000ms linear;
+}
+.amigos {
+    min-height: 20em;
+    background-color: #eee;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    border: 1px solid #d3d3d3;
+}
+.amigos:hover {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+.solicitud {
+    background-color: #eee;
+    border:1px solid #d3d3d3;
+    border-radius: 5px;
+}
+/* --- Plantilla administrador --- */
+.filaAdmin{
+    background: #455A64;
+}
+.panel{
+    background: #fff;
+    min-height: 15em;
+}
+.columnaAdmin{
+    height: 100%;
+    overflow: hidden;
+    background:#455A64;
+}
+/* --- Libros --- */
+.libro{
+    background: #eee;
+    border-radius: 5px;
+    border:1px solid #ccc;
+    box-shadow:0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    cursor:pointer;
+}
+.img-thumbnail{
+    max-height: 180px;
+}
+.cursor{
+    cursor: pointer;
+}
+/* --- Media Queries --- */
+@media only screen and (max-width: 770px) {
+    .display-1 {
+        font-size:4em;
+    }
+    .display-3{
+        font-size:3em;
+    }
+    .typed-cursor{
+        font-size:3em;
+    }
+}
+@media only screen and (max-width: 380px) {
+    .display-1 {
+        font-size:3em;
+    }
+    .display-3{
+        font-size:1.9em;
+    }
+    .typed-cursor{
+        font-size:2em;
+    }
+    .valido{
+        float:none;
+    }
+}
+@media only screen and (max-width: 260px) {
+    .display-1 {
+        font-size:2em;
+    }
+    .display-3{
+        font-size:1em;
+    }
+    .display-4{
+        font-size:1em;
+    }
+    .typed-cursor{
+        font-size:1em;
+    }
+}
+@media only screen and (max-width: 575px) {
+    .portada{
+        width: 40%;
+    }
+}

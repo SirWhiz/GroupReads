@@ -3,8 +3,8 @@
     require_once('piramide-uploader/PiramideUploader.php');
 
     $app = new \Slim\Slim();
-    $db = new mysqli('localhost','root','','groupreads');
-    $db2 = new mysqli('localhost','root','','groupreads');
+    $db = new mysqli('localhost','root','Alvaroadcarry123','groupreads');
+    $db2 = new mysqli('localhost','root','Alvaroadcarry123','groupreads');
     $db->set_charset("utf8");
     $db2->set_charset("utf8");
 
