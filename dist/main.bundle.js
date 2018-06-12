@@ -1346,6 +1346,10 @@ var EditarAutorComponent = /** @class */ (function () {
     };
     EditarAutorComponent.prototype.onSubmit = function () {
         var _this = this;
+        var dia = this.autor.fecha_nacimiento.getDate();
+        var mes = this.autor.fecha_nacimiento.getMonth() + 1;
+        var anio = this.autor.fecha_nacimiento.getFullYear();
+        this.autor.fecha_nacimiento = anio + "/" + mes + "/" + dia;
         this._librosService.updateAutor(this.autor).subscribe(function (result) {
             if (result.code == 200) {
                 _this.snackBar.open("Autor modificado correctamente", "Aceptar", {
