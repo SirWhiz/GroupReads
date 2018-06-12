@@ -3,8 +3,8 @@
     require_once('piramide-uploader/PiramideUploader.php');
 
     $app = new \Slim\Slim();
-    $db = new mysqli('localhost','root','','groupreads');
-    $db2 = new mysqli('localhost','root','','groupreads');
+    $db = new mysqli('localhost','root','Alvaroadcarry123','groupreads');
+    $db2 = new mysqli('localhost','root','Alvaroadcarry123','groupreads');
     $db->set_charset("utf8");
     $db2->set_charset("utf8");
 
@@ -2975,7 +2975,7 @@
                 (238, 'ZM', 'ZAMBIA', 'Zambia', 'ZMB', 894, 260),
                 (239, 'ZW', 'ZIMBABWE', 'Zimbabwe', 'ZWE', 716, 263);
 
-            INSERT INTO usuarios VALUES (NULL,'admin@admin.com','Admin','admin','admin1','','".$pwdEncriptada."',NULL,1,'a');
+            INSERT INTO usuarios VALUES (NULL,'admin@admin.com','Admin','admin','admin1','1998-12-23','".$pwdEncriptada."',NULL,1,'a');
         ";
 
         if($db->multi_query($consulta)){
