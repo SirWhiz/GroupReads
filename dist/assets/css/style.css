@@ -439,9 +439,12 @@ footer{
 .img-thumbnail{
     max-height: 180px;
 }
+<<<<<<< HEAD
 .cursor{
     cursor: pointer;
 }
+=======
+>>>>>>> 47467acc91ee97042c53a5259d2ba7b6603e82b4
 /* --- Media Queries --- */
 @media only screen and (max-width: 770px) {
     .display-1 {

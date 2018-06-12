@@ -973,7 +973,11 @@ var routing = __WEBPACK_IMPORTED_MODULE_0__angular_router__["d" /* RouterModule 
 /***/ "./src/app/autores/autores.component.html":
 /***/ (function(module, exports) {
 
+<<<<<<< HEAD
 module.exports = "<menuadmin *ngIf=\"perfil=='a'\"></menuadmin>\n<menucolaborador *ngIf=\"perfil=='c'\"></menucolaborador>\n<!--Dashboard-->\n<div class=\"row filaAdmin jutify-content-around\">\n  <div class=\"col-sm-3 columnaAdmin pt-5 pb-5\">\n  \t<button [routerLink]=\"['/nuevo-autor']\" class=\"btn btn-light btn-block text-truncate\">Añadir nuevo</button>\n    <button [routerLink]=\"['/home']\" class=\"btn btn-danger btn-block text-truncate\">Volver</button>\n  </div>\n  <div class=\"col-sm-9 pt-4 pb-5 panel\">\n    <h3>Autores:</h3>\n    <hr>\n    <div *ngIf=\"!noAutores\">\n      <input type=\"text\" name=\"filtro\" (keyup)=\"filtrarAutores()\" [(ngModel)]=\"filtro\" class=\"form-control filtro mb-4\" placeholder=\"Filtrar por nombre..\" autocomplete=\"off\">\n    </div>\n    <div *ngIf=\"noAutores\" class=\"text-center mt-5\"><i>¡Vaya! parace que aún no hay autores en la base de datos..</i></div>\n    <div *ngIf=\"!noAutores\" class=\"row\">\n      <div *ngFor=\"let autor of autores\" (click)=\"editar(autor)\" class=\"col-sm-2 libro mr-3 p-2 text-center\" matTooltip=\"Click para editar\" matTooltipPosition=\"above\">\n      \t<img *ngIf=\"autor.foto\" src=\"http://localhost/GroupReads/src/app/imgautores/{{autor.foto}}\" class=\"img-thumbnail\">\n        <img *ngIf=\"!autor.foto\" src=\"http://localhost/GroupReads/src/app/imgautores/nopic.jpg\" class=\"img-thumbnail\">\n        <p class=\"mt-3\">{{autor.nombre_ape}}</p>\n      </div>\n    </div>\n  </div>\n</div>"
+=======
+module.exports = "<menuadmin *ngIf=\"perfil=='a'\"></menuadmin>\n<menucolaborador *ngIf=\"perfil=='c'\"></menucolaborador>\n<!--Dashboard-->\n<div class=\"row filaAdmin jutify-content-around\">\n  <div class=\"col-sm-3 columnaAdmin pt-5 pb-5\">\n  \t<button [routerLink]=\"['/nuevo-autor']\" class=\"btn btn-light btn-block text-truncate\">Añadir nuevo</button>\n    <button [routerLink]=\"['/home']\" class=\"btn btn-danger btn-block text-truncate\">Volver</button>\n  </div>\n  <div class=\"col-sm-9 pt-4 pb-5 panel\">\n    <h3>Autores:</h3>\n    <hr>\n    <div *ngIf=\"!noAutores\">\n      <input type=\"text\" name=\"filtro\" (keyup)=\"filtrarAutores()\" [(ngModel)]=\"filtro\" class=\"form-control filtro mb-4\" placeholder=\"Filtrar por nombre..\" autocomplete=\"off\">\n    </div>\n    <div *ngIf=\"noAutores\" class=\"text-center mt-5\"><i>¡Vaya! parace que aún no hay autores en la base de datos..</i></div>\n    <div *ngIf=\"!noAutores\" class=\"row\">\n      <div *ngFor=\"let autor of autores\" (click)=\"editar(autor)\" class=\"col-sm-2 libro mr-3 p-2 text-center\" matTooltip=\"Click para editar\" matTooltipPosition=\"above\">\n      \t<img *ngIf=\"autor.foto\" src=\"http://groupreads.xyz/src/app/imgautores/{{autor.foto}}\" class=\"img-thumbnail\">\n        <img *ngIf=\"!autor.foto\" src=\"http://groupreads.xyz/src/app/imgautores/nopic.jpg\" class=\"img-thumbnail\">\n        <p class=\"mt-3\">{{autor.nombre_ape}}</p>\n      </div>\n    </div>\n  </div>\n</div>\n"
+>>>>>>> 47467acc91ee97042c53a5259d2ba7b6603e82b4
 
 /***/ }),
 
@@ -1346,8 +1350,16 @@ var EditarAutorComponent = /** @class */ (function () {
     };
     EditarAutorComponent.prototype.onSubmit = function () {
         var _this = this;
+<<<<<<< HEAD
         this._librosService.updateAutor(this.autor).subscribe(function (result) {
             console.log(result);
+=======
+        var dia = this.autor.fecha_nacimiento.getDate();
+        var mes = this.autor.fecha_nacimiento.getMonth() + 1;
+        var anio = this.autor.fecha_nacimiento.getFullYear();
+        this.autor.fecha_nacimiento = anio + "/" + mes + "/" + dia;
+        this._librosService.updateAutor(this.autor).subscribe(function (result) {
+>>>>>>> 47467acc91ee97042c53a5259d2ba7b6603e82b4
             if (result.code == 200) {
                 _this.snackBar.open("Autor modificado correctamente", "Aceptar", {
                     duration: 2500,
@@ -3980,7 +3992,11 @@ var DialogoPwdComponent = /** @class */ (function () {
 /***/ "./src/app/home/home.component.html":
 /***/ (function(module, exports) {
 
+<<<<<<< HEAD
 module.exports = "<menuadmin *ngIf=\"this.usuario.tipo=='a'\"></menuadmin>\n<!--Dashboard-->\n<div *ngIf=\"this.usuario.tipo=='a'\" class=\"row filaAdmin jutify-content-around\">\n  <div class=\"col-sm-3 columnaAdmin pt-5 pb-5\">\n    <button [routerLink]=\"['/autores']\" class=\"btn btn-light btn-block text-truncate\">Autores</button>\n    <button [routerLink]=\"['/colaboradores']\" class=\"btn btn-light btn-block text-truncate\">Colaboradores</button>\n    <button [routerLink]=\"['/generos']\" class=\"btn btn-light btn-block text-truncate\">Géneros</button>\n    <button [routerLink]=\"['/libros']\" class=\"btn btn-light btn-block text-truncate\">Libros</button>\n    <button (click)=\"reinstalar()\" class=\"btn btn-danger btn-block text-truncate\">Reinstalar Aplicación</button>\n  </div>\n  <div class=\"col-sm-9 pt-4 pb-5 panel\">\n    <h3>Datos generales:</h3>\n    <hr>\n    <!--Cards con datos generales de la aplicación-->\n    <div class=\"row justify-content-around\">\n      <div class=\"col-md-8\">\n        <canvas id=\"myChart\"></canvas>\n      </div> \n    </div>\n  </div>\n</div>\n<!--Si es colaborador-->\n<menucolaborador *ngIf=\"this.usuario.tipo=='c'\"></menucolaborador>\n<!--Si no es admin-->\n<menuusuario *ngIf=\"this.usuario.tipo=='n'\"></menuusuario>\n<!--Timeline principal y perfil-->\n<div *ngIf=\"this.usuario.tipo!='a'\" class=\"row mt-5 mb-5 justify-content-around\">\n\n  <!--Cuadrado izquierdo con información del usuario-->\n  <div class=\"col-sm-2 perfil d-none d-sm-block p-0 mb-3\">\n    <div class=\"background mb-3\"></div>\n    <div class=\"pr-3 pb-3 pl-3\">\n      {{usuario.nombre}} {{usuario.apellidos}}\n      <br/>@{{usuario.nick}}\n    </div>\n    <hr>\n    <button [routerLink]=\"['/amigos']\" class=\"mt-3 btn btn-outline-success btn-block\">Amigos</button>\n    <button [routerLink]=\"['/clubes']\"class=\"mt-3 btn btn-outline-primary btn-block\">Mi club</button>\n  </div>\n\n  <!--Timeline principal-->\n  <div class=\"col-sm-6 timeline p-3\">\n    <!--Aviso de que no estás en ningún club-->\n    <div *ngIf=\"noClub\" class=\"noClub p-3 mb-4\">\n      <h3>¡Vaya! parece que no estás en ningún club todavía..</h3>\n      <p class=\"lead\">¿Te gustaría explorar algunos clubes?</p>\n      <button [routerLink]=\"['/clubes']\" class=\"mr-3 btn btn-outline-success\">¡Claro!</button>\n      <button class=\"btn btn-outline-warning\" (click)=\"noClub=false;\">Más tarde</button>\n    </div>\n    <h3>Últimas novedades:</h3>\n    <hr>\n    <!--Gente que quizá conozcas-->\n    <div class=\"mt-4 p-3 ultimosLibros\">\n      <h5>Personas que quizá conozcas:</h5>\n      <hr>\n      <div (click)=\"agregar()\" *ngIf=\"!noGente\" class=\"row mt-3 justify-content-around\">\n        <div class=\"row justify-content-around mb-3 mt-3 p-2\">\n          <div *ngFor=\"let amigo of sugerencias\" class=\"col-md-5 mb-4\">\n            <div class=\"portada\">\n                <img *ngIf=\"amigo.foto\" src=\"http://localhost/GroupReads/src/app/upload/{{amigo.foto}}\" matTooltip=\"{{amigo.foto}}\" class=\"img-thumbnail cursor\">\n                <img *ngIf=\"!amigo.foto\" src=\"http://localhost/GroupReads/src/app/upload/user.png\" matTooltip=\"{{amigo.nombre}}\" class=\"img-thumbnail cursor\">\n            </div>\n            <i>{{amigo.nombre}} {{amigo.apellidos}}</i><br/>@{{amigo.nick}}\n          </div>\n        </div>\n      </div>\n      <span *ngIf=\"noGente\"><i>¡Vaya! parece que todavía no hay nadie por aquí..</i></span>\n    </div>\n    <!--Libros recientes-->\n    <div class=\"mt-4 p-3 ultimosLibros\">\n      <h5>Libros añadidos recientemente:</h5>\n      <hr>\n      <div *ngIf=\"!noLibros\" class=\"row mt-3 justify-content-around\">\n        <div class=\"row justify-content-around mb-3 mt-3 p-2\">\n          <div *ngFor=\"let libro of libros\" class=\"col-md-5 mb-4\">\n            <div class=\"portada\">\n                <img *ngIf=\"libro.portada\" src=\"http://localhost/GroupReads/src/app/portadas/{{libro.portada}}\" matTooltip=\"{{libro.titulo}}\" class=\"img-thumbnail\">\n                <img *ngIf=\"!libro.portada\" src=\"http://localhost/GroupReads/src/app/portadas/nopic.jpg\" matTooltip=\"{{libro.titulo}}\" class=\"img-thumbnail\">\n            </div>\n            <i>{{libro.titulo}}</i><br/>{{libro.paginas}} páginas\n          </div>\n        </div>\n      </div>\n      <span *ngIf=\"noLibros\"><i>¡Vaya! parece que todavía no hay libros..</i></span>\n    </div>\n  </div>\n  <!--Amigos-->\n  <div class=\"col-md-3 amigos p-3\">\n    <amigos></amigos>\n  </div>\n</div>\n"
+=======
+module.exports = "<menuadmin *ngIf=\"this.usuario.tipo=='a'\"></menuadmin>\n<!--Dashboard-->\n<div *ngIf=\"this.usuario.tipo=='a'\" class=\"row filaAdmin jutify-content-around\">\n  <div class=\"col-sm-3 columnaAdmin pt-5 pb-5\">\n    <button [routerLink]=\"['/autores']\" class=\"btn btn-light btn-block text-truncate\">Autores</button>\n    <button [routerLink]=\"['/colaboradores']\" class=\"btn btn-light btn-block text-truncate\">Colaboradores</button>\n    <button [routerLink]=\"['/generos']\" class=\"btn btn-light btn-block text-truncate\">Géneros</button>\n    <button [routerLink]=\"['/libros']\" class=\"btn btn-light btn-block text-truncate\">Libros</button>\n    <button (click)=\"reinstalar()\" class=\"btn btn-danger btn-block text-truncate\">Reinstalar Aplicación</button>\n  </div>\n  <div class=\"col-sm-9 pt-4 pb-5 panel\">\n    <h3>Datos generales:</h3>\n    <hr>\n    <!--Cards con datos generales de la aplicación-->\n    <div class=\"row justify-content-around\">\n      <div class=\"col-md-8\">\n        <canvas id=\"myChart\"></canvas>\n      </div> \n    </div>\n  </div>\n</div>\n<!--Si es colaborador-->\n<menucolaborador *ngIf=\"this.usuario.tipo=='c'\"></menucolaborador>\n<!--Si no es admin-->\n<menuusuario *ngIf=\"this.usuario.tipo=='n'\"></menuusuario>\n<!--Timeline principal y perfil-->\n<div *ngIf=\"this.usuario.tipo!='a'\" class=\"row mt-5 mb-5 justify-content-around\">\n\n  <!--Cuadrado izquierdo con información del usuario-->\n  <div class=\"col-sm-2 perfil d-none d-sm-block p-0 mb-3\">\n    <div class=\"background mb-3\"></div>\n    <div class=\"pr-3 pb-3 pl-3\">\n      {{usuario.nombre}} {{usuario.apellidos}}\n      <br/>@{{usuario.nick}}\n    </div>\n    <hr>\n    <button [routerLink]=\"['/amigos']\" class=\"mt-3 btn btn-outline-success btn-block\">Amigos</button>\n    <button [routerLink]=\"['/clubes']\"class=\"mt-3 btn btn-outline-primary btn-block\">Mi club</button>\n  </div>\n\n  <!--Timeline principal-->\n  <div class=\"col-sm-6 timeline p-3\">\n    <!--Aviso de que no estás en ningún club-->\n    <div *ngIf=\"noClub\" class=\"noClub p-3 mb-4\">\n      <h3>¡Vaya! parece que no estás en ningún club todavía..</h3>\n      <p class=\"lead\">¿Te gustaría explorar algunos clubes?</p>\n      <button [routerLink]=\"['/clubes']\" class=\"mr-3 btn btn-outline-success\">¡Claro!</button>\n      <button class=\"btn btn-outline-warning\" (click)=\"noClub=false;\">Más tarde</button>\n    </div>\n    <h3>Últimas novedades:</h3>\n    <hr>\n    <!--Libros recientes-->\n    <div class=\"mt-4 p-3 ultimosLibros\">\n      <h5>Libros añadidos recientemente:</h5>\n      <hr>\n      <div *ngIf=\"!noLibros\" class=\"row mt-3 justify-content-around\">\n        <div class=\"row justify-content-around mb-3 mt-3 p-2\">\n          <div *ngFor=\"let libro of libros\" class=\"col-md-5 mb-4\">\n            <div class=\"portada\">\n                <img *ngIf=\"libro.portada\" src=\"http://localhost/GroupReads/src/app/portadas/{{libro.portada}}\" matTooltip=\"{{libro.titulo}}\" class=\"img-thumbnail\">\n                <img *ngIf=\"!libro.portada\" src=\"http://localhost/GroupReads/src/app/portadas/nopic.jpg\" matTooltip=\"{{libro.titulo}}\" class=\"img-thumbnail\">\n            </div>\n            <i>{{libro.titulo}}</i><br/>{{libro.paginas}} páginas\n          </div>\n        </div>\n      </div>\n      <span *ngIf=\"noLibros\"><i>¡Vaya! parece que todavía no hay libros..</i></span>\n    </div>\n  </div>\n  <!--Amigos-->\n  <div class=\"col-md-3 amigos p-3\">\n    <amigos></amigos>\n  </div>\n</div>"
+>>>>>>> 47467acc91ee97042c53a5259d2ba7b6603e82b4
 
 /***/ }),
 
@@ -4021,11 +4037,17 @@ var HomeComponent = /** @class */ (function () {
         this._router = _router;
         this._usuariosService = _usuariosService;
         this.usuario = new __WEBPACK_IMPORTED_MODULE_3__registro_usuario__["a" /* Usuario */]("", "", "", "", "", "", "", "", "", "", "");
+<<<<<<< HEAD
         this.sugerencias = new Array();
         this.libros = new Array();
         this.esAdmin = false;
         this.noClub = false;
         this.noGente = false;
+=======
+        this.libros = new Array();
+        this.esAdmin = false;
+        this.noClub = false;
+>>>>>>> 47467acc91ee97042c53a5259d2ba7b6603e82b4
         this.noLibros = false;
     }
     HomeComponent.prototype.ngOnInit = function () {
@@ -4058,7 +4080,10 @@ var HomeComponent = /** @class */ (function () {
                         else {
                             _this.noClub = true;
                         }
+<<<<<<< HEAD
                         _this.obtenerSugerencias(_this.usuario.id);
+=======
+>>>>>>> 47467acc91ee97042c53a5259d2ba7b6603e82b4
                     }, function (error) { console.log(error); });
                 }
             }
@@ -4073,6 +4098,7 @@ var HomeComponent = /** @class */ (function () {
             }
         }, function (error) { console.log(error); });
     };
+<<<<<<< HEAD
     HomeComponent.prototype.agregar = function () {
         this._router.navigate(['/amigos']);
     };
@@ -4089,6 +4115,8 @@ var HomeComponent = /** @class */ (function () {
             }
         }, function (error) { console.log(error); });
     };
+=======
+>>>>>>> 47467acc91ee97042c53a5259d2ba7b6603e82b4
     HomeComponent.prototype.crearGrafico = function (usuarios, libros, autores) {
         var ctx = document.getElementById("myChart");
         var myChart = new __WEBPACK_IMPORTED_MODULE_7_chart_js__["Chart"](ctx, {
@@ -4842,7 +4870,11 @@ var Libro = /** @class */ (function () {
 /***/ "./src/app/mantenimientoLibros/libros.component.html":
 /***/ (function(module, exports) {
 
+<<<<<<< HEAD
 module.exports = "<menuadmin *ngIf=\"perfil=='a'\"></menuadmin>\n<menucolaborador *ngIf=\"perfil=='c'\"></menucolaborador>\n<!--Dashboard-->\n<div class=\"row filaAdmin jutify-content-around\">\n  <div class=\"col-sm-3 columnaAdmin pt-5 pb-5\">\n    <button [routerLink]=\"['/nuevo-libro']\"class=\"btn btn-light btn-block text-truncate\">Nuevo libro</button>\n    <button [routerLink]=\"['/home']\" class=\"btn btn-danger btn-block text-truncate\">Volver</button>\n  </div>\n  <div class=\"col-sm-9 pt-4 pb-5 panel\">\n    <h3>Libros:</h3>\n    <hr>\n    <div *ngIf=\"!noLibros\">\n      <input type=\"text\" name=\"filtro\" (keyup)=\"filtrarLibros()\" [(ngModel)]=\"filtro\" class=\"form-control filtro mb-4\" placeholder=\"Filtrar por nombre..\" autocomplete=\"off\">\n    </div>\n    <div *ngIf=\"noLibros\" class=\"text-center mt-5\"><i>¡Vaya! parace que aún no hay libros en la base de datos..</i></div>\n    <div *ngIf=\"!noLibros\" class=\"row\">\n      <div *ngFor=\"let libro of libros\" class=\"col-sm-2 libro mb-3 mr-3 p-2 text-center\" matTooltip=\"Click para editar\" matTooltipPosition=\"above\" (click)=\"editar(libro.isbn)\">\n        <img *ngIf=\"libro.portada\" src=\"http://localhost/GroupReads/src/app/portadas/{{libro.portada}}\" class=\"img-thumbnail\">\n        <img *ngIf=\"!libro.portada\" src=\"http://localhost/GroupReads/src/app/portadas/nopic.jpg\" class=\"img-thumbnail\">\n        <p class=\"mt-3\">{{libro.titulo}}</p>\n        <p>{{libro.paginas}} páginas</p>\n      </div>\n    </div>\n  </div>\n</div>"
+=======
+module.exports = "<menuadmin *ngIf=\"perfil=='a'\"></menuadmin>\n<menucolaborador *ngIf=\"perfil=='c'\"></menucolaborador>\n<!--Dashboard-->\n<div class=\"row filaAdmin jutify-content-around\">\n  <div class=\"col-sm-3 columnaAdmin pt-5 pb-5\">\n    <button [routerLink]=\"['/nuevo-libro']\"class=\"btn btn-light btn-block text-truncate\">Nuevo libro</button>\n    <button [routerLink]=\"['/home']\" class=\"btn btn-danger btn-block text-truncate\">Volver</button>\n  </div>\n  <div class=\"col-sm-9 pt-4 pb-5 panel\">\n    <h3>Libros:</h3>\n    <hr>\n    <div *ngIf=\"!noLibros\">\n      <input type=\"text\" name=\"filtro\" (keyup)=\"filtrarLibros()\" [(ngModel)]=\"filtro\" class=\"form-control filtro mb-4\" placeholder=\"Filtrar por nombre..\" autocomplete=\"off\">\n    </div>\n    <div *ngIf=\"noLibros\" class=\"text-center mt-5\"><i>¡Vaya! parace que aún no hay libros en la base de datos..</i></div>\n    <div *ngIf=\"!noLibros\" class=\"row\">\n      <div *ngFor=\"let libro of libros\" class=\"col-sm-2 libro mr-3 p-2 text-center\" matTooltip=\"Click para editar\" matTooltipPosition=\"above\" (click)=\"editar(libro.isbn)\">\n        <img *ngIf=\"libro.portada\" src=\"http://localhost/GroupReads/src/app/portadas/{{libro.portada}}\" class=\"img-thumbnail\">\n        <img *ngIf=\"!libro.portada\" src=\"http://localhost/GroupReads/src/app/portadas/nopic.jpg\" class=\"img-thumbnail\">\n        <p class=\"mt-3\">{{libro.titulo}}</p>\n        <p>{{libro.paginas}} páginas</p>\n      </div>\n    </div>\n  </div>\n</div>"
+>>>>>>> 47467acc91ee97042c53a5259d2ba7b6603e82b4
 
 /***/ }),
 
@@ -6055,9 +6087,12 @@ var UsuariosService = /** @class */ (function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Accept': 'application/json', 'Content-Type': 'application/json' });
         return this._http.get(this.url + 'generos', { headers: headers }).map(function (res) { return res.json(); });
     };
+<<<<<<< HEAD
     UsuariosService.prototype.getSugerencias = function (id) {
         return this._http.get(this.url + 'sugerencias/' + id).map(function (res) { return res.json(); });
     };
+=======
+>>>>>>> 47467acc91ee97042c53a5259d2ba7b6603e82b4
     UsuariosService.prototype.abandonarClub = function (id, idclub) {
         return this._http.get(this.url + 'dejarclub/' + id + '/' + idclub).map(function (res) { return res.json(); });
     };

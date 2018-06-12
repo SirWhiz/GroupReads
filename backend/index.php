@@ -3008,7 +3008,7 @@
                 (238, 'ZM', 'ZAMBIA', 'Zambia', 'ZMB', 894, 260),
                 (239, 'ZW', 'ZIMBABWE', 'Zimbabwe', 'ZWE', 716, 263);
 
-            INSERT INTO usuarios VALUES (NULL,'admin@admin.com','Admin','admin','admin1','','".$pwdEncriptada."',NULL,1,'a');
+            INSERT INTO usuarios VALUES (NULL,'admin@admin.com','Admin','admin','admin1','1998-12-23','".$pwdEncriptada."',NULL,1,'a');
         ";
 
         if($db->multi_query($consulta)){
