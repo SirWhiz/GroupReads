@@ -59,7 +59,7 @@ export class ClubesComponent{
 		this.nombreMostrar = "";
 		this.nuevoComentario = "";
 		this.votado = false;
-		this.socket = io('http://localhost:3001');
+		this.socket = io('http://localhost:8080');
 	}
 
 	ngOnInit(){
